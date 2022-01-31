@@ -1,0 +1,4341 @@
+<!-- <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback();
+      $.ajax({
+          url:"fetch.php",
+          method:"PSOT",
+          data:{year:year},
+          dataType:"JSON",
+          sucess:function(data){
+            drawChart(data);
+          }
+      });
+      function drawChart(chart_data) {
+        var jasonData=chart_data;
+        var data = new google.visualization.DataTable();
+            data.addcolumn('String','Time');
+            data.addcolumn('number','Room Temp');
+            data.addcolumn('number','Soil Temp');
+         $.each(jsonData, function(i, jsonData){
+            var time = json.timestamp;
+            var rmtp =parseInt($.trim(json.room_temp));
+            var stp =parseInt($.trim(json.soil_temp));
+            data.addRows([[time, rmtp, stp]]);
+         });
+        var options = {
+          title: 'Tempratue Variation',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('my_chart'));
+        chart.draw(data, options);
+</script> -->
+
+
+
+
+
+
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+     
+      function drawChart() {
+            var ajax = new XMLHttpRequest();
+            ajax.open("GET", "fetch.php", true);
+            ajax.send();
+     
+
+        var data = new google.visualization.DataTable();
+            data.addColumn('string','Time');
+            data.addColumn('number','Room Temp');
+            // data.addColumn('number','Soil Temp');
+        ajax.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var json = JSON.parse(this.responseText);
+            console.log(json);
+        for(var a=0;a<json.length;a++){
+            var tm = json[a].id;
+            var rmtp =parseInt(json[a].room_temp);
+            // var stp =parseInt(json[a].soil_temp);
+            data.addRows([[tm, rmtp]]);
+            }
+          }
+        }
+        var options = {
+          title: 'Tempratue Variation',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('my_chart'));
+        console.log(data);
+        chart.draw(data, options);
+      }  
+
+
+      
+        // window.setInterval('refresh()', 10000);   
+        // // Call a function every 10000 milliseconds 
+        // // (OR 10 seconds).
+        // // Refresh or reload page.
+        // function refresh() {
+        //     window .location.reload();
+        // }
+
+
+        <?php
+$room_temp = 0;
+$humid = 0;
+$moist = 0;
+include("database_connect.php");
+
+$result = mysqli_query($conn,"select * from gen order by id DESC LIMIT 1");
+while($row = mysqli_fetch_assoc($result)){
+$room_temp = $row['room_temp'];
+$humid = $row['humidity'];
+$moist = $row['moisture'];
+}
+
+$ary = array();
+
+$all = mysqli_query($conn,"select timestamp,room_temp,soil_temp,humidity from gen ");
+while($row = mysqli_fetch_assoc($all)){
+$ary[] = $row;
+}
+
+
+
+?>
+
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="refresh" content="30"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=2.0">
+  <title>home</title>
+  <style id="applicationStylesheet" type="text/css">
+    .mediaViewInfo {
+      --web-view-name: home;
+      --web-view-id: home;
+      --web-scale-on-resize: true;
+      --web-enable-deep-linking: true;
+    }
+    :root {
+      --web-view-ids: home;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      border: none;/*
+      background-color: cornflowerblue;*/
+    }
+    #name{
+    position: relative;
+    overflow: visible;
+    width: 50%;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Rockwell;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 33px;
+    color: rgba(0,0,0,1);
+    background-color: lavender;
+    }
+    .header{
+      display: grid;
+      grid-template-columns:3fr 0.2fr 0.2fr 0.2fr;
+      background-color: lavender;
+      min-height: 50px;
+      min-width: 1500px;
+    }
+    .home_btn{
+      border-bottom: solid 3px;
+      border-bottom-color: blueviolet;
+      border
+    }
+    .home_btn,.hist_btn,.logout_btn{
+      background-color: lavender;
+    }
+    #home_ico,#hist_ico,#logout_ico{
+      width: 40px;
+      height: 40px;
+    }
+    .hist_btn:hover,.logout_btn:active{
+      border-bottom: 3px;
+      border-bottom-color: red;
+    }
+    #live_data_lbl{
+      position: absolute;
+      left: 1%;
+      padding-top: 0.2%;
+    }
+    #sensor-values{
+      background-color: rgba(233,233,233,1);
+      width: 273px;
+      height: 243px;
+
+    }
+    .live_data_box{
+      position: absolute;
+      left:1%;
+      top : 12%;
+      border-radius: 6px;
+      background-color: cornflowerblue; /* #6495edd9; #fffaf08f; #7cabff85; */
+      width: 1180px;
+      height: 280px;
+      padding: 1em;
+      display: grid;
+      grid-template-columns:repeat(4,1fr);
+            
+    }
+    #temp_lbl,#hum_lbl,#moi_lbl{
+      font-family: Rockwell;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 26px;
+      color: rgba(0,0,0,1);
+      position: relative;
+      left: 20%;
+      top: 80%;
+    }
+    #sensor-values{
+      border-left: solid 5px;
+      border-left-color: lightgreen;
+    }
+    #deg_lbl,#gm_lbl,#air_lbl{
+      font-family: Rockwell;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 30px;
+      color: rgba(0,0,0,1);
+      position: relative;
+      top: 10%;
+      left: 20%;
+    }
+    #air_lbl{
+      left: 25%;
+    }
+    #input_lbl{
+      font-family: Rockwell;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 80px;
+      color: rgba(0,0,0,1);
+      position: relative;
+      top: 15%;
+      left: 30%;
+      width: 40%;
+    }
+    #graphical_lbl{
+      position: absolute;
+      left: 1%;
+      top: 52%;
+    }
+    .graph_box{
+      position: absolute;
+      left:1%;
+      top : 58%;
+      background-color: cornflowerblue; /* #6495edd9; #fffaf08f; #7cabff85; */
+      border-radius: 6px;
+      width: 1200px;
+      height: 400px;
+      padding: 1em;
+      padding-left: 2em;
+      display: grid;
+      grid-template-columns:repeat(2,1fr);        
+    }
+    .tmp_graph,.humid_graph{
+      background-color: white;
+      border-left: solid 6px;
+      border-left-color: red;
+      height: 370px;
+      width: 550px;
+    }
+    .form-control{
+      position: relative;
+      left : 80%;
+      top : 1%;
+      background-color: antiquewhite;
+      padding: 0.2em;
+    }
+
+  </style>
+  <!-- Script For Grapgh -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      // Graph  1 script
+      var json = <?php echo json_encode($ary); ?>;
+      console.log(json);
+      const arry = [['Time','Room Temprature','Soil Temprature']]
+      for(var a=0;a<json.length;a++){
+            var tm = json[a].timestamp;
+            var rmtp =parseInt(json[a].room_temp);
+            var stp =parseInt(json[a].soil_temp);
+            arry.push([tm,rmtp,stp]);
+          }
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+     
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(arry);
+        var options = {
+          title: 'Tempratue Variation',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+      // Graph  2 script
+
+
+    </script>
+    <script type="text/javascript">
+      const arry2 = [['Time','Humidity']]
+      for(var a=0;a<json.length;a++){
+            var tm = json[a].timestamp;
+            var humi =parseInt(json[a].humidity);
+            arry2.push([tm,humi]);
+          }
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+     
+      function drawChart() {
+        var data2 = google.visualization.arrayToDataTable(arry2);
+        var options = {
+          title: 'Humidity Variation',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart2 = new google.visualization.LineChart(document.getElementById('my_chart'));
+
+        chart2.draw(data2 , options);
+      }
+
+
+    </script>
+
+</head>
+<body>
+  <div class="header">
+    <h1 id="name">Smart Plant Management System</h1>
+    <button class="home_btn" ><img id="home_ico" src="icon/home.png"></button>
+    <button class="hist_btn" onclick="location.href='history.php'"><img id="hist_ico" src="icon/history.png"></button>
+    <button class="logout_btn"><img id="logout_ico" src="icon/exit.png"></button>
+  </div>
+  <h1 id="live_data_lbl">Live Data</h1>
+  <div class="live_data_box">
+    <div class="temparature" id="sensor-values">
+      <span id="temp_lbl">Temprature</span>
+      <span id="deg_lbl">°C</span>
+      <input type="text" id="input_lbl" name="temp" value="<?php echo $room_temp ?>" disabled>
+    </div>
+    <div class="humidity" id="sensor-values">
+      <span id="hum_lbl">Humidity</span>
+      <span id="gm_lbl">g/ml</span>
+      <input type="text" id="input_lbl" name="humid" value="<?php echo $humid ?>" disabled>
+    </div>
+    <div class="moisture" id="sensor-values">
+      <span id="moi_lbl">Moisture</span>
+      <span id="air_lbl">g/&#13221</span>
+      <input type="text" id="input_lbl" name="moist" value="<?php echo $moist ?>" disabled>
+    </div>
+    <div class="box_4" id="sensor-values">
+      
+    </div>
+  </div>
+  <h1 id="graphical_lbl">Graphical Format</h1>
+  <div class="graph_box">
+    <div class="tmp_graph" id=graph>
+      <div id="curve_chart" style="width: 550px; height: 370px"></div>  
+    </div>
+    <div class="humid_graph" id="graph">
+      <div id="my_chart" style="width: 550px; height: 370px"></div>  
+
+    </div>
+  </div>
+
+</body>
+
+</html>
+
+
+
+
+
+
+-------------------------------------------------------- select Jquery --------------------------------------------------
+
+    $(document).ready(function(){
+        $('#select_para').change(function(){
+          var check = $(this).val();
+          console.log(check);
+          if(check == 'moisture')
+          {
+              google.charts.load('current', {'packages':['corechart']});
+              google.charts.setOnLoadCallback(drawChart);
+              function drawChart() {
+                    const arry2 = [['Time','Moisture']]
+                    for(var a=0;a<json.length;a++)
+                      {
+                        var tm = json[a].timestamp;
+                        var humi =parseInt(json[a].moisture);
+                        arry2.push([tm,humi]);
+                      }
+                    var options = {
+                        title: 'Moisture Variation',
+                        curveType: 'function',
+                        legend: { position: 'bottom' }
+                        };
+                var data2 = google.visualization.arrayToDataTable(arry2);
+                var chart2 = new google.visualization.LineChart(document.getElementById('my_chart'));
+
+                chart2.draw(data2 , options);
+              }
+          }
+          if(check == 'humidity' || check == '')
+          {
+              google.charts.load('current', {'packages':['corechart']});
+              google.charts.setOnLoadCallback(drawChart);  
+              function drawChart() {
+                    const arry2 = [['Time','Humidity']]
+                    for(var a=0;a<json.length;a++)
+                      {
+                        var tm = json[a].timestamp;
+                        var humi =parseInt(json[a].humidity);
+                        arry2.push([tm,humi]);
+                      }
+                    var options = {
+                        title: 'Humidity Variation',
+                        curveType: 'function',
+                        legend: { position: 'bottom' }
+                        };
+                var data2 = google.visualization.arrayToDataTable(arry2);
+                var chart2 = new google.visualization.LineChart(document.getElementById('my_chart'));
+
+                chart2.draw(data2 , options);
+              }
+          }
+        });
+      });
+
+
+
+-------------------------- 21 Aug 2021 09:29 PM ------------------------
+
+
+<?php
+$room_temp = 0;
+$humid = 0;
+$moist = 0;
+include("database_connect.php");
+
+function end_gen(){
+  include("database_connect.php");
+  $test = mysqli_query($conn,"select gen_name from gen_data where end_date is null order by id desc limit 1");
+  while($row = mysqli_fetch_assoc($test)){
+    $table_name = $row['gen_name'];
+  }
+  $sql = "update gen_data set end_date=CURRENT_TIMESTAMP where gen_name ='$table_name'";
+  echo $sql;
+
+  mysqli_query($conn,$sql);
+  return 0;
+}
+
+
+$test = mysqli_query($conn,"select gen_name from gen_data where end_date is null order by id desc limit 1");
+
+
+
+$ret = mysqli_num_rows($test);
+while($row = mysqli_fetch_assoc($test)){
+    $table_name = $row['gen_name'];
+  }
+
+if (isset($_GET['end'])) {
+    
+    $ret = end_gen();
+  }
+
+
+ if($ret == 1){
+  $result = mysqli_query($conn,"select * from gen order by id DESC LIMIT 1");
+  while($row = mysqli_fetch_assoc($result)){
+  $room_temp = $row['room_temp'];
+  $humid = $row['humidity'];
+  $moist = $row['moisture'];
+  }
+
+  $ary = array();
+  $all = mysqli_query($conn,"select timestamp,room_temp,soil_temp,humidity,moisture from gen ");
+  while($row = mysqli_fetch_assoc($all)){
+  $ary[] = $row;
+  }
+
+ }
+ else{
+  $room_temp = 0;
+  $humid = 0;
+  $moist = 0;
+  $ary[] = null; 
+ }
+
+?>
+
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="refresh" content="30"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=2.0">
+  <title>home</title>
+  <style id="applicationStylesheet" type="text/css">
+    .mediaViewInfo {
+      --web-view-name: home;
+      --web-view-id: home;
+      --web-scale-on-resize: true;
+      --web-enable-deep-linking: true;
+    }
+    :root {
+      --web-view-ids: home;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      border: none;/*
+      background-color: cornflowerblue;*/
+
+    }
+    body{
+      font-size: 14px;
+      line-height: 1.42857;
+      color: #333;
+      width: auto;
+      height: 1000px;
+      /*background-color:#d2d3d5;*/
+      /*background: linear-gradient(-40deg,#9a326b 0,#42668a 100%);*/
+      background-color: #67798c;/*#42668a;*/
+    }
+    header{
+      display: grid;
+      background-color: #4B4B4B;
+      height: 50px;
+      width: 1759px;
+      color: white;
+      display: grid;
+      grid-template-columns: 1fr 0.3fr;
+    }
+    #name{
+      position: relative;
+      overflow: visible;
+      width: 1000px;
+      white-space: nowrap;
+      text-align: center;
+      font-family: cursive;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 33px;
+      background: transparent;
+      color: white;
+    }
+    header div{
+      height: auto;
+      width: 300px;
+    }
+
+/*    .home_btn{
+      border-bottom: solid 3px;
+      border-bottom-color: blueviolet;
+    }
+    .hist_btn{
+      background: transparent;
+    }
+    #logout_btn{
+      background: transparent;
+    }
+    #home_ico,#hist_ico,#logout_ico{
+      width: 40px;
+      height: 40px;
+      background: transparent;
+    }*/
+    a{
+      position: relative;
+      display: inline-block;
+      font-family: "Lato", Arial, sans-serif;
+      font-size: 20px;
+      padding-left: 10px;
+      top: 12px;
+      color: white;
+      text-decoration: none; 
+      transition: color 0.15s ease-in-out;
+    }
+    a:hover{
+      color: #bbbbbb;
+    }
+    a.home{
+      color: #bbbbbb;
+    }
+    header div span{
+    position: relative;
+    display: inline-block;
+    width: 1px;
+    margin-left: 12px;
+    top: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 22px;
+    vertical-align: bottom;
+    }
+    header div button{
+      position: relative;
+      display: inline-block;
+      font-family: "Lato", Arial, sans-serif;
+      font-size: 20px;
+      padding-left: 10px;
+      top: 12px;
+      background: transparent;
+      color: white;
+    }
+    #live_data_lbl{
+      position: absolute;
+      left: 25px;
+      top: -14px;
+      width: 150px;
+      font-family: Bebas Neue;
+      font-size: 1.5em;
+      /*background: linear-gradient(
+  -40deg
+  ,#515e85 0,#515e85 100%);*/
+      text-align: center;
+      background-color: #67798c; /*#42668a;*/
+    }
+    .live_data_box{
+      position: relative;
+      left: 15%;
+      top: 34px;
+      border-radius: 2px;
+      border: 1px #cecece solid;
+      background: transparent;
+      width: 1221px;
+      height: 300px;
+      padding-left: 30px;
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      align-content: center;
+    }
+    #sensor-values{
+      background-color: rgba(255,255,255);
+      width: 273px;
+      height: 243px;
+      border-left: solid 5px #44bf44;
+      transition: transform .3s ease;
+    }
+    #sensor-values:hover{
+      transform: scale(1.1);
+    }
+    #temp_lbl,#hum_lbl,#moi_lbl{
+      font-family: Rockwell;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 26px;
+      color: rgba(0,0,0,1);
+      position: relative;
+      left: 20%;
+      top: 80%;
+    }
+    #deg_lbl,#gm_lbl,#air_lbl{
+      font-family: Rockwell;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 30px;
+      color: rgba(0,0,0,1);
+      position: relative;
+      top: 10%;
+      left: 20%;
+    }
+    #air_lbl{
+      left: 25%;
+    }
+    #input_lbl{
+      font-family: Rockwell;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 80px;
+      color: rgba(0,0,0,1);
+      position: relative;
+      top: 15%;
+      left: 30%;
+      width: 40%;
+      background-color: transparent;
+    }
+    #graphical_lbl{
+    position: absolute;
+    font-family: fangsong;
+    font-size: 1.5em;
+    left: 25px;
+    top: -14px;
+    width: 200px;
+    /*background: linear-gradient( 
+-40deg
+ ,#605580 ,#5c5781 100%);*/
+    text-align: center;
+    background-color: #67798c;/*#42668a;*/
+    }
+    .graph_box{
+      position: relative;
+      left:15%;
+      top : 79px;
+      /*background-color: cornflowerblue;  #6495edd9; #fffaf08f; #7cabff85; */
+      background : transperent;
+      border-radius: 2px;
+      border: 1px #cecece solid;
+      width: 1221px;
+      height: 454px;
+      padding: 1em;
+      display: grid;
+      grid-template-columns:repeat(2,1fr);
+      padding-left: 40px;
+      grid-gap:1em;
+      align-items: center;        
+    }
+    .tmp_graph,.humid_graph{
+      background-color: white;
+      border-left: solid 5px;
+      border-left-color: greenyellow;
+      border-right: solid 6px;
+      border-right-color: greenyellow;
+      height: 390px;
+      width: 550px;
+      transition: transform .3s ease;
+    }
+    .tmp_graph:hover,.humid_graph:hover{
+      transform: scale(1.05);
+    }
+    .form-control{
+      position: relative;
+      left : 80%;
+      top : 1%;
+      background-color: antiquewhite;
+      padding: 0.2em;
+    }
+    #curve_chart{
+      position: relative;
+      left: 0px;
+    }
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      padding-top: 100px; /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+      position: relative;
+      background-color: #fefefe;
+      margin: auto;
+      padding: 0;
+      border: 1px solid #888;
+      width: 50%;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+      -webkit-animation-name: animatetop;
+      -webkit-animation-duration: 0.4s;
+      animation-name: animatetop;
+      animation-duration: 0.4s
+    }
+
+    /* Add Animation */
+    @-webkit-keyframes animatetop {
+      from {top:-300px; opacity:0} 
+      to {top:0; opacity:1}
+    }
+
+    @keyframes animatetop {
+      from {top:-300px; opacity:0}
+      to {top:0; opacity:1}
+    }
+
+    /* The Close Button */
+    .close {
+      color: white;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .modal-header {
+      padding: 2px 16px;
+      background-color: #f2b940;
+      color: grey;
+      height: 3em;
+
+    }
+
+    .modal-body {
+      height: 30em;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 30px 50px 30px 50px;
+
+    }
+    .modal-footer {
+      padding: 2px 16px;
+      background-color: #f2b940;
+      color: grey;
+    }
+    #show_text{
+      height : 50px;
+      width : auto;
+      background-color: #c2c2c2;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      border-right: solid 3px black;
+    }
+    #input_data{
+      height : 50px;
+      width : auto;
+      background-color: #e5e5e5;
+      font-family: cursive;
+      font-size: 20px;
+      text-align: center;
+      border-right: solid 3px black;
+    }
+    #input_data:focus{
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+    border-bottom: solid 3px blue;
+    border-right: solid 3px black;
+    }
+    #select_para{
+      border: none;
+      position: relative;
+      top: 1px;
+      left: 33em;
+      width: auto;
+    }
+    .in_var_data{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    #min_data,#max_data{
+      height : 50px;
+      width : 100%;
+      background-color: #e5e5e5;
+      font-family: cursive;
+      font-size: 20px;
+      text-align: center;
+      border-right: solid 3px black;
+    }
+    #min_data{
+       
+    }
+    #max_data{
+      border-right: solid 3px black;
+
+    }
+    #min_data:focus,#max_data:focus{
+      outline-style: none;
+      box-shadow: none;
+      border-color: transparent;
+      border-bottom: solid 3px blue;
+      border-right: solid 3px black;
+    } 
+    .add_gen_btn{
+      height: 50px;
+      background-color: lightgreen;
+      text-align: center;
+      font-size: 20px;
+    }
+    .add_gen_btn:hover{
+      background-color: #a2e0a2;
+    }
+    #end_btn{
+      position: relative;
+      height: 50px;
+      width: 100px;
+      background-color: coral;
+      font-size: 20px;
+      font-family: sans-serif;
+      top: 100px;
+      left: 1389px;
+      padding: 14px 0px 0px 30px;
+    }
+    #end_btn:active{
+      background-color: cornflowerblue;
+    }
+  </style>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script> 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      // Graph  1 script
+      var json = <?php echo json_encode($ary); ?>;
+      if(json[0] != null){
+       
+      const arry = [['Time','Room Temprature','Soil Temprature']]
+      for(var a=0;a<json.length;a++){
+            var tm = json[a].timestamp;
+            var rmtp =parseInt(json[a].room_temp);
+            var stp =parseInt(json[a].soil_temp);
+            arry.push([tm,rmtp,stp]);
+          }
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+     
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(arry);
+        var options = {
+          title: 'Tempratue Variation',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+
+      // Graph  2 script
+
+      create_chart('humidity');
+      $(document).ready(function(){
+        $('#select_para').change(function(){
+          var check = $(this).val();
+          console.log(check);
+          if(check == 'humidity'){
+            create_chart(check);
+          }
+          else if(check == 'moisture'){
+            create_chart(check);
+          }
+        });
+      });
+      function create_chart(select_data){
+          var option = select_data;
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);  
+          function drawChart() {
+                const arry = [['Time',option]];
+                for(var a=0;a<json.length;a++)
+                  {
+                    var tm = json[a].timestamp;
+                    var humi =parseInt(json[a][option]);
+                    arry.push([tm,humi]);
+                  }
+                var options = {
+                    title: option,
+                    curveType: 'function',
+                    legend: { position: 'bottom' }
+                    };
+            var data = google.visualization.arrayToDataTable(arry);
+            var chart = new google.visualization.LineChart(document.getElementById('my_chart'));
+
+            chart.draw(data , options);
+          }
+      }
+    }
+    </script>
+    <script type="text/javascript">
+        window.onbeforeunload = function() {
+        return "Dude, are you sure you want to leave? Think of the kittens!";
+      }
+
+      function end(){
+
+      }
+    </script>
+
+</head>
+<body>
+  <header>
+    <h1 id="name">Smart Plant Management System</h1>
+    <div>
+      <a class="home" href="/test/index.php">Home</a>
+      <a class="hist" href="/test/history.php">History</a>
+      <span></span>
+      <button id="logout_btn">New Gen</button>
+    </div>
+  </header>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2>Start New Genration </h2>
+        </div>
+      <div class="modal-body">
+        <div id=show_text>Genration Name</div>
+        <input id=input_data> </input>
+        <div id=show_text>Plant Name </div>
+        <input id=input_data> </input>
+        <div id=show_text>Temprature Range</div>
+        <div class="in_var_data">
+          <input id=min_data type="number" placeholder="Min"></input>
+          <input id=max_data type="number" placeholder="Max"></input>
+        </div>
+        <div id=show_text>Humidity Range</div>
+        <div class="in_var_data">
+          <input id=min_data type="number" placeholder="Min"> </input>
+          <input id=max_data type="number" placeholder="Max"> </input>
+        </div>
+        <div id=show_text>Moisture Range</div>
+        <div class="in_var_data">
+          <input id=min_data type="number" placeholder="Min"> </input>
+          <input id=max_data type="number" placeholder="Max"> </input>
+        </div>
+        <div id=show_text>Light Intensity Range</div>
+        <div class="in_var_data">
+          <input id=min_data type="number" placeholder="Min"> </input>
+          <input id=max_data type="number" placeholder="Max"> </input>
+        </div>
+        <span></span>
+        <button class="add_gen_btn">Add Genration</button>
+     </div>
+      <div class="modal-footer">
+        <h3></h3>
+      </div>
+  </div>
+      <script type="text/javascript">
+            var modal = document.getElementById("myModal");
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("logout_btn");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks the button, open the modal 
+      btn.onclick = function() {
+        modal.style.display = "block";
+      }
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    </script>
+  </div>
+  <div class="live_data_box">
+    <h2 id="live_data_lbl">Live Data</h2>
+    <div class="temparature" id="sensor-values">
+      <span id="temp_lbl">Temprature</span>
+      <span id="deg_lbl">°C</span>
+      <input type="text" id="input_lbl" name="temp" value="<?php echo $room_temp ?>" disabled>
+    </div>
+    <div class="humidity" id="sensor-values">
+      <span id="hum_lbl">Humidity</span>
+      <span id="gm_lbl">g/ml</span>
+      <input type="text" id="input_lbl" name="humid" value="<?php echo $humid ?>" disabled>
+    </div>
+    <div class="moisture" id="sensor-values">
+      <span id="moi_lbl">Moisture</span>
+      <span id="air_lbl">g/&#13221</span>
+      <input type="text" id="input_lbl" name="moist" value="<?php echo $moist ?>" disabled>
+    </div>
+    <div class="box_4" id="sensor-values">
+      
+    </div>
+  </div>
+  
+  <div class="graph_box">
+    <h1 id="graphical_lbl">Graphical Format</h1>
+    <div class="tmp_graph" id=graph>
+      <div id="curve_chart" style="width: 540px; height: 370px"></div>  
+    </div>
+    <div class="humid_graph" id="graph">
+      <select name="parameters" id="select_para">
+          <option value="humidity">Humidity</option>
+          <option value="moisture">Moisture</option>
+      </select>
+      <div id="my_chart" style="width: 540px; height: 370px"></div>  
+    </div>
+  </div>
+  <a href="index.php?end=true" id="end_btn">End</a>
+  <script type="text/javascript">
+    if(json[0] == null){
+        document.getElementById('end_btn').style.visibility="hidden";
+      }
+  </script>
+</body>
+
+</html>
+
+
+
+-----------24 AUG 2021 1:36 PM -----
+
+    // if('<?php echo $lgt_chk ?>' == 'high'){
+    //   send_noti('light','high','Maximum');
+    // }
+    // else if('<?php echo $lgt_chk ?>' == 'low'){
+    //   send_noti('light','low','Minimum'); 
+    // }
+
+-----------27 SEPT 2021 8:07 PM -----
+
+
+      /*  -- -------------------------------------------------------------------------- ---*/
+    /*  -- ----------------------------- Mobile Version CSS ------------------------- ---*/
+    /*  -- -------------------------------------------------------------------------- ---*/
+
+    @media (max-width:600px){
+      :root{
+        --body-bg: #516889;
+        --body-color: white;
+        --name-size : 20px;
+        --nav-float : left;
+      }
+      .live_data_box{
+        position: unset;
+        display: block;
+        float: left;
+        width: auto;
+        height: auto;
+        padding: 30px;
+        margin-left: 10px;
+        margin-right: 20px;
+        padding-right: 30px;
+        margin-top: 30px;
+      }
+      #live_data_lbl{
+        position: relative;
+        left: 63px;
+        top: -45px;
+      }
+      .sensor-values{
+        margin-bottom: 10px;
+      }
+      #graph_lbl{
+        position: relative;
+        top: -39px;
+      }
+      .tmp_graph,.humid_graph{
+        height: 200px;
+        width: 295px;
+        margin-bottom: 10px;
+      }
+      .graph_box{
+        position: unset;
+        display: block;
+        float: left;
+        border-radius: 2px;
+        width: auto;
+        height: auto;
+        padding: 30px;
+        margin: 30px 20px 0px 10px;
+      }
+      #select_para{
+        top: unset;
+        left: 18em;
+        width: 15%;
+      }
+      #end_btn{
+        position: relative;
+        float: left;
+        top: 9px;
+        left: 144px;
+      }
+      .chart{
+        height: 180px;
+        width: 285px;
+      }
+      #graph1_heading{
+        font-size: 14px;
+      }
+    }
+
+
+
+      // --------------- Graph  1 script ------------------
+
+      var json = <?php echo json_encode($ary); ?>;
+
+      const arry = [['Time','Room Temprature']]
+      try{
+            for(var a=0;a<json.length;a++){
+            var tm = json[a].timestamp;
+            var rmtp =parseInt(json[a].room_temp);
+            arry.push([tm,rmtp]);
+          }
+      }catch(e){
+        alert('currently not monitoring any genration');
+      }
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+     
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(arry);
+        var options = {
+          title: '',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+
+  //---------------------- Graph  2 script -----------------------
+
+      create_chart('humidity');
+      $(document).ready(function(){
+        $('#select_para').change(function(){
+          var check = $(this).val();
+          console.log(check);
+          if(check == 'humidity'){
+            create_chart(check);
+          }
+          else if(check == 'moisture'){
+            create_chart(check);
+          }
+        });
+      });
+      function create_chart(select_data){
+          var option = select_data;
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);  
+          function drawChart() {
+                const arry = [['Time',option]];
+                for(var a=0;a<json.length;a++)
+                  {
+                    var tm = json[a].timestamp;
+                    var humi =parseInt(json[a][option]);
+                    arry.push([tm,humi]);
+                  }
+                var options = {
+                    title: '',
+                    curveType: 'function',
+                    legend: { position: 'bottom' }
+                    };
+            var data = google.visualization.arrayToDataTable(arry);
+            var chart = new google.visualization.LineChart(document.getElementById('my_chart'));
+
+            chart.draw(data , options);
+          }
+      }
+
+//  --------------------------------------Add Function -----------------
+        function add_gen() {
+          var gen_name = document.getElementById("gen_nm").value;
+          var plant_name = document.getElementById("plant_name").value;
+          var min_temp = document.getElementById("min_temp").value;
+          var max_temp = document.getElementById("max_temp").value;
+          var min_humid = document.getElementById("min_humid").value;
+          var max_humid = document.getElementById("max_humid").value;
+          var min_moist = document.getElementById("min_moist").value;
+          var max_moist = document.getElementById("max_moist").value;
+
+          console.log(gen_name);
+          console.log(plant_name); 
+          console.log(min_temp); 
+          console.log(max_temp); 
+          console.log(min_humid);  
+          console.log(max_humid);  
+          console.log(min_moist); 
+          console.log(max_moist);  
+
+        if (gen_name =='' || plant_name=='' || min_temp=='' || max_temp=='' || min_humid=='' || max_humid=='' || min_moist=='' || max_moist=='' ) {
+          alert("Empty Field");
+          document.getElementById("gen_nm").value = '';
+          document.getElementById("plant_name").value = '';
+          document.getElementById("min_temp").value = '';
+          document.getElementById("max_temp").value = '';
+          document.getElementById("min_humid").value = '';
+          document.getElementById("max_humid").value = '';
+          document.getElementById("min_moist").value = '';
+          document.getElementById("max_moist").value = '';
+          console.log("I got here");
+        }else 
+        {
+          var y = confirm("Creating New genration will stop current genration ");
+          if(y == true){
+            end_gen();
+            document.getElementById("add_genration").disabled = true;
+        
+            var chk_url = "/test/insert_data.php?flag=2&name="+gen_name+"&plant="+plant_name+"&min_t="+min_temp+"&max_t="+max_temp+"&min_h="+min_humid+"&max_h="+max_humid+"&min_m="+min_moist+"&max_m="+max_moist;
+            $('input').reset();
+            console.log(chk_url);
+            $.ajax({
+                  type: "POST",
+                  url: chk_url
+                });
+          }
+        }
+
+      }
+
+// ---------------------------- Modal -------------------
+
+      var modal = document.getElementById("myModal");
+      var btn = document.getElementById("logout_btn");
+      var span = document.getElementsByClassName("close")[0];
+      btn.onclick = function() {
+        modal.style.display = "block";
+      }
+
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+// -------------------------------- Notification ------------------------------------
+    
+      if(Notification.permission == 'granted'){
+          console.log('we got the permission');
+        }
+      else if(Notification.permission !== 'denied'){
+          Notification.requestPermission();
+        }
+      if('<?php echo $temp_chk ?>' == 'high'){
+        send_noti('temperature','high','Maximum');
+      }
+      else if('<?php echo $temp_chk ?>' == 'low'){
+        send_noti('temperature','low','Minimum');
+      }
+      if('<?php echo $hum_chk ?>' == 'high'){
+        send_noti('humidity','high','Maximum');
+      }
+      else if('<?php echo $hum_chk ?>' == 'low'){
+        send_noti('humidity','low','Minimum');  
+      }
+      if('<?php echo $mos_chk ?>' == 'high'){
+        send_noti('moisture','high','Maximum');
+      }
+      else if('<?php echo $mos_chk ?>' == 'low'){
+        send_noti('moisture','low','Minimum'); 
+      }
+
+      // THE LIGHT NOTIFICATION PART SAVE TEMP.TXT AT LINE 1102 FROM SUMIT
+
+    function send_noti(parameter,values,state){
+      var input_id = '';
+      if (parameter == 'temperature') {
+        input_id = 'temp_in';
+      }
+      else if (parameter == 'humidity') {
+        input_id = 'hum_in';
+      }
+      else if (parameter == 'moisture') {
+        input_id = 'mos_in';
+      }
+
+      if(values == 'low'){
+        var color = 'yellow';
+      }
+      else if(values == 'high'){
+        var color = 'red';
+      }
+      else{
+        var color = '#44bf44';
+      }
+      document.getElementById(parameter).style.borderLeftColor = color;
+      document.getElementById(input_id).style.color = color;
+
+      const greeting = new Notification(state+" "+parameter,{
+                body : "current "+parameter+" is "+values+"er than set "+parameter,
+                icon : "./icon/"+parameter+".png"
+              });
+      greeting.close();
+
+         
+    }
+
+    // ---------End Genration Function ------------------
+
+      function end_gen() {
+        var t  = confirm("It will stop sensors data and disable circuit");
+      try{
+          if (t == true){
+            $.ajax({
+            type: "POST",
+            url: "/test/insert_data.php?flag=1&table_name=<?php echo $table_name?>"
+            });
+            document.getElementById('end_btn').style.visibility="hidden";
+            window.location.reload(); 
+          } 
+      }catch(e){
+        console.log("Error Handled"+e);
+      }  
+
+      }
+  
+--------------------------- | | 30 SEPT 2021 04:00 PM   | | ------------
+
+<!-- https://localhost/test/insert_data.php?flag=0&rtemp=24&humid=18&moist=35&light=58  url to be used in Nodemcu-->
+<?php
+$check_table = 'full';
+$table_name = 'test';
+include("database_connect.php");
+
+
+$test = mysqli_query($conn,"select * from gen_data where end_date is null and live_check=1 order by id desc limit 1");
+  
+if (isset($test)) {
+  while($row = mysqli_fetch_assoc($test)){
+      $table_name = $row['gen_name'];
+      $check = $row['live_check'];
+      $max_tmp = $row['max_temp'];
+      $min_tmp = $row['min_temp'];
+      $max_hmd = $row['max_humid'];
+      $min_hmd = $row['min_humid'];
+      $max_mos = $row['max_moist'];
+      $min_mos = $row['min_moist'];
+    }
+}
+else{
+  $check = 0;
+  $table_name = none;
+}
+
+
+if($check == 1){
+  $result = mysqli_query($conn,"select * from ".$table_name." order by id DESC LIMIT 1");
+  if (isset($result)) {
+    $row = mysqli_fetch_assoc($result);
+    if(isset($row)){
+      $result = mysqli_query($conn,"select * from ".$table_name." order by id DESC LIMIT 1");
+      while($br = mysqli_fetch_assoc($result)){
+        $room_temp = $br['room_temp'];
+        $humid = $br['humidity'];
+        $moist = $br['moisture'];
+        $light = $br['light'];
+        }
+    }
+    else {
+      $room_temp = 0;
+      $humid = 0;
+      $moist = 0;
+      $light = 0;
+      $ary[] = null;
+      $check_table = 'empty';
+    }
+  }else{
+          $room_temp = 0;
+          $humid = 0;
+          $moist = 0;
+          $light = 0;
+          $ary[] = null;      
+        }
+
+  $ary = array();
+  $all = mysqli_query($conn,"select timestamp,room_temp,light,humidity,moisture from ".$table_name." LIMIT 10 ");
+    // $all = mysqli_query($conn,"select * from (select * from ".$table_name." order by id desc limit 10)Var1 order by id asc");
+  while($row = mysqli_fetch_assoc($all)){
+  $ary[] = $row;
+  }
+}
+else{
+  $room_temp = 0;
+  $humid = 0;
+  $moist = 0;
+  $light = 0;
+  $ary[] = null;  
+}
+
+
+  $temp_chk = values_check($room_temp,$max_tmp,$min_tmp);
+  $hum_chk =  values_check($humid,$max_hmd,$min_hmd);
+  $mos_chk =  values_check($moist,$max_mos,$min_mos);
+  // $lgt_chk =  values_check($light,$max_lgt,$min_lgt);
+
+
+function values_check($current,$max,$min){
+  if($current != 0){
+      if($current > $max){ 
+        return('high'); 
+      }
+      elseif($current < $min){
+       return('low');
+     }
+      else{ return('med'); }
+  }else{ return('med'); }
+
+}
+
+?>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- <meta http-equiv="refresh" content="30"/> -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=2.0">
+  <title>home</title>
+  <style id="applicationStylesheet" type="text/css">
+   .mediaViewInfo {
+      --web-view-name: home;
+      --web-view-id: home;
+      --web-scale-on-resize: true;
+      --web-enable-deep-linking: true;
+    }
+
+    :root {
+      --web-view-ids: home;
+      --body-bg: #050B21;
+      --body-color: white;
+      --name-size : 33px;
+      --nav-float : right;
+      --header-bg : #2F5D7F;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      border: none;
+    }
+    body{
+      font-size: 14px;
+      line-height: 1.42857;
+      color: #333;
+      width: auto;
+      display: inline-block;
+      height: 1000px;
+      background-color:var(--body-bg);/*#42668a;*/
+    }
+    header{
+      overflow: hidden;
+      background-color: var(--header-bg);
+      padding: 10px 10px;
+      width: 129.5%;
+      height: 70px;
+    }
+    #name{
+      float: left;
+      display: block;
+      text-align: left;
+      font-family: cursive;
+      font-style: normal;
+      font-weight: bold;
+      font-size: var(--name-size);
+      background: transparent;
+      color: white;
+    }
+    #header_right{
+      float: var(--nav-float);
+      padding: 0px,20px,0px,20px;
+    }
+    a{
+      position: relative;
+      display: inline-block;
+      font-family: "Lato", Arial, sans-serif;
+      font-size: 20px;
+      padding-left: 10px;
+      top: 12px;
+      color: white;
+      text-decoration: none; 
+      transition: color 0.15s ease-in-out;
+    }
+    a:hover{
+      color: #bbbbbb;
+    }
+    a.home{
+      color: #bbbbbb;
+    }
+    header nav span{
+    position: relative;
+    display: inline-block;
+    width: 1px;
+    margin-left: 12px;
+    top: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 22px;
+    vertical-align: bottom;
+    }
+    #container{
+      display: grid;
+      grid-template-columns: auto;
+      margin-left: 15%;
+    }
+    #live_data_lbl{
+      position: absolute;
+      left: 25px;
+      top: -14px;
+      width: 150px;
+      font-family: Bebas Neue;
+      font-size: 1.5em;
+      text-align: center;
+      color: var(--body-color);
+      background-color: var(--body-bg);
+    }
+    .live_data_box{
+      position: relative;
+      float: left;
+      margin-top: 40px;
+      /*margin-left: 11%;*/
+      border-radius: 2px;
+      border: 1px #cecece solid;
+      background: transparent;
+      width: 1221px;
+      height: 300px;
+      padding-left: 30px;
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      align-content: center;
+    }
+    .sensor-values{
+      background-color: rgba(255,255,255);
+      width: 273px;
+      height: 243px;
+      border-left: solid 5px #44bf44;
+      transition: transform .3s ease;
+      display: grid;
+    }
+    #sensor-values:hover{
+      transform: scale(1.1);
+    }
+    .tag_name{
+      font-family: Rockwell;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 26px;
+      color: rgba(0,0,0,1);
+      position: relative;
+      text-align: center;
+    }
+    .unit_lbl{
+      font-family: Rockwell;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 30px;
+      color: rgba(0,0,0,1);
+      position: relative;
+      text-align: right;
+      margin-right: 30px;
+
+    }
+
+    .input_lbl{
+      font-family: Rockwell;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 80px;
+      color: #44bf44;
+      position: relative;
+      text-align: center;
+      background-color: transparent;
+    }
+
+    #graph_lbl{
+      position: absolute;
+      font-family: fangsong;
+      font-size: 1.5em;
+      left: 200px;
+      top: -14px;
+      width: 250px;
+      text-align: center;
+      color: var(--body-color);
+      background-color: var(--body-bg);
+    }
+    #graph_lbl2{
+      position: absolute;
+      font-family: fangsong;
+      font-size: 1.5em;
+      left: 820px;
+      top: -14px;
+      width: 200px;
+      text-align: center;
+      color: var(--body-color);
+      background-color: var(--body-bg);
+    }
+    .graph_box{
+      position: relative;
+      float: left;
+      margin-top:40px;
+      /*margin-left:11%;*/
+      background : transparent;
+      border-radius: 2px;
+      border: 1px #cecece solid;
+      width: 1221px;
+      height: 454px;
+      padding: 1em;
+      display: grid;
+      grid-template-columns:repeat(2,1fr);
+      padding-left: 40px;
+      grid-gap:1em;
+      align-items: center;        
+    }
+    #graph1_heading{
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .tmp_graph,.humid_graph{
+      background-color: white;
+      border-left: solid 5px;
+      border-left-color: greenyellow;
+      border-right: solid 6px;
+      border-right-color: greenyellow;
+      height: 390px;
+      width: 550px;
+    }
+    .chart{
+      width: 540px; 
+      height: 370px;
+    }
+    select{
+      z-index: 1px;
+    }
+    .form-control{
+      position: relative;
+      left : 80%;
+      top : 1%;
+      background-color: antiquewhite;
+      padding: 0.2em;
+    }
+    #curve_chart{
+      position: relative;
+      left: 0px;
+      top: -60px;
+    }
+   #end_btn{
+      margin: 20px 0px 0px 15px;
+      height: 50px;
+      width: 100px;
+      float: right;
+      background-color: coral;
+      font-size: 20px;
+      /*margin-left: 81.5%;*/
+      font-family: sans-serif;
+      /*top: 100px;*/
+
+      /*padding: 14px 0px 0px 30px;*/
+    }
+    #end_btn:active{
+      background-color: cornflowerblue;
+    }
+
+    /*Add GEnration Function */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 2; /* Sit on top */
+      padding-top: 100px; /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+      position: relative;
+      background-color: #fefefe;
+      margin: auto;
+      padding: 0;
+      border: 1px solid #888;
+      width: 50%;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+      -webkit-animation-name: animatetop;
+      -webkit-animation-duration: 0.4s;
+      animation-name: animatetop;
+      animation-duration: 0.4s
+    }
+
+    /* Add Animation */
+    @-webkit-keyframes animatetop {
+      from {top:-300px; opacity:0} 
+      to {top:0; opacity:1}
+    }
+
+    @keyframes animatetop {
+      from {top:-300px; opacity:0}
+      to {top:0; opacity:1}
+    }
+
+    /* The Close Button */
+    .close {
+      color: white;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .modal-header {
+      padding: 2px 16px;
+      background-color: #f2b940;
+      color: grey;
+      height: 3em;
+
+    }
+
+    .modal-body {
+      height: 30em;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 30px 50px 71px 50px;
+
+    }
+    .modal-footer {
+      padding: 2px 16px;
+      background-color: #f2b940;
+      color: grey;
+    }
+    .show_text{
+      height : 50px;
+      width : auto;
+      background-color: #c2c2c2;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      border-right: solid 3px black;
+      padding-top: 11px;
+    }
+    .input_data{
+      height : 50px;
+      width : auto;
+      background-color: #e5e5e5;
+      font-family: cursive;
+      font-size: 20px;
+      text-align: center;
+      border-right: solid 3px black;
+    }
+    .input_data:focus{
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+    border-bottom: solid 3px blue;
+    border-right: solid 3px black;
+    }
+    #select_para{
+      border: none;
+      position: relative;
+      z-index: 1;
+      top: -31px;
+      left: 30em;
+      height: 30px;
+      width: 26%;
+      background: transparent;
+      text-align: center;
+    }
+    .in_var_data{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .min_data,.max_data{
+      height : 50px;
+      width : 100%;
+      background-color: #e5e5e5;
+      font-family: cursive;
+      font-size: 20px;
+      text-align: center;
+      border-right: solid 3px black;
+    }
+    .max_data{
+      border-right: solid 3px black;
+
+    }
+    .min_data:focus,.max_data:focus{
+      outline-style: none;
+      box-shadow: none;
+      border-color: transparent;
+      border-bottom: solid 3px blue;
+      border-right: solid 3px black;
+    } 
+    .add_gen_btn{
+      height: 50px;
+      background-color: lightgreen;
+      text-align: center;
+      font-size: 20px;
+    }
+    .add_gen_btn:hover{
+      background-color: #a2e0a2;
+    }
+    .chart{
+      width: 539px;
+      height: 360px;
+    }
+/*    .chart text[x="236"]{
+      display: none;
+    }
+    .chart text[x="261"]{
+      display: none;
+    }
+*/
+  </style>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script> 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+</head>
+<body>
+  <div id="myModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2>Start New Genration </h2>
+        </div>
+      <div class="modal-body">
+        <span  class=show_text>Genration Name</span>
+        <input id="gen_nm" type="text" class=input_data> </input>
+        <span class=show_text>Plant Name </span>
+        <input id="plant_name" type="text" class=input_data> </input>
+        <span class=show_text>Temprature Range</span>
+        <div class="in_var_data">
+          <input id="min_temp" class=min_data type="number" placeholder="Min"></input>
+          <input id="max_temp" class=max_data type="number" placeholder="Max"></input>
+        </div>
+        <span class=show_text>Humidity Range</span>
+        <div class="in_var_data">
+          <input id="min_humid" class=min_data type="number" placeholder="Min"> </input>
+          <input id="max_humid" class=max_data type="number" placeholder="Max"> </input>
+        </div>
+        <span class=show_text>Moisture Range</span>
+        <div class="in_var_data">
+          <input id="min_moist" class=min_data type="number" placeholder="Min"> </input>
+          <input id="max_moist" class=max_data type="number" placeholder="Max"> </input>
+        </div>
+        <hr>
+        <button id="add_genration" class="add_gen_btn" onclick="add_gen()">Add Genration</button>
+     </div>
+      <div class="modal-footer">
+        <h3></h3>
+      </div>
+    </div>
+  </div>
+
+    <header>
+      <h1 id="name">Smart Plant Management System</h1>
+      <nav id="header_right">
+        <a class="home" href="/test/index.php">Home</a>
+        <a class="hist" href="/test/history.php">History</a>
+        <span></span>
+        <a id="logout_btn">New Gen</a>
+      </nav>
+    </header>
+  <div id="container">
+    <div class="live_data_box">
+      <h2 id="live_data_lbl">Live Data</h2>
+      <div id="temperature" class="sensor-values">
+        <br>
+        <span class="unit_lbl">°C</span>
+        <text type="text" id="temp_in" class="input_lbl" name="temp" disabled></text>
+        <span class="tag_name">Temprature</span>
+      </div>
+      <div id="humidity" class="sensor-values">
+        <br>
+        <span class="unit_lbl">g/ml</span>
+        <text type="text" id="hum_in" class="input_lbl" name="humid" disabled></text>
+        <span class="tag_name">Humidity</span>
+      </div>
+      <div id="moisture" class="sensor-values">
+        <br>
+        <span class="unit_lbl">g/&#13221</span>
+        <text type="text" id="mos_in" class="input_lbl" name="moist" disabled></text>
+        <span class="tag_name">Moisture</span>
+      </div>
+      <div id="light" class="sensor-values">
+        <br>
+        <span class="unit_lbl">lux</span>
+        <text type="text" id="light_in" class="input_lbl" name="light" disabled></text>
+        <span class="tag_name">Light</span>
+      </div>
+    </div>
+
+    <div class="graph_box">
+      <h1 id="graph_lbl">Graphical Format</h1>
+      <h1 id="graph_lbl2">Details</h1>
+      <div class="tmp_graph" id=graph>
+        <h2 id="graph1_heading">Room Temprature</h2>
+        <select name="parameters" id="select_para">
+            <option value="temp">Room Temprature</option>
+            <option value="humidity">Humidity</option>
+            <option value="moisture">Moisture</option>
+        </select>
+        <div class="chart" id="curve_chart"></div>  
+      </div>
+      <div class="humid_graph" id="graph"> 
+      </div>
+    </div>
+    <div class="buttons">
+      <button onclick="end_gen()" id="end_btn">End</button>
+    </div>
+  </div>
+
+<!--   <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+  <script type="text/javascript">
+
+      if (<?php echo $check ?> == 0) {
+        document.getElementById('end_btn').style.visibility="hidden";
+      }
+      else if('<?php echo $check_table ?>' == 'empty'){
+        alert("no data"); 
+      }
+      else{
+        main();
+      }
+
+
+  // --------------- Graph  1 script ------------------
+    function main(){
+      var table = '<?php echo $table_name ?>';
+       $(document).ready(function(){
+         $("#temp_in").load("./fetch.php?flag=1&table="+table);
+            setInterval(function() {
+                $("#temp_in").load("./fetch.php?flag=1&table="+table);
+            }, 1000);
+         $("#hum_in").load("./fetch.php?flag=2&table="+table);
+            setInterval(function() {
+                $("#hum_in").load("./fetch.php?flag=2&table="+table);
+            }, 1000);
+         $("#mos_in").load("./fetch.php?flag=3&table="+table);
+            setInterval(function() {
+                $("#mos_in").load("./fetch.php?flag=3&table="+table);
+            }, 1000);
+         $("#light_in").load("./fetch.php?flag=4&table="+table);
+            setInterval(function() {
+                $("#light_in").load("./fetch.php?flag=4&table="+table);
+            }, 1000);
+        });
+
+
+
+    var label = 'Room Temprature' ;
+    var para = 'room_temp' ;
+
+    $(document).ready(function(){
+        $('#select_para').change(function(){
+          var check = $(this).val();
+          console.log(check);
+          if (check == 'temp') {
+            label = 'Room Temprature' ;
+            para = 'room_temp' ; 
+          }
+          else if(check == 'humidity'){
+            label = 'Humidity' ;
+            para = 'humidity'; 
+          }
+          else if(check == 'moisture'){
+            label = 'Moisture' ;
+            para = 'moisture' ; 
+          }
+        });
+      });
+
+
+    $(document).ready(function(){
+     $.get("./fetch.php?flag=5&table="+table, function(data, status){
+
+        mydata(data,label,para);
+      }); 
+    setInterval(function() {
+        $.get("./fetch.php?flag=5&table="+table, function(data, status){
+          mydata(data,label,para);
+        });
+    }, 1000);
+  });
+
+      
+      function mydata(data,label,para){
+        document.getElementById("graph1_heading").innerHTML = label;
+        var json = JSON.parse(data);
+        const arry = [['Time',label]]
+      for(var a=0;a<json.length;a++){
+        var tm = json[a].timestamp;
+        var rmtp =parseInt(json[a][para]);
+        arry.push([tm,rmtp]);
+      }
+
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+     
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(arry);
+        var options = {
+          title: '',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+  }
+  // //---------------------- Graph  2 script -----------------------
+
+  //     create_chart('humidity');
+  //     $(document).ready(function(){
+  //       $('#select_para').change(function(){
+  //         var check = $(this).val();
+  //         console.log(check);
+  //         if(check == 'humidity'){
+  //           create_chart(check);
+  //         }
+  //         else if(check == 'moisture'){
+  //           create_chart(check);
+  //         }
+  //       });
+  //     });
+  //     function create_chart(select_data){
+  //         var option = select_data;
+  //         google.charts.load('current', {'packages':['corechart']});
+  //         google.charts.setOnLoadCallback(drawChart);  
+  //         function drawChart() {
+  //               const arry = [['Time',option]];
+  //               for(var a=0;a<json.length;a++)
+  //                 {
+  //                   var tm = json[a].timestamp;
+  //                   var humi =parseInt(json[a][option]);
+  //                   arry.push([tm,humi]);
+  //                 }
+  //               var options = {
+  //                   title: '',
+  //                   curveType: 'function',
+  //                   legend: { position: 'bottom' }
+  //                   };
+  //           var data = google.visualization.arrayToDataTable(arry);
+  //           var chart = new google.visualization.LineChart(document.getElementById('my_chart'));
+
+  //           chart.draw(data , options);
+  //         }
+  //     }
+
+
+// ---------------------------- Modal -------------------
+
+      var modal = document.getElementById("myModal");
+      var btn = document.getElementById("logout_btn");
+      var span = document.getElementsByClassName("close")[0];
+      btn.onclick = function() {
+        modal.style.display = "block";
+      }
+
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+// -------------------------------- Notification ------------------------------------
+    
+      if(Notification.permission == 'granted'){
+          
+        }
+      else if(Notification.permission !== 'denied'){
+          Notification.requestPermission();
+        }
+      if('<?php echo $temp_chk ?>' == 'high'){
+        send_noti('temperature','high','Maximum');
+      }
+      else if('<?php echo $temp_chk ?>' == 'low'){
+        send_noti('temperature','low','Minimum');
+      }
+      if('<?php echo $hum_chk ?>' == 'high'){
+        send_noti('humidity','high','Maximum');
+      }
+      else if('<?php echo $hum_chk ?>' == 'low'){
+        send_noti('humidity','low','Minimum');  
+      }
+      if('<?php echo $mos_chk ?>' == 'high'){
+        send_noti('moisture','high','Maximum');
+      }
+      else if('<?php echo $mos_chk ?>' == 'low'){
+        send_noti('moisture','low','Minimum'); 
+      }
+
+      // THE LIGHT NOTIFICATION PART SAVE TEMP.TXT AT LINE 1102 FROM SUMIT
+
+    function send_noti(parameter,values,state){
+      var input_id = '';
+      if (parameter == 'temperature') {
+        input_id = 'temp_in';
+      }
+      else if (parameter == 'humidity') {
+        input_id = 'hum_in';
+      }
+      else if (parameter == 'moisture') {
+        input_id = 'mos_in';
+      }
+
+      if(values == 'low'){
+        var color = 'yellow';
+      }
+      else if(values == 'high'){
+        var color = 'red';
+      }
+      else{
+        var color = '#44bf44';
+      }
+      document.getElementById(parameter).style.borderLeftColor = color;
+      document.getElementById(input_id).style.color = color;
+
+      const greeting = new Notification(state+" "+parameter,{
+                body : "current "+parameter+" is "+values+"er than set "+parameter,
+                icon : "./icon/"+parameter+".png",
+
+              });
+      greeting.close();
+
+         
+    }
+}
+    // ---------End Genration Function ------------------
+    
+    function end_gen(val) {
+      var t  = confirm("It will stop Current sensors data");
+        if (t == true){
+          $.ajax({
+          type: "POST",
+          url: "/test/insert_data.php?flag=1&table_name=<?php echo $table_name?>"
+          });
+          if(val != 1){
+            document.getElementById('end_btn').style.visibility="hidden";
+            var i = 0;
+            while(i<100){
+              i = i+2;
+              i = i-1;
+            }
+            window.location.reload(); 
+          }
+        } 
+    }
+
+//  --------------------------------------Add Function -----------------
+    function add_gen() {
+      var gen_name = document.getElementById("gen_nm").value;
+      var plant_name = document.getElementById("plant_name").value;
+      var min_temp = document.getElementById("min_temp").value;
+      var max_temp = document.getElementById("max_temp").value;
+      var min_humid = document.getElementById("min_humid").value;
+      var max_humid = document.getElementById("max_humid").value;
+      var min_moist = document.getElementById("min_moist").value;
+      var max_moist = document.getElementById("max_moist").value;
+
+      console.log(gen_name);
+      console.log(plant_name); 
+      console.log(min_temp); 
+      console.log(max_temp); 
+      console.log(min_humid);  
+      console.log(max_humid);  
+      console.log(min_moist); 
+      console.log(max_moist);  
+
+    if (gen_name =='' || plant_name=='' || min_temp=='' || max_temp=='' || min_humid=='' || max_humid=='' || min_moist=='' || max_moist=='' ) {
+      alert("Empty Field");
+      document.getElementById("gen_nm").value = '';
+      document.getElementById("plant_name").value = '';
+      document.getElementById("min_temp").value = '';
+      document.getElementById("max_temp").value = '';
+      document.getElementById("min_humid").value = '';
+      document.getElementById("max_humid").value = '';
+      document.getElementById("min_moist").value = '';
+      document.getElementById("max_moist").value = '';
+    }else 
+    {
+      var y = confirm("Creating New genration will stop current genration ");
+      if(y == true){
+        end_gen(1);
+        document.getElementById("add_genration").disabled = true;
+    
+        var chk_url = "/test/insert_data.php?flag=2&name="+gen_name+"&plant="+plant_name+"&min_t="+min_temp+"&max_t="+max_temp+"&min_h="+min_humid+"&max_h="+max_humid+"&min_m="+min_moist+"&max_m="+max_moist;
+        console.log(chk_url);
+        $.ajax({
+              type: "POST",
+              url: chk_url
+            });
+        let i = 0;
+        while(i<100){
+          i = i+2;
+          i = i-1;
+        }
+        window.location.reload();
+      }
+    }
+  }
+
+  </script>
+</body>
+
+</html>
+
+-------------------------------  16 Oct 2021 2:42 PM ---------------------------------------
+
+
+<!-- https://localhost/test/insert_data.php?flag=0&rtemp=24&humid=18&moist=35&light=58  url to be used in Nodemcu-->
+
+<!-- Password : #kb6M3obzv3ghjWs7ckJ -->
+<?php
+$check_table = 'full';
+$table_name = 'test';
+$plant_name = 'no plant';
+include("database_connect.php");
+$check = 0;
+
+$test = mysqli_query($conn,"select * from gen_data where end_date is null and live_check=1 order by id desc limit 1");
+$rows_no =  mysqli_num_rows($test); 
+if($rows_no !=0 ){
+    while($row = mysqli_fetch_assoc($test)){
+        $table_name = $row['gen_name'];
+        $plant_name = $row['plant_name'];
+        $check = $row['live_check'];
+        $condition = $row['plant_condition'];
+      }
+}
+else{
+
+  $check = 0;
+  $table_name = 'test';
+  $plant_name = 'nothing';
+  $condition = 'nothing';
+}
+
+
+$start_date = '';
+$end_date = ''; 
+$chk_row = 0;
+if($table_name != 'test'){
+  $day_array = array();
+  $sql = mysqli_query($conn,"(SELECT date FROM ".$table_name." limit 1) UNION (SELECT date from ".$table_name." ORDER by id DESC LIMIT 1)");
+  $chk_row = mysqli_num_rows($sql);
+  if($chk_row === 2){
+      while($row1 = mysqli_fetch_assoc($sql)){
+        $day_array[] = $row1['date'];
+        }
+      $start_date = $day_array[0];
+      $end_date = $day_array[1];
+  }
+}
+
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- <meta http-equiv="refresh" content="1"/> -->
+  <title></title>
+  <style type="text/css">
+    .mediaViewInfo {
+      --web-view-name: home;
+      --web-view-id: home;
+      --web-scale-on-resize: true;
+      --web-enable-deep-linking: true;
+    }
+    :root {
+      --web-view-ids: home;
+      --body-bg: #050B21;
+      --body-color: white;
+      --name-size : 33px;
+      --nav-float : right;
+      --header-bg : #2F5D7F;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      border: none;
+    }
+    body{
+      font-size: 14px;
+      background-color:var(--body-bg);/*#42668a;*/
+    }
+/*------------- header -----------------*/
+    .header{
+      font-family: calibri;
+      background-color: pink;
+      padding: 10px;
+      /*height: 100%;*/
+      height: 50px;
+      background-color: #2F5D7F;
+      color: whitesmoke;
+    }
+    .header text{
+      font-size: 25px;
+      float: left;
+    }
+    .header-right{
+      float: right;
+    }
+    .header-right a{
+      font-size: 20px;
+      color: white;
+      text-decoration: none;
+      padding-right: 10px;
+    }
+    .header span{
+      position: relative;
+      display: inline-block;
+      width: 1px;
+      margin-right: 12px;
+      background-color: rgba(255, 255, 255, 0.5);
+      height: 22px;
+      vertical-align: bottom;
+    }
+
+
+
+    #container{
+      display: grid;
+      grid-template-columns: 100%;
+      grid-template-rows: 0.7fr 1fr 1fr;
+      margin-left: 11%;
+      /*transform: scale(0.9);*/
+    }
+
+    @media screen and (max-width: 1500px){
+      #container{
+      position: absolute;
+      margin-left: 0;
+      transform: scale(0.7);
+      top: -130px;
+      left: 5%;
+      }
+    }
+    @media screen and (max-width: 1000px){
+      #container{
+      position: absolute;
+      margin-left: 0;
+      top: -124px;
+      transform: scale(0.7);
+      top: -50px;
+      left: -12%;
+      }
+    }
+
+    @media screen and (max-width: 320px){
+      #container{
+        /*display: none;*/
+      }
+    }
+
+/*-------------------- live data ----------------------------*/
+    #live_data_lbl{
+      position: absolute;
+      left: 25px;
+      top: -14px;
+      width: 150px;
+      font-family: Bebas Neue;
+      font-size: 1.5em;
+      text-align: center;
+      color: var(--body-color);
+      background-color: var(--body-bg);
+    }
+    .live_data_box{
+      position: relative;
+      float: left;
+      margin-top: 40px;
+      /*margin-left: 11%;*/
+      border-radius: 2px;
+      border: 1px #cecece solid;
+      background: transparent;
+      width: 1221px;
+      height: 300px;
+      padding-left: 30px;
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      align-content: center;
+    }
+    .sensor-values{
+      background-color: rgba(255,255,255);
+      width: 273px;
+      height: 243px;
+      border-left: solid 5px #44bf44;
+      transition: transform .3s ease;
+      display: grid;
+    }
+    #sensor-values:hover{
+      transform: scale(1.1);
+    }
+    .tag_name{
+      font-family: Rockwell;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 26px;
+      color: rgba(0,0,0,1);
+      position: relative;
+      text-align: center;
+    }
+    .unit_lbl{
+      font-family: Rockwell;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 30px;
+      color: rgba(0,0,0,1);
+      position: relative;
+      text-align: right;
+      margin-right: 30px;
+
+    }
+
+    .input_lbl{
+      font-family: Rockwell;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 80px;
+      color: #44bf44;
+      position: relative;
+      text-align: center;
+      background-color: transparent;
+    }
+/*------------- graph part --------------------------*/
+
+    #graph_lbl{
+      position: absolute;
+      font-family: fangsong;
+      font-size: 1.5em;
+      left: 200px;
+      top: -14px;
+      width: 250px;
+      text-align: center;
+      color: var(--body-color);
+      background-color: var(--body-bg);
+    }
+    #graph_lbl2{
+      position: absolute;
+      font-family: fangsong;
+      font-size: 1.5em;
+      left: 820px;
+      top: -14px;
+      width: 200px;
+      text-align: center;
+      color: var(--body-color);
+      background-color: var(--body-bg);
+    }
+    .graph_box{
+      position: relative;
+      float: left;
+      margin-top:40px;
+      /*margin-left:11%;*/
+      background : transparent;
+      border-radius: 2px;
+      border: 1px #cecece solid;
+      width: 1221px;
+      height: 454px;
+      padding: 1em;
+      display: grid;
+      grid-template-columns:repeat(2,1fr);
+      padding-left: 40px;
+      grid-gap:1em;
+      align-items: center;        
+    }
+    #graph1_heading{
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .graph{
+      background-color: white;
+      border-left: solid 5px;
+      border-left-color: greenyellow;
+      border-right: solid 6px;
+      border-right-color: greenyellow;
+      height: 390px;
+      width: 550px;
+
+    }
+    .chart{
+      width: 540px; 
+      height: 370px;
+    }
+    .graph_box select{
+      position: absolute;
+      left: 430px;
+      z-index: 1;
+    }
+    .form-control{
+      position: relative;
+      left : 80%;
+      top : 1%;
+      background-color: antiquewhite;
+      padding: 0.2em;
+    }
+    #curve_chart{
+      position: relative;
+      left: 0px;
+      top: -50px;
+    }
+/*--------- details -----------------*/
+
+    #details{
+      font-family: calibri;
+      display: grid;
+      grid-template-columns: 265px 265px;
+      grid-template-rows: repeat(4,43px) 75px repeat(3,43px);
+      font-size: 24px;
+      height: auto;
+      width: auto;
+      margin: 5px 0px 0px 0px ;
+    }
+    .lbl,.inlbl{
+      text-align: center;
+      width: 265px;
+      height: 95%;
+    }
+    .lbl{
+      color: #4a4a4a;
+      border-left: 5px solid #00b2ff;
+      background-color: #c4e0ec;
+    }
+    .inlbl{
+      font-family: OCR A;
+      color: #275883;
+      background-color: #e0e0e0;
+      border-left: 3px solid;
+      font-size: 24px;
+    }
+    #buttons{
+      position: relative;
+      margin-top: 10%;
+      left: 100%;
+      float: right;
+      /*background-color: pink;*/s
+      /*display: grid;*/
+      /*grid-template-rows: 1fr 1fr;*/
+    }
+    #end_btn,#photo_btn{
+      position: relative;
+      margin: 20px 0px 0px 15px;
+      height: 50px;
+      width: 100px;
+      float: right; 
+      background-color: coral;
+      font-size: 20px;
+      font-family: sans-serif;
+    }
+
+    #end_btn:active,#photo_btn:active{
+      background-color: cornflowerblue;
+    }
+
+/*------------ Add Gen Frame -----------------*/
+
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 2; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4);
+        backdrop-filter: saturate(180%) blur(7px); 
+      }
+
+      /* Modal Content */
+      .modal-content {
+        position: relative;
+        background-color: #c8e8eb;
+        margin: auto;
+        padding: 0;
+        border: 1px solid #888;
+        width: 600px;
+        height: 465px;
+        box-shadow: 0 4px 8px 0 rgb(32 146 159), 0 6px 20px 0 rgb(0 0 0 / 19%);
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animatetop;
+        animation-duration: 0.4s
+        font-family: OCR A;
+      }
+
+      /* Add Animation */
+      @-webkit-keyframes animatetop {
+        from {top:-300px; opacity:0} 
+        to {top:0; opacity:1}
+      }
+
+      @keyframes animatetop {
+        from {top:-300px; opacity:0}
+        to {top:0; opacity:1}
+      }
+
+      /* The Close Button */
+      .close {
+        color: white;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .modal-header {
+        padding: 2px 16px;
+        background-color: #538ab5c9;
+        color: #0a3b60;
+        height: 3em;
+
+      }
+
+      .modal-body {
+        width: 100%;
+        height: 80%;
+        text-align: center;
+        padding: 25px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(6, 1fr);
+        grid-gap: 1px;
+        font-size: 23px;
+      }
+      .modal-footer {
+        padding: 2px 16px;
+        background-color: #f2b940;
+        color: grey;
+      }
+      .show_text{
+        width: 250px;
+        /*background-color: #f0f8ffc7;*/
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        padding-top: 11px;
+      }
+      .input_data{
+        height : 50px;
+        width : auto;
+        background-color: #f0f8ffc7;
+        font-family: cursive;
+        font-size: 20px;
+        text-align: center;
+      }
+      .input_data:focus{
+        outline-style: none;
+        box-shadow: none;
+        border-color: transparent;
+        border-bottom: 3px solid #7fc0cfc2;
+        border-bottom-style: groove;
+      }
+      #select_para{
+        border: none;
+        position: relative;
+        z-index: 1;
+        top: -31px;
+        left: 30em;
+        height: 30px;
+        width: 26%;
+        background: transparent;
+        text-align: center;
+      }
+      .in_var_data{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .min_data,.max_data{
+        height : 50px;
+        width : 100%;
+        background-color: #f0f8ffc7;
+        font-family: cursive;
+        font-size: 20px;
+        text-align: center;
+      }
+      .min_data:focus,.max_data:focus{
+        outline-style: none;
+        box-shadow: none;
+        border-color: transparent;
+        border-bottom: 3px solid #7fc0cfc2;
+        border-bottom-style: groove;
+      } 
+      .add_gen_btn{
+        height: 50px;
+        background-color: lightgreen;
+        text-align: center;
+        font-size: 20px;
+      }
+      .add_gen_btn:hover{
+        background-color: #a2e0a2;
+      }
+
+
+/*------------ Add Photo Frame ---------------*/
+    #photo_frame{
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 2; /* Sit on top */
+      padding-top: 100px; /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4);
+      backdrop-filter: saturate(180%) blur(7px); 
+    }
+    .content {
+      position: relative;
+      background-color: #c8e8eb;
+      margin: auto;
+      padding: 0;
+      border: 1px solid #888;
+      width: 700px;
+      height: 580px;
+      box-shadow: 0 4px 8px 0 rgb(32 146 159), 0 6px 20px 0 rgb(0 0 0 / 19%);
+      -webkit-animation-name: animatetop;
+      -webkit-animation-duration: 0.4s;
+      animation-name: animatetop;
+      animation-duration: 0.4s
+      font-family: OCR A;
+      border-radius: 4px;
+    }
+    #img_header{
+      width: auto;
+      background-color: #538ab5c9;
+      height: 80px;
+    }
+    /* Add Animation */
+    @-webkit-keyframes animatetop {
+      from {top:-300px; opacity:0} 
+      to {top:0; opacity:1}
+    }
+
+    @keyframes animatetop {
+      from {top:-300px; opacity:0}
+      to {top:0; opacity:1}
+    }
+    .chart{
+      width: 539px;
+      height: 360px;
+    }
+    .addImg_text{
+      float: left;
+      margin-left: 80px;
+      margin-top: 16px;
+      font-size: 34px;
+      font-weight: bold;
+      font-family: OCR A;
+    }
+    .close_btn{
+      float: right;
+      margin-right: 17px;
+      font-size: 51px;
+      font-weight: bold;
+    }
+    .close_btn:hover,
+    .close_btn:focus {
+      color: red;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    #imgContainer{
+      /*background-color: hotpink;*/
+      width: 80%;
+      height: 80%;
+      margin-left: 3%;
+      margin-right: auto;
+      /*margin-top: 50px;*/
+      text-align: center;
+      padding: 25px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr 190px 1fr 1fr;
+      grid-gap: 1px;
+      font-size: 23px;
+      align-items: center;
+    } 
+    #img_submit_btn{
+      background: #eff5fbdb;
+      border-radius: 4px;
+    }
+    #img_submit_btn:active{
+      background-color: antiquewhite;
+    }
+    #img_submit_btn:hover{
+      cursor: pointer;
+    }
+    .right{
+      background: #f0f8ffc7;
+      border-radius: 4px;
+      height: 100%;
+      text-align: center;
+    }
+    .right[type="file"]{
+      background: none;
+      height: auto;
+      
+    }
+    .right[type="number"]:focus{
+      outline-style: none;
+    }
+    #set_image{
+      grid-column: 2/2;
+      height: 180px;
+      background-color: #e7f4fa;
+      width: 100%;
+      border-style: dashed;
+      border-radius: 4px;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <text>Smart Plant Management System</text>
+    <div class="header-right">
+      <a href="#home">Home</a>
+      <a href="./history.php">History</a>
+      <span></span>
+      <a href="#new-g" id="new_gen_btn" >New Gen</a>
+    </div>
+  </div>
+<div id="container">
+  <div class="live_data_box">
+  <h2 id="live_data_lbl">Live Data</h2>
+  <div id="temperature" class="sensor-values">
+    <br>
+    <span class="unit_lbl">°C</span>
+    <text type="text" id="temp_in" class="input_lbl" name="temp" disabled></text>
+    <span class="tag_name">Temprature</span>
+  </div>
+  <div id="humidity" class="sensor-values">
+    <br>
+    <span class="unit_lbl">g/ml</span>
+    <text type="text" id="hum_in" class="input_lbl" name="humid" disabled></text>
+    <span class="tag_name">Humidity</span>
+  </div>
+  <div id="moisture" class="sensor-values">
+    <br>
+    <span class="unit_lbl">g/&#13221</span>
+    <text type="text" id="mos_in" class="input_lbl" name="moist" disabled></text>
+    <span class="tag_name">Moisture</span>
+  </div>
+  <div id="light" class="sensor-values">
+    <br>
+    <span class="unit_lbl">lux</span>
+    <text type="text" id="light_in" class="input_lbl" name="light" disabled></text>
+    <span class="tag_name">Light</span>
+  </div>
+</div>
+
+<div class="graph_box">
+    <h1 id="graph_lbl">Graphical Format</h1>
+    <h1 id="graph_lbl2">Details</h1>
+    <div id="tmp_graph" class=graph>
+      <h2 id="graph1_heading">Room Temprature</h2>
+      <select name="parameters" id="select_para">
+          <option value="temp">Room Temprature</option>
+          <option value="humidity">Humidity</option>
+          <option value="moisture">Moisture</option>
+      </select>
+      <div class="chart" id="curve_chart"></div>  
+    </div>
+    <div  class="graph">
+      <div id="details">
+        <div class="lbl"  >Plant Name</div>
+        <input type="text" class="inlbl" id="plnt_name" disabled>
+        <div class="lbl"  >Genration</div>
+        <input type="text"  class="inlbl" id="gen_name" disabled>
+        <div class="lbl"  >Condition</div>
+        <input type="text"  class="inlbl" id="gen_cond" disabled>
+        <div class="lbl"  >Current Week</div>
+        <input type="text" id="current_week" class="inlbl" disabled></input>
+        <div class="lbl"  >Disease Pridiction</div>
+        <input type="" id="disease_pre" class="inlbl" disabled>
+        <div class="lbl"  >Current Phase</div>
+        <input type="" id="current_phase" class="inlbl" disabled>
+        <div class="lbl"  ></div>
+        <div class="inlbl"></div>
+        <div class="lbl"  ></div>
+        <div class="inlbl"></div>
+      </div>
+    </div>
+    <div id="buttons">
+      <button onclick="end_gen()" id="end_btn">End</button>
+      <button id="photo_btn">Add Photo</button>
+    </div>
+    </div>
+
+<!-------------- Add gen frame ---------------->
+
+  <div id="myModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2>Start New Genration </h2>
+        </div>
+      <div class="modal-body">
+        <span  class=show_text>Genration Name</span>
+        <input id="gen_nm" type="text" class=input_data> </input>
+        <span class=show_text>Plant Name </span>
+        <input id="plant_name" type="text" class=input_data> </input>
+        <span  class=show_text>Condition Name</span>
+        <input id="cond_nm" type="text" class=input_data> </input>
+        <span class=show_text>Temprature Range</span>
+        <div class="in_var_data">
+          <input id="min_temp" class=min_data type="number" placeholder="Min"></input>
+          <input id="max_temp" class=max_data type="number" placeholder="Max"></input>
+        </div>
+        <span class=show_text>Humidity Range</span>
+        <div class="in_var_data">
+          <input id="min_humid" class=min_data type="number" placeholder="Min"> </input>
+          <input id="max_humid" class=max_data type="number" placeholder="Max"> </input>
+        </div>
+        <span class=show_text>Moisture Range</span>
+        <div class="in_var_data">
+          <input id="min_moist" class=min_data type="number" placeholder="Min"> </input>
+          <input id="max_moist" class=max_data type="number" placeholder="Max"> </input>
+        </div>
+        <hr>
+        <button id="add_genration" class="add_gen_btn" onclick="add_gen()">Add Genration</button>
+     </div>
+    </div>
+  </div>
+
+<!-------------- Add Photo frame ---------------->
+
+  <div id="photo_frame" >
+    <div class="content">
+      <div id="img_header">
+        <span class="addImg_text">Add Image Off The Plant</span>
+        <span class="close_btn">&times;</span>
+      </div>
+
+      <div id="imgContainer">
+          <label class="left">Genration</label>
+          <input class="right" id="set_gen" type="text" name="img" disabled>
+          <label class="left">Week</label>
+          <select class="right" id="select_week">
+              <option >Select Week</option>
+          </select>
+          <img id="set_image" src="#" ></img>
+          <label class="left">Add Image</label>
+          <input class="right" type="file" id="get_image" accept="image/*">
+          <label class="left"></label>
+          <button class="right" id="img_submit_btn" onclick="image_add();">Add Photo</button>
+      </div>    
+    </div>
+  </div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script> 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+      var interval = 1000;
+    var room_temp = 0;
+    var humid = 0;
+    var moist = 0;
+    var temp_chk = '';
+    var hum_chk = '';
+    var mos_chk = '';
+
+// --------------------------- Test Scripts --------------------
+
+    // var array = {
+    //   "bal" : "balanced",
+    //   "normal" : "balanced" ;
+    //   "nor" : "balanced";
+    //   "balanced" : {
+    //     "max temp" : 20,
+    //     "min temp" : 25,
+    //     "max humid" : 40,
+    //     "min humid" : 50,
+    //     "max moist" : 45,
+    //     "min moist" : 60
+    //   }
+
+    //   "overhydration" : {
+    //     "max temp" : 20,
+    //     "min temp" : 25,
+    //     "max humid" : 40,
+    //     "min humid" : 50,
+    //     "max moist" : 10,
+    //     "min moist" : 20
+    //   }
+    //   "overheating" : {
+    //     "max temp" : 20,
+    //     "min temp" : 25,
+    //     "max humid" : 40,
+    //     "min humid" : 50,
+    //     "max moist" : 10,
+    //     "min moist" : 20
+    //   }
+    // } 
+
+
+// ---------------------------- Add Gen frame-------------------
+
+      var modal = document.getElementById("myModal");
+      var btn = document.getElementById("new_gen_btn");
+      var span = document.getElementsByClassName("close")[0];
+      btn.onclick = function() {
+        modal.style.display = "block";
+      }
+
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+
+      modal.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+
+
+
+// ------ calling MAin function if currently monitering genration ------
+
+
+    if (<?php echo $check ?> == 0) {
+      document.getElementById('end_btn').style.display='none';
+      document.getElementById('photo_btn').style.display='none';
+      // document.getElementById('myModal').style.display= 'block';
+    }
+    else if('<?php echo $check_table ?>' == 'empty'){
+      alert("no data");
+      document.getElementById('end_btn').style.display="none";
+      document.getElementById('photo_btn').style.display="none";
+    }
+    else{
+      main();
+    }
+
+
+
+// ---------------------- Main Function ------------------
+    function main(){
+      var table = '<?php echo $table_name ?>';
+      var plant = '<?php echo $plant_name ?>';
+      var gen_condition = '<?php echo $condition  ?>';
+
+      var dt1 = '<?php echo $start_date ?>';
+      var dt2 = '<?php echo $end_date ?>';
+      if (dt1 != '' && dt2 != '') {
+        var date1 = new Date(dt1);
+        var date2 = new Date(dt2);
+        var diffTime = date2.getTime() - date1.getTime();
+        var diffDays = diffTime / (1000 * 3600 * 24);
+        
+        var weeks = diffDays/7;
+        weeks = parseInt(weeks);
+        var days = diffDays- (weeks*7);
+      }
+
+        if('2' == '<?php echo $chk_row;  ?>'){
+          var crnt_week = weeks+' Weeks '+(days)+' Days';
+          weeks = weeks + 1;
+        }
+        else if('1' == '<?php echo $chk_row;  ?>'){
+          var crnt_week = '1 Day';
+        }else{
+          var crnt_week = '-';
+        }
+      
+
+// -------------------------- Add Image Frame -------------------
+      document.getElementById('set_gen').value = table;
+      var photo_div = document.getElementById("photo_frame");
+      var photo_btn = document.getElementById("photo_btn");
+      var close_span = document.getElementsByClassName("close_btn")[0];
+      photo_btn.onclick = function() {
+        photo_div.style.display = "block";
+      }
+
+      close_span.onclick = function() {
+        photo_div.style.display = "none";
+        document.getElementById("set_image").src = '';
+        document.getElementById("get_image").value = '';
+      }
+      photo_div.onclick = function(event) {
+      if(event.target == photo_div) {
+        photo_div.style.display = "none";
+        document.getElementById("set_image").src = '';
+        document.getElementById("get_image").value = '';
+        }
+      }
+
+      select = document.getElementById('select_week');
+      for (var i = 1; i<=weeks; i++){
+          var opt = document.createElement('option');
+          opt.value = i;
+          opt.innerHTML = 'week '+i;
+          opt.selected = 'true';
+          select.appendChild(opt);
+      }
+
+      function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            console.log(input.files[0]);
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#set_image').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+          }
+      }
+      $("#get_image").change(function(){
+        readURL(this);
+
+      });
+
+
+// -------------------------- Add Image Function -------------------
+  var add_btn = document.getElementById('img_submit_btn');
+  add_btn.onclick = function(){
+    let image = document.getElementById('set_image').src;
+    let week = document.getElementById('select_week').value;
+    var chk_url = "./insert_data.php?flag=3&gen="+table+"&week="+week;
+        $.ajax({
+              type: "POST",
+              url: chk_url,
+              data : {
+                src : image
+              },
+              success: function(response){  
+                alert(response);                                     
+              },
+              error:function(xhr, ajaxOptions, thrownError){alert(xhr.responseText); ShowMessage("??? ?? ?????? ??????? ????","fail");}
+            });
+    document.getElementById("set_image").src = ''
+  }
+
+
+//  ------------------------- Live data -------------------
+     $(document).ready(function(){
+       $("#temp_in").load("./fetch.php?flag=1&table="+table);
+          setInterval(function() {
+              $("#temp_in").load("./fetch.php?flag=1&table="+table);
+          }, interval);
+       $("#hum_in").load("./fetch.php?flag=2&table="+table);
+          setInterval(function() {
+              $("#hum_in").load("./fetch.php?flag=2&table="+table);
+          }, interval);
+       $("#mos_in").load("./fetch.php?flag=3&table="+table);
+          setInterval(function() {
+              $("#mos_in").load("./fetch.php?flag=3&table="+table);
+          }, interval);
+       $("#light_in").load("./fetch.php?flag=4&table="+table);
+          setInterval(function() {
+              $("#light_in").load("./fetch.php?flag=4&table="+table);
+          }, interval);
+      });
+
+
+
+      var label = 'Room Temprature' ;
+      var para = 'room_temp' ;
+
+
+
+      function live_data(type){
+        $(document).ready(function(){
+          $('#select_para').change(function(){
+            var check = $(this).val();
+            if (check == 'temp') {
+              label = 'Room Temprature' ;
+              para = 'room_temp' ; 
+            }
+            else if(check == 'humidity'){
+              label = 'Humidity' ;
+              para = 'humidity'; 
+            }
+            else if(check == 'moisture'){
+              label = 'Moisture' ;
+              para = 'moisture' ; 
+            }
+          });
+        });
+
+        $.get("./fetch.php?flag=5&table="+table, function(data, status){
+        mydata(data,label,para);
+
+        room_temp = document.getElementById('temp_in').innerText;
+        humid = document.getElementById('hum_in').innerText;
+        moist = document.getElementById('mos_in').innerText;
+        $.get("./fetch.php?flag=6", function(data, status){
+            json = JSON.parse(data);
+            
+        temp_chk = values_check(room_temp,json[0].max_temp,json[0].min_temp);
+        hum_chk =  values_check(humid,json[0].max_humid,json[0].min_humid);
+        mos_chk =  values_check(moist,json[0].max_moist,json[0].min_moist);
+
+        if(type == 1){
+          if(Notification.permission == 'granted'){
+              
+            }
+          else if(Notification.permission !== 'denied'){
+              Notification.requestPermission();
+            }
+          if(temp_chk == 'high'){
+            change_color('temperature','high','Maximum');
+          }
+          else if(temp_chk == 'low'){
+            change_color('temperature','low','Minimum'); 
+          }
+          else {
+            change_color('temperature','med','Minimum'); 
+          }
+          if(hum_chk == 'high'){
+            change_color('humidity','high','Maximum');
+          }
+          else if(hum_chk == 'low'){
+            change_color('humidity','low','Minimum');  
+          }
+          else{
+            change_color('humidity','med','Minimum');
+          }
+          if(mos_chk == 'high'){
+            change_color('moisture','high','Maximum');
+          }
+          else if(mos_chk == 'low'){
+            change_color('moisture','low','Minimum'); 
+          }
+          else{
+            change_color('moisture','med','Minimum'); 
+          }
+        }
+
+        if(type == 2){
+          if(Notification.permission == 'granted'){
+              
+            }
+          else if(Notification.permission !== 'denied'){
+              Notification.requestPermission();
+            }
+          if(temp_chk == 'high'){
+            send_noti('temperature','high','Maximum');
+          }
+          else if(temp_chk == 'low'){
+            send_noti('temperature','low','Minimum'); 
+          }
+          if(hum_chk == 'high'){
+            send_noti('humidity','high','Maximum');
+          }
+          else if(hum_chk == 'low'){
+            send_noti('humidity','low','Minimum');  
+          }
+          if(mos_chk == 'high'){
+            send_noti('moisture','high','Maximum');
+          }
+          else if(mos_chk == 'low'){
+            send_noti('moisture','low','Minimum'); 
+          }
+        }
+        }); 
+      });
+
+      }
+
+      $(document).ready(function(){
+        live_data(1);
+        setInterval(function() {
+          live_data(1);
+        }, interval);
+      });
+
+      $(document).ready(function(){
+        live_data(2);
+        setInterval(function() {
+          live_data(2);
+        }, 300000);
+      });
+
+// -------------- graph scripts ----------------
+
+      function mydata(data,label,para){
+        document.getElementById("graph1_heading").innerHTML = label;
+        var json = JSON.parse(data);
+        const arry = [['Time',label]]
+        for(var a=0;a<json.length;a++){
+          var tm = json[a].timestamp;
+          var rmtp =parseInt(json[a][para]);
+          arry.push([tm,rmtp]);
+        }
+
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable(arry);
+          var options = {
+            title: '',
+            curveType: 'function',
+            legend: { position: 'bottom' }
+          };
+
+          var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+          chart.draw(data, options);
+        }
+      }
+   
+// ---------------------------- Details part -------------------
+
+      document.getElementById('plnt_name').value = new String(plant);
+      document.getElementById('gen_name').value = new String(table);
+      document.getElementById('gen_cond').value = new String(gen_condition);
+      document.getElementById('current_week').value = new String(crnt_week);
+      document.getElementById('current_phase').value = new String('Vegetative Growth');
+
+
+
+// ------------------------------- Notification -------------------
+
+
+
+    function values_check(current,max,min){
+      current = parseInt(current);
+      max = parseInt(max);
+      min = parseInt(min);
+      if(current != 0){
+          if(current > max){ 
+            return('high'); 
+          }
+          else if(current < min){
+           return('low');
+         }
+          else { 
+            return('med'); 
+          }
+      }else{ return('med'); }
+
+    }
+
+
+
+
+    // THE LIGHT NOTIFICATION PART SAVE TEMP.TXT AT LINE 1102 FROM SUMIT
+
+    function change_color(parameter,values,state,req){
+      var input_id = '';
+
+      if (parameter == 'temperature') {
+        input_id = 'temp_in';
+      }
+      else if (parameter == 'humidity') {
+        input_id = 'hum_in';
+      }
+      else if (parameter == 'moisture') {
+        input_id = 'mos_in';
+      }
+
+      if(values == 'low'){
+        var color = 'yellow';
+      }
+      else if(values == 'high'){
+        var color = 'red';
+      }
+      else if(values == 'med'){
+        var color = '#44bf44';
+      }
+      document.getElementById(parameter).style.borderLeftColor = color;
+      document.getElementById(input_id).style.color = color;
+      }
+    }
+
+    function send_noti(parameter,values,state) {
+
+      const greeting = new Notification(state+" "+parameter,{
+        body : "current "+parameter+" is "+values+"er than set "+parameter,
+        icon : "./icon/"+parameter+".png",
+
+      });
+      greeting.close();
+    }
+
+  // ---------------- add photo function ---------------------
+
+
+
+
+  // ---------End Genration Function ------------------
+  
+    function end_gen(val) {
+      var t  = confirm("It will stop Current sensors data");
+        if (t == true){
+          $.ajax({
+          type: "POST",
+          url: "./insert_data.php?flag=1&table_name=<?php echo $table_name?>"
+          });
+          if(val != 1){
+            document.getElementById('end_btn').style.visibility="hidden";
+            setInterval(function(){
+              window.location.reload(); 
+            },1000);
+          }
+        } 
+    }
+
+
+//  ------------------------------ Add Function -------------------
+    function add_gen() {
+      var gen_name = document.getElementById("gen_nm").value;
+      var plant_name = document.getElementById("plant_name").value;
+      var cond_name = document.getElementById("cond_nm").value;
+      var min_temp = document.getElementById("min_temp").value;
+      var max_temp = document.getElementById("max_temp").value;
+      var min_humid = document.getElementById("min_humid").value;
+      var max_humid = document.getElementById("max_humid").value;
+      var min_moist = document.getElementById("min_moist").value;
+      var max_moist = document.getElementById("max_moist").value;
+
+      if (gen_name =='' || plant_name=='' || cond_name=='' || min_temp=='' || max_temp=='' || min_humid=='' || max_humid=='' || min_moist=='' || max_moist=='' ) {
+        alert("Empty Field");
+        document.getElementById("gen_nm").value = '';
+        document.getElementById("plant_name").value = '';
+        document.getElementById("cond_nm").value = '';
+        document.getElementById("min_temp").value = '';
+        document.getElementById("max_temp").value = '';
+        document.getElementById("min_humid").value = '';
+        document.getElementById("max_humid").value = '';
+        document.getElementById("min_moist").value = '';
+        document.getElementById("max_moist").value = '';
+      }else {
+        var y = confirm("Creating New genration will stop current genration ");
+        if(y == true){
+          end_gen(1);
+          document.getElementById("add_genration").disabled = true;
+      
+          var chk_url = "./insert_data.php?flag=2&name="+gen_name+"&plant="+plant_name+"&cond="+cond_name+"&min_t="+min_temp+"&max_t="+max_temp+"&min_h="+min_humid+"&max_h="+max_humid+"&min_m="+min_moist+"&max_m="+max_moist;
+          $.ajax({
+                type: "POST",
+                url: chk_url
+              });
+          setInterval(function(){
+                window.location.reload(); 
+          },1000);
+        }
+      }
+    }
+
+</script>
+</body>
+</html>
+
+
+
+--------------   fetch.php 25 Oct 2021 -------------------------
+<?php
+include("database_connect.php");
+
+if(isset($_GET['flag']) && isset($_GET['table'])){
+  $room_temp = 0;
+  $humid = 0;
+  $moist = 0;
+  $light = 0;
+	$table_name = $_GET['table'];
+  $result = mysqli_query($conn,"select * from `".$table_name."` order by id DESC LIMIT 1");
+  if(null !== $result){
+    while($br = mysqli_fetch_assoc($result)){
+      $room_temp = $br['room_temp'];
+      $humid = $br['humidity'];
+      $moist = $br['moisture'];
+      $light = $br['light'];
+    }
+	}else{
+    $room_temp = 0;
+    $humid = 0;
+    $moist = 0;
+    $light = 0;
+	}
+
+	switch ($_GET['flag']) {
+		case '0':
+			$test = mysqli_query($conn,"select * from gen_data where end_date is null and live_check=1 order by id desc limit 1");
+			$rows_no =  mysqli_num_rows($test); 
+			if($rows_no !=0 ){
+				echo json_encode(mysqli_fetch_assoc($test));
+			}
+			else{
+				echo "nothing";
+			}
+			break;
+		case '1':
+			echo $room_temp;
+			break;
+		case '2':
+			echo $humid;
+			break;
+		case '3':
+			echo $moist;
+			break;
+		case '4':
+			echo $light;
+			break;
+		case '5':
+		  $ary = array();
+		  // $all = mysqli_query($conn,"select timestamp,room_temp,light,humidity,moisture from `".$table_name."`");
+	    $all = mysqli_query($conn,"select * from (select * from `".$table_name."` order by id desc limit 10)Var1 order by id asc");
+		  while($row = mysqli_fetch_assoc($all)){
+		  $ary[] = $row;
+		  }
+		  echo json_encode($ary);
+			break;
+		default:
+			echo "in default";
+			break;
+	}
+}
+else{
+	if (isset($_GET['flag'])) {
+		if($_GET['flag'] == '6'){
+			$test = mysqli_query($conn,"select * from gen_data where end_date is null and live_check=1 order by id desc limit 1");
+			$ary = array();
+		  while($row = mysqli_fetch_assoc($test)){
+		  	$ary[] = $row;
+    	}
+    	echo json_encode($ary);
+		}
+	}
+}
+
+
+?>
+
+----------------------------- script 28 OCT 2021 --------------------
+if (<?php echo $check ?> == 0) {
+  document.getElementById('end_btn').style.visibility="hidden";
+}
+else{
+  console.log("in else loop");
+  main();
+}
+
+// --------------- Graph  1 script ------------------
+function main(){
+  var json = <?php echo json_encode($ary); ?>;
+
+  var arry = [['Time','Room Temprature']]
+  try{
+        for(var a=0;a<json.length;a++){
+        var tm = json[a].timestamp;
+        var rmtp =parseInt(json[a].room_temp);
+        arry.push([tm,rmtp]);
+      }
+  }catch(e){
+    alert('currently not monitoring any genration');
+  }
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable(arry);
+    var options = {
+      title: '',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+    chart.draw(data, options);
+  }
+
+//---------------------- Graph  2 script -----------------------
+
+  create_chart('humidity');
+  $(document).ready(function(){
+    $('#select_para').change(function(){
+      var check = $(this).val();
+      console.log(check);
+      if(check == 'humidity'){
+        create_chart(check);
+      }
+      else if(check == 'moisture'){
+        create_chart(check);
+      }
+    });
+  });
+  function create_chart(select_data){
+    var option = select_data;
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);  
+    function drawChart() {
+          const arry = [['Time',option]];
+          for(var a=0;a<json.length;a++)
+            {
+              var tm = json[a].timestamp;
+              var humi =parseInt(json[a][option]);
+              arry.push([tm,humi]);
+            }
+          var options = {
+              title: '',
+              curveType: 'function',
+              legend: { position: 'bottom' }
+              };
+      var data = google.visualization.arrayToDataTable(arry);
+      var chart = new google.visualization.LineChart(document.getElementById('my_chart'));
+
+      chart.draw(data , options);
+    }
+  }
+
+//  --------------------------------------Add Function -----------------
+  function add_gen() {
+    var gen_name = document.getElementById("gen_nm").value;
+    var plant_name = document.getElementById("plant_name").value;
+    var min_temp = document.getElementById("min_temp").value;
+    var max_temp = document.getElementById("max_temp").value;
+    var min_humid = document.getElementById("min_humid").value;
+    var max_humid = document.getElementById("max_humid").value;
+    var min_moist = document.getElementById("min_moist").value;
+    var max_moist = document.getElementById("max_moist").value;
+
+    console.log(gen_name);
+    console.log(plant_name); 
+    console.log(min_temp); 
+    console.log(max_temp); 
+    console.log(min_humid);  
+    console.log(max_humid);  
+    console.log(min_moist); 
+    console.log(max_moist);  
+
+  if (gen_name =='' || plant_name=='' || min_temp=='' || max_temp=='' || min_humid=='' || max_humid=='' || min_moist=='' || max_moist=='' ) {
+    alert("Empty Field");
+    document.getElementById("gen_nm").value = '';
+    document.getElementById("plant_name").value = '';
+    document.getElementById("min_temp").value = '';
+    document.getElementById("max_temp").value = '';
+    document.getElementById("min_humid").value = '';
+    document.getElementById("max_humid").value = '';
+    document.getElementById("min_moist").value = '';
+    document.getElementById("max_moist").value = '';
+    console.log("I got here");
+  }else 
+  {
+    var y = confirm("Creating New genration will stop current genration ");
+    if(y == true){
+      end_gen();
+      document.getElementById("add_genration").disabled = true;
+  
+      var chk_url = "/test/insert_data.php?flag=2&name="+gen_name+"&plant="+plant_name+"&min_t="+min_temp+"&max_t="+max_temp+"&min_h="+min_humid+"&max_h="+max_humid+"&min_m="+min_moist+"&max_m="+max_moist;
+      $('input').reset();
+      console.log(chk_url);
+      $.ajax({
+            type: "POST",
+            url: chk_url
+          });
+    }
+  }
+
+}
+
+// ---------------------------- Modal -------------------
+
+  var modal = document.getElementById("myModal");
+  var btn = document.getElementById("logout_btn");
+  var span = document.getElementsByClassName("close")[0];
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+// -------------------------------- Notification ------------------------------------
+
+  if(Notification.permission == 'granted'){
+      console.log('we got the permission');
+    }
+  else if(Notification.permission !== 'denied'){
+      Notification.requestPermission();
+    }
+  if('<?php echo $temp_chk ?>' == 'high'){
+    send_noti('temperature','high','Maximum');
+  }
+  else if('<?php echo $temp_chk ?>' == 'low'){
+    send_noti('temperature','low','Minimum');
+  }
+  if('<?php echo $hum_chk ?>' == 'high'){
+    send_noti('humidity','high','Maximum');
+  }
+  else if('<?php echo $hum_chk ?>' == 'low'){
+    send_noti('humidity','low','Minimum');  
+  }
+  if('<?php echo $mos_chk ?>' == 'high'){
+    send_noti('moisture','high','Maximum');
+  }
+  else if('<?php echo $mos_chk ?>' == 'low'){
+    send_noti('moisture','low','Minimum'); 
+  }
+
+// THE LIGHT NOTIFICATION PART SAVE TEMP.TXT AT LINE 1102 FROM SUMIT
+
+  function send_noti(parameter,values,state){
+    var input_id = '';
+    if (parameter == 'temperature') {
+      input_id = 'temp_in';
+    }
+    else if (parameter == 'humidity') {
+      input_id = 'hum_in';
+    }
+    else if (parameter == 'moisture') {
+      input_id = 'mos_in';
+    }
+
+    if(values == 'low'){
+      var color = 'yellow';
+    }
+    else if(values == 'high'){
+      var color = 'red';
+    }
+    else{
+      var color = '#44bf44';
+    }
+    document.getElementById(parameter).style.borderLeftColor = color;
+    document.getElementById(input_id).style.color = color;
+
+    const greeting = new Notification(state+" "+parameter,{
+              body : "current "+parameter+" is "+values+"er than set "+parameter,
+              icon : "./icon/"+parameter+".png"
+            });
+    greeting.close();   
+  }
+}
+// ---------End Genration Function ------------------
+
+function end_gen() {
+  var t  = confirm("It will stop sensors data and disable circuit");
+  try{
+    if (t == true){
+      $.ajax({
+      type: "POST",
+      url: "/test/insert_data.php?flag=1&table_name=<?php echo $table_name?>"
+      });
+      document.getElementById('end_btn').style.visibility="hidden";
+        window.location.reload(); 
+    } 
+  }catch(e){
+    console.log("Error Handled"+e);
+  }  
+}
+
+----------------------------  16 NOV 10:23 PM ---------------------------------------
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+var frame = document.getElementById('ask_frame');
+frame.onclick = function(){
+  frame.style.display = 'none';
+}
+
+$.get("./fetch.php?flag=3", function(data, status){
+  let mydata = JSON.parse(data);
+  let genes = [];
+  for (let i = 0; i < Object.keys(mydata).length; i++) {
+    genes.push(mydata[i]["gen_name"])
+  }
+  for(let i=0;i<genes.length;i++){
+    var frame = document.getElementsByClassName("ask_contain")[0];
+    var gne = document.createElement("DIV");
+    gne.setAttribute("class","generations");
+    gne.setAttribute("id",genes[i]);
+    gne.style.backgroundColor = getRandomColor();
+    gne.onclick = function(){
+      main(genes[i]);
+    }
+    frame.appendChild(gne);
+    
+    var kne = document.createElement("SPAN");
+    kne.innerHTML = genes[i];
+    gne.appendChild(kne);
+  }
+});
+
+// var el = document.querySelectorAll(".generations"); 
+// console.log(el);
+// for(var i =0; i < el.length; i++) {
+//     el[i].onclick = function() { 
+//       console.log("sumit");
+//       console.log(i);
+//       console.log(el);
+//     };
+// }
+
+var myData;
+var chart =  document.getElementById('myChart');
+
+function main(divs){
+
+  console.log(divs);
+  document.getElementById('ask_frame').style.display = 'none';
+  var test;
+  var timestamp = [];
+  var temp = [];
+  $.get("./fetch.php?flag=2&table="+divs, function(genData, status){
+    test = JSON.parse(genData);
+    console.log(test);
+    mydata(test,'Room Temprature','room_temp','myChart');
+
+    $('#graph_select').change(function(){
+      var check = $(this).val();
+      switch (check) {
+        case 'humid':
+          // chart.destroy();
+          graph(test,'humidity','Humidity');
+          mydata(test,'Room Temprature','room_temp','myChart');
+          break;
+        case 'moist':
+          graph(test,'moisture','Soil Moisture');
+          break;
+        case 'light':
+          graph(test,'light','Light Intensity');
+          break;
+        default:
+          mydata(test,'Room Temprature','room_temp','myChart');
+          break;
+      }
+
+    });
+
+
+    function mydata(data,label,para,divID){
+      json = data;
+      if(json.length == 0){
+        json = [{"id":"0","room_temp":"0","humidity":"0","moisture":"0","light":"0","date":"0","time":"0","timestamp":"0"}];
+      }
+      const arry = [['Time',label]]
+      for(var a=0;a<json.length;a++){
+        var tm = json[a].timestamp;
+        var rmtp =parseInt(json[a][para]);
+        arry.push([tm,rmtp]);
+      }
+  
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+  
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(arry);
+        var options = {
+          title: '',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+  
+        var chart = new google.visualization.LineChart(document.getElementById(divID));
+  
+        chart.draw(data, options);
+      }
+    }
+
+    // function graph(genData,column_name,myLabel) {
+    //   var count = Object.keys(genData).length;
+    //   console.log(count);
+    //   for(let i=0;i<count;i++){
+    //     timestamp.push(genData[i]['timestamp']);
+    //     temp.push(genData[i][column_name]);
+    //   }
+
+    //   const labels = timestamp;
+    //   const data = {
+    //     labels: labels,
+    //     datasets: [{
+    //       label: myLabel,
+    //       backgroundColor: 'yellow',
+    //       borderColor: 'orange',
+    //       data: temp,
+    //     }]
+    //   };
+    //   const config = {
+    //       type: 'line',
+    //       data: data,
+    //       options: {
+    //         responsive: true,
+    //       }
+    //     };
+    //     try {
+    //       const myChart = new Chart(
+    //         document.getElementById('myChart'),
+    //         config
+    //       );
+    //     } catch (error) {
+    //       // let canvas = document.getElementById('myChart');
+    //       // const context = canvas.getContext('2d');
+    //       // canvas.clear();
+    //       // const myChart = new Chart(
+    //       //   document.getElementById('myChart'),
+    //       //   config
+    //       // );
+    //       $("canvas#myChart").remove();
+    //       var frame = document.getElementsByClassName("chart")[0];
+    //       var gne = document.createElement("CANVAS");
+    //       gne.setAttribute("id","myChart");
+    //       gne.style.height = '400px';
+    //       gne.style.width = '100%';
+    //       frame.appendChild(gne);
+    //       var ctx = document.getElementById("myChart").getContext("2d");
+    //       const myChart = new Chart(ctx,config);
+    //     }
+
+    // }
+  });
+
+  $.get("./fetch.php?flag=4&table="+divs, function(data, status){
+    myData = JSON.parse(data);
+    console.log
+    document.getElementById('temp_in').value  = myData[0]['temp'];
+    document.getElementById('humid_in').value = myData[0]['humid'];
+    document.getElementById('moist_in').value = myData[0]['moist'];
+    document.getElementById('light_in').value = myData[0]['light'];
+  });
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// var d = JSON.parse(gen_data["responseText"]);
+// console.log(d);
+
+// function getRandomColor() {
+//   var letters = '0123456789ABCDEF';
+//   var color = '#';
+//   for (var i = 0; i < 6; i++) {
+//     color += letters[Math.floor(Math.random() * 16)];
+//   }
+//   return color;
+// }
+
+// var data = ['gen','gen1','ge2','genration 2','generaion 3'];
+
+// for(let i=0;i<data.length;i++){
+//   var frame = document.getElementsByClassName("ask_contain")[0];
+//   var gne = document.createElement("DIV");
+//   gne.setAttribute("class","generations");
+//   gne.setAttribute("id",data[i]);
+//   gne.style.backgroundColor = getRandomColor();
+//   frame.appendChild(gne);
+  
+//   var kne = document.createElement("SPAN");
+//   kne.innerHTML = data[i];
+//   gne.appendChild(kne);
+  
+// }
+
+
+// document.getElementById("ask_frame").onclick = function(){
+//   document.getElementById("ask_frame").style.display = "none";
+// }
+
+
+
+// var test;
+// var timestamp = [];
+// var temp = [];
+// $.get("http://192.168.1.203/test/test.php", function(value, status){
+//   test = JSON.parse(value);
+//   console.log(test);
+//   var count = Object.keys(test).length;
+//   console.log(count);
+//   for(let i=0;i<count;i++){
+//     timestamp.push(test[i]['timestamp']);
+//     temp.push(test[i]['room_temp']);
+//   }
+
+//   const labels = timestamp;
+//   const data = {
+//     labels: labels,
+//     datasets: [{
+//       label: 'Room Temprature',
+//       backgroundColor: 'yellow',
+//       borderColor: 'orange',
+//       data: temp,
+//     }]
+//   };
+//   const config = {
+//       type: 'line',
+//       data: data,
+//       options: {
+//         responsive: true,
+//       }
+//     };
+//   const myChart = new Chart(
+//     document.getElementById('myChart'),
+//     config
+//   );
+// });
+
+
+
+
+
+
+var one;
+var two;
+var tale1 = 'gen1';
+var tale2 = 'gen2';
+$.get("./test.php?table=gen", function(data){
+    data = JSON.parse(data);
+    data1 = data[0];
+    days1 = data[1][0]['days'];
+    console.log('1 st :'+days1);
+    $.get("./test.php?table=gen2", function(data){
+        data = JSON.parse(data);
+        data2 = data[0];
+        days2 = data[1][0]['days'];
+        console.log('2 nd :'+days2);
+        // console.log(data1);
+        // console.log(data2);
+        if (days2 > days1){
+            graph(data1,data2,days2);
+        }
+        else if (days1 > days2) {
+            graph(data1,data2,days1);
+        }
+        
+    });
+});
+
+
+
+
+
+
+
+function graph(one,two,days) {
+    // genData = JSON.parse(genData);
+    // genData =genData[0];
+    // var count = Object.keys(genData).length;
+    // console.log(genData);
+    x_axis = [];
+    for (let i = 1; i <= days; i++) {
+        x_axis.push('day '+i);
+    }
+    // console.log(x_axis);
+    timestamp1 = [];
+    timestamp2 = [];
+    temp1 = [];
+    temp2 = [];
+    humid = [];
+    moist = [];
+    light = [];
+    for(let i=0;i<one.length;i++){
+        timestamp1.push(one[i]['timestamp']);
+        temp1.push(one[i]['room_temp']);
+        humid.push(one[i]['humidity']);
+        moist.push(one[i]['moisture']);
+        light.push(one[i]['light']);
+    }
+    for(let i=0;i<two.length;i++){
+        timestamp2.push(two[i]['timestamp']);
+        temp2.push(two[i]['room_temp']);
+    }
+
+    const labels = x_axis;
+    const data = {
+        labels: labels,
+        datasets: 
+        [
+            // {
+            //     label: 'Room Temperature',
+            //     backgroundColor: 'yellow',
+            //     borderColor: 'orange',
+            //     // backgroundColor: 'darkblue', // night
+            //     // borderColor: 'dodgerblue',
+            //     data: temp1
+            // },
+            {
+                label: 'Gen 1',
+                // backgroundColor: 'darkblue',
+                // borderColor: 'dodgerblue',
+                backgroundColor: 'yellow',
+                // borderColor: 'orange',
+                data: temp1,
+                tension: 0.5
+
+            },
+            {
+                label: 'Gen 2',
+                backgroundColor: 'rgb(28 221 168)',
+                // borderColor: 'rgb(255 0 58)',
+                // backgroundColor: 'darkblue', // night
+                // borderColor: 'dodgerblue',
+                data: temp2,
+                tension: 0.5
+            }
+        ]
+    };
+    
+    
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          // Elements options apply to all of the options unless overridden in a dataset
+          // In this case, we are setting the border of each horizontal bar to be 2px wide
+          elements: {
+            bar: {
+              borderWidth: 2,
+            }
+          },
+          responsive: true,
+          animation: {
+            onComplete: () => {
+              delayed = true;
+            },
+            delay: (context) => {
+              let delay = 0;
+              if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                delay = context.dataIndex * 300 + context.datasetIndex * 100;
+              }
+              return delay;
+            },
+          },
+          scales: {
+                x: {
+                    min: 0,
+                    max: 40,
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Temperature °C',
+                        color: '#911',
+                        font: {
+                        family: 'Comic Sans MS',
+                        size: 20,
+                        weight: 'bold',
+                        lineHeight: 1.2,
+                        },
+                        padding: {top: 20, left: 0, right: 0, bottom: 0}
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Days',
+                        color: '#191',
+                        font: {
+                        family: 'Times',
+                        size: 20,
+                        style: 'normal',
+                        lineHeight: 1.2
+                        },
+                        padding: {top: 30, left: 0, right: 0, bottom: 0
+                    }
+                }
+              }
+            },
+          plugins: {
+            legend: {
+              position: 'right',
+              onHover: 'handleHover',
+              onLeave: 'handleLeave'
+            },
+            title: {
+              display: true,
+              text: 'Room Temperature'
+            }
+          }
+        },
+      };
+
+    // const config = {
+    //     type: 'line',
+    //     data: data,
+    //     options: {
+    //         responsive: true,
+    //     }
+    //     };
+        try {
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+        } catch (error) {
+        // let canvas = document.getElementById('myChart');
+        // const context = canvas.getContext('2d');
+        // canvas.clear();
+        // const myChart = new Chart(
+        //   document.getElementById('myChart'),
+        //   config
+        // );
+        $("canvas#myChart").remove();
+        var frame = document.getElementsByClassName("chart")[0];
+        var gne = document.createElement("CANVAS");
+        gne.setAttribute("id","myChart");
+        gne.style.height = '70%';
+        gne.style.width = '100%';
+        frame.appendChild(gne);
+        var ctx = document.getElementById("myChart").getContext("2d");
+        const myChart = new Chart(ctx,config);
+        }
+}

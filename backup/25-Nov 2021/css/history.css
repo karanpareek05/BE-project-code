@@ -1,0 +1,201 @@
+.mediaViewInfo {
+    --web-view-name: home;
+    --web-view-id: home;
+    --web-scale-on-resize: true;
+    --web-enable-deep-linking: true;
+  }
+:root {
+--web-view-ids: home;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+}
+body{
+    font-size: 14px;
+    background-color:var(--body-bg);/*#42668a;*/
+}
+/*------------- header -----------------*/
+.header{
+    font-family: calibri;
+    background-color: pink;
+    padding: 10px;
+    /*height: 100%;*/
+    height: 50px;
+    background-color: #2F5D7F;
+    color: whitesmoke;
+}
+.header text{
+    font-size: 25px;
+    float: left;
+}
+.header-right{
+    float: right;
+}
+.header-right a{
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    padding-right: 10px;
+}
+.header span{
+    position: relative;
+    display: inline-block;
+    width: 1px;
+    margin-right: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 22px;
+    vertical-align: bottom;
+}
+/* ---------------- container ----------------------- */
+.container{
+    display: block;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+}
+
+/* ---------------- upper ----------------------- */
+
+.upper{
+    height: 300px;
+    background-color: crimson;
+}
+
+/* ---------------- middle ----------------------- */
+
+.middle{
+    height: 500px;
+    background-color: #7f89ff;/*#242a74*/
+    padding: 30px;
+}
+.middle .graph{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 #242a74, 0 6px 20px 0 rgb(0 0 0 / 19%);
+    padding: 5px;
+    padding-left: 5px;
+    box-sizing: border-box;
+}
+.graph div{
+    position: relative;
+} 
+.middle .graph select{
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+    font-size: 120%;
+    text-align: center;
+    z-index: 1;
+}
+
+/* ---------------- bottom ----------------------- */
+
+.bottom{
+    position: relative;
+    height: 100%;
+    background-color: #ffc0cb7e;
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: large;
+}
+.bottom div{
+    display: grid;
+    grid-template-rows: 50px 1fr 50px;
+}
+.bottom div span{
+    font-size: 40px;
+    text-align: right;
+    margin-right: 10%;
+}
+.bottom div input{
+    font-size: 520%;
+    width: 100%;
+    text-align: center;
+    background-color: transparent;
+}
+.bottom div label{
+    text-align: center;
+    height: 100%;
+}
+#temp{
+    background-color: darkorange;
+}
+
+#humid{
+    background-color: lightgray;
+}
+#moist{
+    background-color: lightskyblue;
+}
+#light{
+    background-color: gold;
+}
+#weeks{
+    background-color: honeydew;
+}
+#days{
+    background-color: lemonchiffon;
+}
+
+/* --------------- ask gen frame ------------------ */
+
+.ask_gen{
+    display: block; 
+    position: fixed; 
+    z-index: 2; 
+    padding-top: 100px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4);
+    backdrop-filter: saturate(180%) blur(7px);
+}
+.ask_contain{
+    display: grid;
+    grid-template-columns: repeat(4,300px);
+}
+#choose_gen{
+    width: 150px;
+    height: 150px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 200%;
+    color: aliceblue;
+    position: relative;
+    top: -50px;
+    left: 20em;
+}
+.generations{
+    display: block;
+    position: relative;
+    margin-left: 80%;
+    margin-bottom: 50px;
+    width: 200px;
+    height: 200px;
+    background-color: #2F5D7F;
+    border-radius: 5px;
+    transform: scale(1);
+    transition: 0.3s;
+    cursor: pointer;
+}
+.generations:hover{
+    transform: scale(1.2);
+}
+.generations span{
+    position: absolute; 
+    width: 200px;
+    text-align: center;
+    font-size: xx-large;
+    top: 35%;
+    color: rgb(233, 233, 233);
+}
+
+

@@ -1,0 +1,41 @@
+{
+    "disease":
+    [
+        {
+            "name"  : "Powdery mildew",
+            "symptons" : "It appears as small, white, powdery patches on young parts of stems, leaves and buds which increases in size, and coalesce to cover entire area of leaf surface.",
+            "spread" : "Fungus can survive in plant debris",
+            "Favourable conditions" : {
+                "humidity" : "90",
+                "temperature" : ["35","45"]
+            }
+        },
+        {
+            "name"  : "Wilt",
+            "symptons" : "The disease can easily be recognized in the field by drooping of the terminal portions",
+            "spread" : "The disease is soil borne and primary infection occurs through inoculum present in the soil.",
+            "Favourable conditions" : {
+                "moisture" : ["90","100"],
+                "temperature" : ["35","50"]
+            }
+        },
+        {
+            "name"  : "stem gall",
+            "symptons" : "The disease appears in the form of tumor-like swellings of leafStem gallveins, leaf stalks, peduncles, stems as well as fruits. ",
+            "spread" : "The disease is soil borne and the inocula present in the soil are the source of primary infection",
+            "Favourable conditions" : {
+                "moisture" : ["90","100"],
+                "temperature" : ["30","40"]
+            }
+        },
+        {
+            "name"  : "Blight disease",
+            "symptons" : "Dark brown spots appear on the stem and leaves of infected plants and emerging umbels with young flowers get killed.",
+            "spread" : "The pathogen survives through conidia or mycelia in diseased plant debris or weed or in soil.",
+            "Favourable conditions" : {
+                "humidity" : ["68","72"],
+                "temperature" : ["12","25"]
+            }
+        }  
+    ]
+}
