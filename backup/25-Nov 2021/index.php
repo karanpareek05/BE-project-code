@@ -10,7 +10,7 @@
 <head>
   <meta charset="utf-8">
   <!-- <meta http-equiv="refresh" content="1"/> -->
-  <title>smart plant</title>
+  <title>smart</title>
   <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
