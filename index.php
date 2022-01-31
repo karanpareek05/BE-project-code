@@ -10,7 +10,7 @@
 <head>
   <meta charset="utf-8">
   <!-- <meta http-equiv="refresh" content="1"/> -->
-  <title>SPMS</title>
+  <title>Smart Plant</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
   <link rel="stylesheet" href="./css/index.css">
 </head>
