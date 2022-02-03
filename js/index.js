@@ -208,12 +208,14 @@ else{
 
 // ---------------------- Main Function ------------------
 function main(data){
-  var table = data[0]['gen_name'];
-  var plant = data[0]['plant_name'];
-  var gen_condition = data[0]['plant_condition'];
+  const table = data[0]['gen_name'];
+  const plant = data[0]['plant_name'];
+  const gen_condition = data[0]['plant_condition'];
   var weeks = 0;
   var crnt_week = '---';
-  let third_data = data[3];
+  const third_data = data[3];
+  const images = data[4];
+
   if (third_data.length != 0){
     var dt1 = third_data[0]['date'];
     var dt2 = third_data[third_data.length-1]['date'];
@@ -230,52 +232,6 @@ function main(data){
       var days = diffDays- (weeks*7);
       console.log(date1,date2);
 
-      function setImage(){
-        $.get("./test.php", function(data, status){
-          data = JSON.parse(data);
-
-  
-            function add_image(data,i){
-              const div = document.createElement("div");
-              div.classList.add("carousel-item");
-              if(i == 0){
-                div.classList.add("active");
-              }
-
-              const img = document.createElement("img");
-              img.classList.add("d-block");
-              img.classList.add("w-100");
-              img.src = data[i]['image'];
-              img.style.width = "800px !important";
-              img.style.height = "400px";
-
-
-              const div2 = document.createElement("div");
-              div2.classList.add("carousel-caption");
-              div2.classList.add("d-none");
-              div2.classList.add("d-md-block");
-
-              const h5 = document.createElement("h5");
-              h5.innerText = "Day "+data[i]['day']
-
-              const p = document.createElement("p");
-              p.innerText = data[i]['timestamp']
-
-              div.appendChild(img);
-              div.appendChild(div2);
-              div2.appendChild(h5);
-              div2.appendChild(p);
-              document.getElementById("image-cont").appendChild(div);
-            }
-            for (let i = 0; i < data.length; i++) {
-              add_image(data,i);
-            }
-         
-
-          });
-      }
-
-      setImage()
       // ------------------ Weeks part -------------------------------
 
       // if(String(date1) != String(date2)) {
@@ -310,6 +266,45 @@ function main(data){
     }
   
   }
+
+
+  function add_image(data,i){
+    const div = document.createElement("div");
+    div.classList.add("carousel-item");
+    if(i == 0){
+      div.classList.add("active");
+    }
+
+    const img = document.createElement("img");
+    img.classList.add("d-block");
+    img.classList.add("w-100");
+    img.src = data[i]['image'];
+    img.style.width = "800px !important";
+    img.style.height = "400px";
+
+
+    const div2 = document.createElement("div");
+    div2.classList.add("carousel-caption");
+    div2.classList.add("d-none");
+    div2.classList.add("d-md-block");
+
+    const h5 = document.createElement("h5");
+    h5.innerText = "Day "+data[i]['day']
+
+    const p = document.createElement("p");
+    p.innerText = data[i]['timestamp']
+
+    div.appendChild(img);
+    div.appendChild(div2);
+    div2.appendChild(h5);
+    div2.appendChild(p);
+    document.getElementById("image-cont").appendChild(div);
+  }
+
+  for (let i = 0; i < images.length; i++) {
+    add_image(images,i);
+  }
+
 
   // -------------------------- Add Image Frame -------------------
   document.getElementById('set_gen').value = table;
@@ -735,7 +730,9 @@ function end_gen(table,plant,getCmd) {
   }
   let frame = document.getElementById('endGen_frame');
   frame.style.display = 'block';
+
   alert("Ending Genration will stop fetching data from Arduino")
+  
   document.getElementById('set_gen_name').value = table;
   document.getElementById('set_plant_name').value = plant;
 
@@ -774,8 +771,6 @@ function end_gen(table,plant,getCmd) {
 
     $.get("./insert_data.php?flag=4&name="+table+"&quality="+starNo+"&growth="+growth+"&disName="+diseaseName+"&disDetails="+diseaseDetails, function(data){
       data = JSON.parse(data);
-      console.log(data);
-      console.log(data == "success");
       if (data == 'success') {
         // $.get("./insert_data.php?flag=1&table_name=".table, function(data){
         //   console.log(data);
@@ -787,7 +782,6 @@ function end_gen(table,plant,getCmd) {
           clear_input();
           modal.style.display = "none";
           if (getCmd == 1) {
-            console.log("getcmd => "+getCmd);
             window.location.reload();
           }else{
             addGenFrame.style.display = "block";

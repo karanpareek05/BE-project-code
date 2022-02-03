@@ -33,6 +33,13 @@ include("database_connect.php");
 			$ary[] = $row;
 			}
 			array_push($whole,$ary);
+
+			$ary = [];
+			$all = mysqli_query($conn,"select *  from photos where gen_name='".$table."' order by timestamp desc");
+			while($row = mysqli_fetch_assoc($all)){
+			$ary[] = $row;
+			}
+			array_push($whole,$ary);
 			
 			echo json_encode($whole);
 

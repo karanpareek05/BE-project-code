@@ -102,16 +102,17 @@ body::-webkit-scrollbar {
   color: whitesmoke;
   position: fixed;
   z-index: 2;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 .header text{
-  font-size: 25px;
-  float: left;
+  font-size: large;
+
 }
-.header-right{
-  float: right;
-}
+
 .header-right a{
-  font-size: 20px;
+  font-size: large;
   color: white;
   text-decoration: none;
   padding-right: 10px;
@@ -202,7 +203,7 @@ body::-webkit-scrollbar {
   border: 1px #cecece solid;
   background: transparent;
   width: 1221px;
-  height: 300px;
+  height: 280px;
   padding-left: 30px;
   display: grid;
   grid-template-columns: repeat(4,1fr);
@@ -211,7 +212,7 @@ body::-webkit-scrollbar {
 .sensor-values{
   background-color: rgba(255,255,255);
   width: 273px;
-  height: 243px;
+  height: 230px;
   border-left: solid 5px #44bf44;
   transition: transform .3s ease;
   display: grid;
