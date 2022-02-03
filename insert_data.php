@@ -47,7 +47,7 @@ if(isset($_GET['flag'])){
 			if (empty($src)) {
 				echo "src is empty";
 			} else {
-				$sql = "insert into photos (gen_name,week,image,date,timestamp) values('".$_GET['gen']."',".$_GET['week'].",'".$src."','".$date."','".$date."')";
+				$sql = "insert into photos (gen_name,day,image,date,timestamp) values('".$_GET['gen']."',".$_GET['week'].",'".$src."','".$date."','".$date."')";
 
 				if (!mysqli_query($conn,$sql)) {
 					echo("Error description: " . mysqli_error($conn));

@@ -256,7 +256,7 @@ function main(data){
               div2.classList.add("d-md-block");
 
               const h5 = document.createElement("h5");
-              h5.innerText = "Day "+data[i]['week']
+              h5.innerText = "Day "+data[i]['day']
 
               const p = document.createElement("p");
               p.innerText = data[i]['timestamp']
