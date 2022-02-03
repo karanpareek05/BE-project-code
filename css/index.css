@@ -168,11 +168,17 @@ body::-webkit-scrollbar {
   height: 400px;
   color: slategray;
 }
-
-.photos_box img{
-  width: 80%;
-  height: 400px;
+#image-cont{
+  width: 1220px;
+  border: lightgrey 5px solid;
+  border-radius: 18px;
 }
+
+.carousel-caption{
+  bottom: 0.0rem;
+  padding-bottom: 0.0rem;
+}
+
 
 
 /*-------------------- live data ----------------------------*/

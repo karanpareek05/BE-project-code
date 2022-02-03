@@ -232,20 +232,45 @@ function main(data){
 
       function setImage(){
         $.get("./test.php", function(data, status){
-          
-          const div = document.createElement("div");
-          div.classList.add("carousel-item");
+          data = JSON.parse(data);
 
-          const img = document.createElement("img");
-          img.classList.add("d-block");
-          img.classList.add("w-100");
+  
+            function add_image(data,i){
+              const div = document.createElement("div");
+              div.classList.add("carousel-item");
+              if(i == 0){
+                div.classList.add("active");
+              }
 
-          const div2 = document.createElement("div");
-          div2.classList.add("carousel-item");
+              const img = document.createElement("img");
+              img.classList.add("d-block");
+              img.classList.add("w-100");
+              img.src = data[i]['image'];
+              img.style.width = "800px !important";
+              img.style.height = "400px";
 
-          document.getElementById("image-cont").appendChild(div);
-          
 
+              const div2 = document.createElement("div");
+              div2.classList.add("carousel-caption");
+              div2.classList.add("d-none");
+              div2.classList.add("d-md-block");
+
+              const h5 = document.createElement("h5");
+              h5.innerText = "Day "+data[i]['week']
+
+              const p = document.createElement("p");
+              p.innerText = data[i]['timestamp']
+
+              div.appendChild(img);
+              div.appendChild(div2);
+              div2.appendChild(h5);
+              div2.appendChild(p);
+              document.getElementById("image-cont").appendChild(div);
+            }
+            for (let i = 0; i < data.length; i++) {
+              add_image(data,i);
+            }
+         
 
           });
       }
