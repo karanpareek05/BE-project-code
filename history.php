@@ -66,8 +66,12 @@ while($row = mysqli_fetch_assoc($test)){
 		</div>
 		<div class="middle">
 			<div class="graph">
+				<select name="para" class="slct" id="day_select">
+					<option value="select" selected="selected">- Select -</option>
+				</select>
 				<select name="para" class="slct" id="graph_select">
-					<option value="temp" selected="selected">Room Temprature</option>
+					<option value="select">- Select -</option>
+					<option value="temp"  selected="selected" >Room Temprature</option>
 					<option value="humid" >Humidity</option>
 					<option value="moist" >Moisture</option>
 					<option value="light" >Light</option>
@@ -121,7 +125,7 @@ while($row = mysqli_fetch_assoc($test)){
 	</div>
 	<div class="ask_gen" id="ask_frame">
 		<div class="ask_box">
-			<span id="choose_gen">Choose Generation which you want to open</span>
+			<div><center><h3>Choose Genration to view History</h3></center></div>
 			<div class="ask_contain">
 		</div>
 

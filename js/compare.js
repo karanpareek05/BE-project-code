@@ -234,7 +234,8 @@ function mainGraph_temp(gen1,gen2,data1,data2,days) {
         fill: true,
         backgroundColor: 'skyblue',
         borderColor: 'dodgerblue',
-        tension: 0.5
+        tension: 0.5,
+        opener:0.5
       }
     ]
   };
@@ -421,7 +422,7 @@ dark.onclick = function () {
 
 // ------------------------ Calling Main Function ----------------------
 
-var promise = $.get('http://192.168.1.201/test/test.php',(data) =>{
+var promise = $.get('./test.php',(data) =>{
 // var promise = $.get('./test.php',(data) =>{
   main(data);
   console.log(data);

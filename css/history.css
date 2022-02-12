@@ -149,6 +149,15 @@ body{
     width: 110vw;
     left: -100px;
 } */
+#day_select{
+    position: absolute;
+    right: 0;
+    margin-right: 26%;
+    font-size: 120%;
+    text-align: center;
+    z-index: 1;
+    border: #7f88fe solid 2px;
+}
 #graph_select{
     position: absolute;
     right: 0;
@@ -236,19 +245,24 @@ body{
     background-color: rgb(0,0,0); 
     background-color: rgba(0,0,0,0.4);
     backdrop-filter: saturate(180%) blur(7px);
+    display: flex;
+    justify-content: center;
 }
 
 .ask_box{
-    width: 600px;
+    width: 500px;
     height: 600px;
-    background-color: white;
+    background-color: whitesmoke;
     border-radius: 10px;
-    box-shadow: 0 5 8 slategray;
+    padding: 10px;
 }
 
 .ask_contain{
+    margin-top: 20px;
     display: grid;
-    grid-template-columns: repeat(4,300px);
+    grid-template-columns: repeat(3,1fr);
+    padding: 20px;
+    padding-left: 12%;
 }
 #choose_gen{
     width: 150px;
@@ -261,28 +275,30 @@ body{
     left: 20em;
 }
 .generations{
-    display: block;
     position: relative;
-    margin-left: 40%;
     margin-bottom: 50px;
-    width: 150px;
-    height: 150px;
-    background-color: #2F5D7F;
+    width: 100px;
+    height: 100px;
+    /* background-color: #2F5D7F; */
+    box-shadow: 0 4px 8px gray;
     border-radius: 5px;
     transform: scale(1);
     transition: 0.3s;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .generations:hover{
     transform: scale(1.2);
 }
 .generations span{
     position: absolute; 
-    width: 200px;
-    text-align: center;
-    font-size: xx-large;
-    top: 35%;
-    color: rgb(233, 233, 233);
+    /* width: 200px; */
+    /* text-align: center; */
+    font-size: large;
+    /* top: 35%; */
+    color: slategrey;
 }
 
 /* .ask_gen_cont{

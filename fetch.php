@@ -83,6 +83,15 @@ include("database_connect.php");
 				}
 				array_push($whole,$ary);
 			}
+			$sql2 = "select date from `".$_GET['table']."` group by date";
+			$result2 = mysqli_query($conn,$sql2);
+			$ary = [];
+			if(null !== $result2){
+				while ($row = mysqli_fetch_assoc($result2)) {
+					$ary[] = $row;
+				}
+				array_push($whole,$ary);
+			}
 			echo json_encode($whole);
 			break;
 		case '3':

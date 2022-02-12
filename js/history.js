@@ -22,7 +22,7 @@ $.get("./fetch.php?flag=3", function(data, status){
     var gne = document.createElement("DIV");
     gne.setAttribute("class","generations");
     gne.setAttribute("id",genes[i]);
-    gne.style.backgroundColor = getRandomColor();
+    // gne.style.backgroundColor = getRandomColor();
     gne.onclick = function(){
       main(genes[i]);
     }
@@ -59,7 +59,21 @@ function main(divs){
   $.get("./fetch.php?flag=2&table="+divs, function(genData, status){
     genData = JSON.parse(genData);
     test = genData[0];
+
+    days = genData[3];
+    select = document.getElementById('day_select');
+    for (var i = 1; i<=days.length; i++){
+        var opt = document.createElement('option');
+        opt.value = days[i]["date"];
+        opt.innerHTML = days[i]["date"];
+        // opt.selected = 'true';
+        select.appendChild(opt);
+    }
+  
+
     $('#time_select').change(function(){
+      $('#graph_select').val("select")
+      graph([0,0],'-','-');
       var check = $(this).val();
       switch (check) {
         case 'day':
@@ -102,6 +116,9 @@ function main(divs){
         case 'light':
           graph(test,'light','Light Intensity');
           break;
+        case 'select':
+          graph([0,0],'-','-');
+          break;
         default:
           graph(test,'room_temp','Room Temprature');
           break;
@@ -128,6 +145,8 @@ function main(divs){
           // backgroundColor: 'darkblue', // night
           // borderColor: 'dodgerblue',
           data: temp,
+          fill: true,
+          tension: 0.5
         }]
       };
       const config = {
