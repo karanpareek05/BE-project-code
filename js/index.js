@@ -300,9 +300,12 @@ function main(data){
     div2.appendChild(p);
     document.getElementById("image-cont").appendChild(div);
   }
-
-  for (let i = 0; i < images.length; i++) {
-    add_image(images,i);
+  if(images.length == 0){
+    document.getElementById("photos_box").style.display = "none";
+  } else {
+    for (let i = 0; i < images.length; i++) {
+      add_image(images,i);
+    }
   }
 
 

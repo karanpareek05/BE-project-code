@@ -1,0 +1,25 @@
+{
+    "disease":[
+        {
+            "name":"Powdery Mildew",
+            "symptoms" : "",
+            "spread" : "",
+            "Favourable condition" : "",
+            "image" : ""
+        },
+        {
+            "name":"Verticillium wilt",
+            "symptoms" : "",
+            "spread" : "",
+            "Favourable condition" : "",
+            "image" : ""
+        },
+        {
+            "name":"Mint Rust",
+            "symptoms" : "",
+            "spread" : "",
+            "Favourable condition" : "",
+            "image" : ""
+        }
+    ]
+}
