@@ -237,6 +237,15 @@ body{
     background-color: rgba(0,0,0,0.4);
     backdrop-filter: saturate(180%) blur(7px);
 }
+
+.ask_box{
+    width: 600px;
+    height: 600px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5 8 slategray;
+}
+
 .ask_contain{
     display: grid;
     grid-template-columns: repeat(4,300px);
@@ -254,10 +263,10 @@ body{
 .generations{
     display: block;
     position: relative;
-    margin-left: 80%;
+    margin-left: 40%;
     margin-bottom: 50px;
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     background-color: #2F5D7F;
     border-radius: 5px;
     transform: scale(1);

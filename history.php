@@ -120,8 +120,11 @@ while($row = mysqli_fetch_assoc($test)){
 		</div>
 	</div>
 	<div class="ask_gen" id="ask_frame">
-		<span id="choose_gen">Choose Generation which you want to open</span>
-		<div class="ask_contain">
+		<div class="ask_box">
+			<span id="choose_gen">Choose Generation which you want to open</span>
+			<div class="ask_contain">
+		</div>
+
 		</div>
 	</div>
 	<script src="./js/history.js"></script>
