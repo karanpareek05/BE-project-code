@@ -381,6 +381,16 @@ body::-webkit-scrollbar {
   width: auto;
   margin: 5px 0px 0px 0px ;
 }
+#details table{
+  width: 32.5vw;
+  justify-content: space-evenly;
+  margin: 10px;
+  text-align: center;
+
+}
+#details table td:nth-child(even){
+  border-left: 5px solid #00b2ff;
+}
 /* #disease{
   grid-column : 2/1;
   width: 33.2vw;

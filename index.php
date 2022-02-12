@@ -113,7 +113,19 @@
           <table>
             <tr>
               <td>Plnat Name</td>
-              <td><input type="text" class="inlbl" id="plnt_name" disabled></td>
+              <td>Mint</td>
+            </tr>
+            <tr>
+              <td>Generation</td>
+              <td>BG01</td>
+            </tr>
+            <tr>
+              <td>Condition</td>
+              <td>Balanced</td>
+            </tr>
+            <tr>
+              <td>Days</td>
+              <td>Day 1</td>
             </tr>
           </table>
           <!-- <div class="lbl"  >Plant Name</div>

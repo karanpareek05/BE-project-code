@@ -108,8 +108,8 @@ left.onclick = function(){
   var span = document.getElementsByClassName("close")[0];
   btn.onclick = function() {
     try {
-      let table = document.getElementById('gen_name').value;
-      let plant = document.getElementById('plnt_name').value;
+      let table = document.getElementById('gen_name').innerText;
+      let plant = document.getElementById('plnt_name').innerText;
       console.log()
       if (table != "" && plant != "") {
         end_gen(table,plant,0);
@@ -580,10 +580,10 @@ function main(data){
 
   // ---------------------------- Details part -------------------
   // console.log(plant, table, gen_condition, crnt_week);
-  document.getElementById('plnt_name').value = new String(plant);
-  document.getElementById('gen_name').value = new String(table);
-  document.getElementById('gen_cond').value = new String(gen_condition);
-  document.getElementById('current_week').value = new String(crnt_week);
+  document.getElementById('plnt_name').innerText = new String(plant);
+  document.getElementById('gen_name').innerText = new String(table);
+  document.getElementById('gen_cond').innerText = new String(gen_condition);
+  document.getElementById('current_week').innerText = new String(crnt_week);
   // document.getElementById('current_phase').value = new String('Vegetative Growth');
   
   // dis_json = {
