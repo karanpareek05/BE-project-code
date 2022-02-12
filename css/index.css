@@ -374,15 +374,14 @@ body::-webkit-scrollbar {
 
 #details{
   font-family: calibri;
-  display: grid;
-  grid-template-columns: 265px 265px;
-  grid-template-rows: repeat(4,43px) 1fr;
+
+  position: relative;
   font-size: 24px;
   height: auto;
   width: auto;
   margin: 5px 0px 0px 0px ;
 }
-#disease{
+/* #disease{
   grid-column : 2/1;
   width: 33.2vw;
 }
@@ -427,7 +426,7 @@ body::-webkit-scrollbar {
   background-color: #e0e0e0;
   border-left: 3px solid;
   font-size: 24px;
-}
+} */
 #buttons{
   position: relative;
   margin-top: 10%;

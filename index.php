@@ -110,15 +110,21 @@
       </div>
       <div  class="graph">
         <div id="details">
-          <div class="lbl"  >Plant Name</div>
+          <table>
+            <tr>
+              <td>Plnat Name</td>
+              <td><input type="text" class="inlbl" id="plnt_name" disabled></td>
+            </tr>
+          </table>
+          <!-- <div class="lbl"  >Plant Name</div>
           <input type="text" class="inlbl" id="plnt_name" disabled>
           <div class="lbl"  >Generation</div>
           <input type="text"  class="inlbl" id="gen_name" disabled>
           <div class="lbl"  >Condition</div>
           <input type="text"  class="inlbl" id="gen_cond" disabled>
           <div class="lbl"  >Current Day</div>
-          <input type="text" id="current_week" class="inlbl" disabled></input>
-          <div class="lbl" id="disease" >
+          <input type="text" id="current_week" class="inlbl" disabled></input> -->
+          <!-- <div class="lbl" id="disease" >
             <label for="disease">Disease Pridiction</label>
             <div class="dis_rows" id="dis_name">
               <span class="dis_label"> Name : </span><span class="dis_detail_in"></span>
@@ -129,7 +135,7 @@
             <div class="dis_rows" id="symptoms">
               <span class="dis_label"> Symptoms : </span><span class="dis_detail_in"></span>
             </div>
-          </div>
+          </div> -->
           <!-- <input type="" id="disease_pre" class="inlbl" disabled> -->
         </div>
       </div>
