@@ -110,45 +110,44 @@
       </div>
       <div  class="graph">
         <div id="details">
-          <table>
+          <table class="details-table">
             <tr>
-              <td>Plnat Name</td>
-              <td>Mint</td>
+              <td>Plant Name</td>
+              <td id="plnt_name">Mint</td>
             </tr>
             <tr>
               <td>Generation</td>
-              <td>BG01</td>
+              <td id="gen_name" >BG01</td>
             </tr>
             <tr>
               <td>Condition</td>
-              <td>Balanced</td>
+              <td id="gen_cond" >Balanced</td>
             </tr>
             <tr>
               <td>Days</td>
-              <td>Day 1</td>
+              <td id="current_week">-</td>
             </tr>
           </table>
-          <!-- <div class="lbl"  >Plant Name</div>
-          <input type="text" class="inlbl" id="plnt_name" disabled>
-          <div class="lbl"  >Generation</div>
-          <input type="text"  class="inlbl" id="gen_name" disabled>
-          <div class="lbl"  >Condition</div>
-          <input type="text"  class="inlbl" id="gen_cond" disabled>
-          <div class="lbl"  >Current Day</div>
-          <input type="text" id="current_week" class="inlbl" disabled></input> -->
-          <!-- <div class="lbl" id="disease" >
-            <label for="disease">Disease Pridiction</label>
-            <div class="dis_rows" id="dis_name">
-              <span class="dis_label"> Name : </span><span class="dis_detail_in"></span>
-            </div>
-            <div class="dis_rows" id="proba">
-              <span class="dis_label"> Probablity : </span><span class="dis_detail_in"></span>
-            </div>
-            <div class="dis_rows" id="symptoms">
-              <span class="dis_label"> Symptoms : </span><span class="dis_detail_in"></span>
-            </div>
-          </div> -->
-          <!-- <input type="" id="disease_pre" class="inlbl" disabled> -->
+          <table class="disease-table">
+            <th colspan="2"><h4>Disease Prediction</h4></th>
+            <tr>
+              <td>Name : </td>
+              <td id="dis_name" > -- </td>
+            </tr>
+            <tr>
+              <td>Probability : </td>
+              <td id="proba">  -- </td>
+            </tr>
+            <tr >
+              <td>Symptoms : </td>
+              <td><textarea  id="symptoms" cols="30" rows="10" disabled> -- </textarea></td>
+            </tr>
+            <tr >
+              <td >Fav condition : </td>
+              <td><textarea  id="fav-cond" cols="30" rows="10" disabled> -- </textarea></td>
+            </tr>
+          </table>
+
         </div>
       </div>
       <div id="buttons">

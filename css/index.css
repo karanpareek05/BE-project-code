@@ -381,15 +381,53 @@ body::-webkit-scrollbar {
   width: auto;
   margin: 5px 0px 0px 0px ;
 }
-#details table{
-  width: 32.5vw;
+#details .details-table{
+  width: 35vw;
+  height: 9.5vw;
   justify-content: space-evenly;
-  margin: 10px;
+  margin-left: 10px;
   text-align: center;
+  border-collapse: separate;
+  border-spacing: 2px 2px;
 
 }
-#details table td:nth-child(even){
+#details .details-table td:nth-child(odd){
   border-left: 5px solid #00b2ff;
+  background-color: #c4e0ec;
+  width: 16.25vw;
+}
+#details .details-table td:nth-child(even){
+  border-left: 5px solid slategray;
+  background-color: #e0e0e0;
+  width: 16.25vw;
+}
+
+#details .details-table tr{
+  margin-bottom: 5px;
+}
+.disease-table{
+  width: 35vw;
+  border-collapse: separate;
+  border-spacing: 5px 2px;
+}
+.disease-table th{
+  text-align: center;
+
+  border-bottom: 2px solid slategray;
+}
+.details-table td{
+  font-size: 18px;
+}
+.disease-table td:nth-child(odd){
+  text-align: right;
+}
+.disease-table tr:nth-child(3),.disease-table tr:nth-child(4){
+  height: 50px;
+}
+.disease-table tr textarea{
+  width: 22vw;
+  height:40px;
+  font-size: small;
 }
 /* #disease{
   grid-column : 2/1;
