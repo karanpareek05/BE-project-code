@@ -241,10 +241,18 @@
           <!-- <input class="right" id="get_dis_details" type="text" name="img"> -->
           <textarea class="right" id="get_dis_details"  name="details"></textarea>
           <button class="right" id="endgen_call_btn">End Generation</button>
+          
       </div>    
     </div>
   </div>
+ <script> var dis_json = <?php
+      $myfile = fopen("mint.json", "r") or die("Unable to open file!");
+      echo fread($myfile,filesize("mint.json"));
+      fclose($myfile);
+  ?>;
 
+  
+  </script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script> 
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
