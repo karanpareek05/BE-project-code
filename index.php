@@ -27,7 +27,7 @@
   <div class="header">
     <text>Smart Plant Management System</text>
     <div class="header-right">
-      <a href="./index.php">
+      <a href="./index.php" class="active">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Home-icon.svg/1200px-Home-icon.svg.png" alt="">
         <span>Home</span>
       </a>

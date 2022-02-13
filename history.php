@@ -23,15 +23,32 @@ while($row = mysqli_fetch_assoc($test)){
 </head>
 <body>
 	<div class="header">
+		<text>Smart Plant Management System</text>
+		<div class="header-right">
+		<a href="./index.php">
+			<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Home-icon.svg/1200px-Home-icon.svg.png" alt="">
+			<span>Home</span>
+		</a>
+		<a href="./history.php" class="active">
+			<img src="https://cdn-icons-png.flaticon.com/512/32/32223.png" alt="">
+			<span>History</span>
+		</a>
+		<span class="vertical_line"></span>
+		<a  id="new_gen_btn" >
+			<img src="https://user-images.githubusercontent.com/21024245/35808218-c177e6cc-0a8d-11e8-929c-f8452748642b.png" alt="">
+			<span>Compare</span>
+		</a>
+		</div>
+	</div>
+	<!-- <div class="header">
 		<text>Smart Plant Monitoring System</text>
 		<div class="header-right">
 			<a href="./index.php">Home</a>
 			<span></span>
 			<a href="./history.php">History</a>
 			<a href="./compare.html" id="compare" >Compare</a>
-		</div>
+		</div> -->
 	</div>
-	<div style="height: 50px; width: 100vw;"></div>
 	<div class="container-box">
 		<section class="upper">
 			<div id="container_1">

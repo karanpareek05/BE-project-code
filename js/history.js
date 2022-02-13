@@ -75,6 +75,7 @@ function main(divs){
     if(images.length == 0){
       document.getElementById("sec4").style.display = "none";
     } else {
+      // document.getElementById("sec4").style.display = "block";
       for (let i = 0; i < images.length; i++) {
         add_image(images,i);
       }

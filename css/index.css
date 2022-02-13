@@ -149,6 +149,9 @@ body::-webkit-scrollbar {
   background-color: var(--body-bg);
   cursor: pointer;
 }
+.active{
+  background-color: var(--body-bg);
+}
 /* .header span{
   position: relative;
   display: inline-block;
@@ -480,18 +483,20 @@ body::-webkit-scrollbar {
 .btns{
   height: 50px;
   width: 155px;
-  background-color: coral;
   border-radius: 5px;
   display: flex;
   justify-content: space-around;
   align-items: center;
   font-size: larger;
-  color: black;
+  color: #162e28;
   font-weight: bold;
+  background: linear-gradient(45deg, #99ddff, #3bff85c4);
+  transition: 0.3s;
 }
 .btns:hover{
-  color: rgb(150, 192, 235);
+  color: black;
   cursor: pointer;
+  background: linear-gradient(233deg, #99ddff, #3bff85c4);
 }
 .btns svg{
   width: 24px;
