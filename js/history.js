@@ -51,62 +51,101 @@ function main(divs){
 
   // console.log(divs);
   document.getElementById('ask_frame').style.display = 'none';
-  var test;
+  var allData;
+  var dayData;
+  var nightData;
   var timestamp = [];
   var temp = [];
   var bgcolor = 'crimson';
   var bordColor = 'darkgrey';
   $.get("./fetch.php?flag=2&table="+divs, function(genData, status){
     genData = JSON.parse(genData);
-    test = genData[0];
-
-    days = genData[3];
+    allData = genData[0];
+    days = genData[1];
+    images = genData[2];
     select = document.getElementById('day_select');
-    for (var i = 1; i<=days.length; i++){
+    for (var i = 0; i<days.length; i++){
         var opt = document.createElement('option');
         opt.value = days[i]["date"];
         opt.innerHTML = days[i]["date"];
         // opt.selected = 'true';
         select.appendChild(opt);
     }
-  
-    $('#day_select').change(function(){
-      selected_day = $('#day_select').val()
-      test = $.grep(genData[0] , function( n, i ) {
-        return n.date==selected_day;
-      });
-      console.log(test);
-    });
 
+    if(images.length == 0){
+      document.getElementById("sec4").style.display = "none";
+    } else {
+      for (let i = 0; i < images.length; i++) {
+        add_image(images,i);
+      }
+    }
+
+    $('#day_select').change(function(){
+      $('#time_select').val("select");
+      graph([0,0],'-','-');
+      var selected_day = $(this).val();
+      switch (selected_day) {
+        case 'select':
+          $('#time_select').val("select");
+          graph([0,0],'-','-');
+          allData = genData[0];
+          break;
+        default:
+          allData = $.grep(genData[0] , function( n, i ) {
+            return n.date==selected_day;
+          });
+          break;
+      }
+      // console.log(allData);
+    });
+    dayHrs = [7,8,9,10,11,12,13,14,15,16,17,18]
+    nightHrs = [19,20,21,22,23,24,1,2,3,4,5,6]
+    test = allData;
+    bgcolor = 'crimson';
+    bordColor = 'darkgrey';
     $('#time_select').change(function(){
       $('#graph_select').val("select")
       graph([0,0],'-','-');
       var check = $(this).val();
       switch (check) {
         case 'day':
-          test = genData[1];
+          dayData = $.grep(allData, function( n, i ) {
+            tist = n.timestamp;
+            const dt = new Date(tist).getHours();
+            return dayHrs.includes(dt);
+          });
+          test = dayData;
           bgcolor = 'yellow';
           bordColor = 'orange';
           break;
         case 'night':
+          nightData = $.grep(allData, function( n, i ) {
+            tist = n.timestamp;
+            const dt = new Date(tist).getHours();
+            return nightHrs.includes(dt);
+          });
+          test = nightData;
           bgcolor = 'skyblue';
           bordColor = 'darkslateblue';
-          test = genData[2];
+          // allData = genData[2];
           break;
-        default:
-          test = genData[0];
+        case 'select':
+          $('#graph_select').val("select")
+          graph([0,0],'-','-');
+          test = allData;
           bgcolor = 'crimson';
           bordColor = 'darkgrey';
           break;
       }
+      // console.log(test);
     });
     
-    // graph(test,'room_temp','Room Temprature','temp_chart');
-    // graph(test,'humidity','Humidity','humid_chart');
-    // graph(test,'moisture','Soil Moisture','moist_chart');
-    // graph(test,'light','Light Intensity','light_chart');
-    // graph(test,'light','Light Intensity',);
-    graph(test,'room_temp','Room Temprature');
+    // graph(allData,'room_temp','Room Temprature','temp_chart');
+    // graph(allData,'humidity','Humidity','humid_chart');
+    // graph(allData,'moisture','Soil Moisture','moist_chart');
+    // graph(allData,'light','Light Intensity','light_chart');
+    // graph(allData,'light','Light Intensity',);
+    graph(allData,'room_temp','Room Temprature');
     $('#graph_select').change(function(){
       var check = $(this).val();
       switch (check) {
@@ -127,14 +166,15 @@ function main(divs){
           graph([0,0],'-','-');
           break;
         default:
-          graph(test,'room_temp','Room Temprature');
+          graph(allData,'room_temp','Room Temprature');
           break;
       }
     });
 
     function graph(genData,column_name,myLabel) {
+      // console.log(genData)
       var count = Object.keys(genData).length;
-      console.log(bgcolor,bordColor);
+      // console.log(bgcolor,bordColor);
       timestamp = [];
       temp = [];
       for(let i=0;i<count;i++){
@@ -239,6 +279,38 @@ function main(divs){
     document.getElementById('humid_night').innerText = night_val['night_humid'];
     document.getElementById('moist_day').innerText = day_val['day_moist'];
     document.getElementById('moist_night').innerText = night_val['night_moist'];
+  }
+  function add_image(data,i){
+    const div = document.createElement("div");
+    div.classList.add("carousel-item");
+    if(i == 0){
+      div.classList.add("active");
+    }
+
+    const img = document.createElement("img");
+    img.classList.add("d-block");
+    img.classList.add("w-100");
+    img.src = data[i]['image'];
+    img.style.width = "800px !important";
+    img.style.height = "400px";
+
+
+    const div2 = document.createElement("div");
+    div2.classList.add("carousel-caption");
+    div2.classList.add("d-none");
+    div2.classList.add("d-md-block");
+
+    const h5 = document.createElement("h5");
+    h5.innerText = "Day "+data[i]['day']
+
+    const p = document.createElement("p");
+    p.innerText = data[i]['timestamp']
+
+    div.appendChild(img);
+    div.appendChild(div2);
+    div2.appendChild(h5);
+    div2.appendChild(p);
+    document.getElementById("image-cont").appendChild(div);
   }
 
 }

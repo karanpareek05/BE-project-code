@@ -529,7 +529,7 @@ function main(data){
         let dis_part = dis_json["disease"]
         for (var i = 0; i < dis_part.length; i++){
           if (dis_part[i].name == disName){
-            console.log(dis_part[i].symptons)
+            // console.log(dis_part[i].symptons)
             dis_in[2].innerText = dis_part[i].symptons;
           }
         }

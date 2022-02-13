@@ -65,16 +65,25 @@ include("database_connect.php");
 				array_push($whole,$ary);
 			}
 			// select * from gen1 where HOUR(timestamp) in (18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5);
-			$sql = "select * from `".$_GET['table']."` where HOUR(timestamp) in (6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17)";
-			$result = mysqli_query($conn,$sql);
-			$ary = [];
-			if(null !== $result){
-				while ($row =mysqli_fetch_assoc($result)) {
-					$ary[] = $row; 
-				}
-				array_push($whole,$ary);
-			}
-			$sql2 = "select * from `".$_GET['table']."` where HOUR(timestamp) in (18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5)";
+			// $sql = "select * from `".$_GET['table']."` where HOUR(timestamp) in (6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17)";
+			// $result = mysqli_query($conn,$sql);
+			// $ary = [];
+			// if(null !== $result){
+			// 	while ($row =mysqli_fetch_assoc($result)) {
+			// 		$ary[] = $row; 
+			// 	}
+			// 	array_push($whole,$ary);
+			// }
+			// $sql2 = "select * from `".$_GET['table']."` where HOUR(timestamp) in (18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5)";
+			// $result2 = mysqli_query($conn,$sql2);
+			// $ary = [];
+			// if(null !== $result2){
+			// 	while ($row = mysqli_fetch_assoc($result2)) {
+			// 		$ary[] = $row;
+			// 	}
+			// 	array_push($whole,$ary);
+			// }
+			$sql2 = "select date from `".$_GET['table']."` group by date";
 			$result2 = mysqli_query($conn,$sql2);
 			$ary = [];
 			if(null !== $result2){
@@ -83,7 +92,7 @@ include("database_connect.php");
 				}
 				array_push($whole,$ary);
 			}
-			$sql2 = "select date from `".$_GET['table']."` group by date";
+			$sql2 = "select * from photos where gen_name='".$_GET['table']."'";
 			$result2 = mysqli_query($conn,$sql2);
 			$ary = [];
 			if(null !== $result2){

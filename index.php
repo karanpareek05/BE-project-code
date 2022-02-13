@@ -43,13 +43,7 @@
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div> -->
   <div class="carousel-inner" id="image-cont">
-    <!-- <div class="carousel-item active" >
-      <img src="..." class="d-block w-100 "  height=400 id="sumit" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5 id=h5-1 >First slide label</h5>
-        <p  id=p-2 >Some representative placeholder content for the first slide.</p>
-      </div>
-    </div> -->
+
 
 
 
