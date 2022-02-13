@@ -70,6 +70,13 @@ function main(divs){
         select.appendChild(opt);
     }
   
+    $('#day_select').change(function(){
+      selected_day = $('#day_select').val()
+      test = $.grep(genData[0] , function( n, i ) {
+        return n.date==selected_day;
+      });
+      console.log(test);
+    });
 
     $('#time_select').change(function(){
       $('#graph_select').val("select")
@@ -235,95 +242,4 @@ function main(divs){
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var d = JSON.parse(gen_data["responseText"]);
-// console.log(d);
-
-// function getRandomColor() {
-//   var letters = '0123456789ABCDEF';
-//   var color = '#';
-//   for (var i = 0; i < 6; i++) {
-//     color += letters[Math.floor(Math.random() * 16)];
-//   }
-//   return color;
-// }
-
-// var data = ['gen','gen1','ge2','genration 2','generaion 3'];
-
-// for(let i=0;i<data.length;i++){
-//   var frame = document.getElementsByClassName("ask_contain")[0];
-//   var gne = document.createElement("DIV");
-//   gne.setAttribute("class","generations");
-//   gne.setAttribute("id",data[i]);
-//   gne.style.backgroundColor = getRandomColor();
-//   frame.appendChild(gne);
-  
-//   var kne = document.createElement("SPAN");
-//   kne.innerHTML = data[i];
-//   gne.appendChild(kne);
-  
-// }
-
-
-// document.getElementById("ask_frame").onclick = function(){
-//   document.getElementById("ask_frame").style.display = "none";
-// }
-
-
-
-// var test;
-// var timestamp = [];
-// var temp = [];
-// $.get("http://192.168.1.203/test/test.php", function(value, status){
-//   test = JSON.parse(value);
-//   console.log(test);
-//   var count = Object.keys(test).length;
-//   console.log(count);
-//   for(let i=0;i<count;i++){
-//     timestamp.push(test[i]['timestamp']);
-//     temp.push(test[i]['room_temp']);
-//   }
-
-//   const labels = timestamp;
-//   const data = {
-//     labels: labels,
-//     datasets: [{
-//       label: 'Room Temprature',
-//       backgroundColor: 'yellow',
-//       borderColor: 'orange',
-//       data: temp,
-//     }]
-//   };
-//   const config = {
-//       type: 'line',
-//       data: data,
-//       options: {
-//         responsive: true,
-//       }
-//     };
-//   const myChart = new Chart(
-//     document.getElementById('myChart'),
-//     config
-//   );
-// });
-
 
