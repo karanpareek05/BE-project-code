@@ -25,10 +25,10 @@ while($row = mysqli_fetch_assoc($test)){
 	<div class="header">
 		<text>Smart Plant Monitoring System</text>
 		<div class="header-right">
-		<a href="./index.php">Home</a>
-		<span></span>
-		<a href="./history.php">History</a>
-		<a href="./compare.html" id="compare" >Compare</a>
+			<a href="./index.php">Home</a>
+			<span></span>
+			<a href="./history.php">History</a>
+			<a href="./compare.html" id="compare" >Compare</a>
 		</div>
 	</div>
 	<div style="height: 50px; width: 100vw;"></div>

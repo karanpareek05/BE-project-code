@@ -145,12 +145,12 @@ function main(divs){
     // graph(allData,'moisture','Soil Moisture','moist_chart');
     // graph(allData,'light','Light Intensity','light_chart');
     // graph(allData,'light','Light Intensity',);
-    graph(allData,'room_temp','Room Temprature');
+    graph(allData,'room_temp','Temprature');
     $('#graph_select').change(function(){
       var check = $(this).val();
       switch (check) {
         case 'temp':
-          graph(test,'room_temp','Room Temprature');
+          graph(test,'room_temp','Temprature');
           break;
         case 'humid':
           // chart.destroy();
@@ -166,7 +166,7 @@ function main(divs){
           graph([0,0],'-','-');
           break;
         default:
-          graph(allData,'room_temp','Room Temprature');
+          graph(allData,'room_temp','Temprature');
           break;
       }
     });

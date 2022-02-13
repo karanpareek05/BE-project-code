@@ -27,10 +27,19 @@
   <div class="header">
     <text>Smart Plant Management System</text>
     <div class="header-right">
-      <a href="#home">Home</a>
-      <a href="./history.php">History</a>
-      <span></span>
-      <a  id="new_gen_btn" >New Gen</a>
+      <a href="./index.php">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Home-icon.svg/1200px-Home-icon.svg.png" alt="">
+        <span>Home</span>
+      </a>
+      <a href="./history.php">
+        <img src="https://cdn-icons-png.flaticon.com/512/32/32223.png" alt="">
+        <span>History</span>
+      </a>
+      <span class="vertical_line"></span>
+      <a  id="new_gen_btn" >
+        <img src="https://freepikpsd.com/file/2019/10/create-icon-png-1-Transparent-Images-300x300.png" alt="">
+        <span>New Gen</span>
+      </a>
     </div>
   </div>
   <div class="webBody">
@@ -92,7 +101,7 @@
       <h1 id="graph_lbl">Graphical Format</h1>
       <h1 id="graph_lbl2">Details</h1>
       <div id="tmp_graph" class=graph>
-        <h2 id="graph1_heading">Room Temprature</h2>
+        <h2 id="graph1_heading">Temprature</h2>
         <img src="./icon/left-arrow.svg" id="arrow-left"></img>
         <div id="allGraph">
           <div class="chart" id="temp-chart"></div>  
@@ -144,11 +153,24 @@
 
         </div>
       </div>
-      <div id="buttons">
-        <button  id="end_btn">End</button>
-        <button id="photo_btn">Add Photo</button>
-      </div>
     </div>
+    <div id="buttons">
+        <div class="btns" id="end_btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-slash-circle-fill" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.646-2.646a.5.5 0 0 0-.708-.708l-6 6a.5.5 0 0 0 .708.708l6-6z"/>
+        </svg>
+          <span>End</span>
+        </div>
+        <div class="btns" id="photo_btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-images" viewBox="0 0 16 16">
+          <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+          <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2zM14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1zM2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10z"/>
+        </svg>
+          <span>Add Photo</span>
+        </div>
+        <!-- <button  id="end_btn">End</button>
+        <button id="photo_btn">Add Photo</button> -->
+      </div>
   </div>
 
 <!-------------- Add gen frame ---------------->

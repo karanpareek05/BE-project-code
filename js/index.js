@@ -63,7 +63,7 @@ setInterval(function() {
 // --------------------  Graph Change -------------------------
 var right = document.getElementById("arrow-right");
 var count = 0;
-let label = ['Room Temperature','Humidity','Moisture','Light']
+let label = ['Temperature','Humidity','Moisture','Light']
 document.getElementById("graph1_heading").innerHTML = label[0];
 right.onclick = function(){
   if(count == 0){  
@@ -424,7 +424,7 @@ function main(data){
 
   function live_data(type,data){
 
-    mydata(data,'Room Temprature','room_temp','temp-chart');
+    mydata(data,'Temprature','room_temp','temp-chart');
     mydata(data,'Humidity','humidity','humid-chart');
     mydata(data,'Moisture','moisture','moist-chart');
     mydata(data,'Light','light','light-chart');
@@ -502,35 +502,37 @@ function main(data){
   humid = document.getElementById('hum_in').innerText;
   moist = document.getElementById('mos_in').innerText;
   light = document.getElementById('light_in').innerText;
-  // try {
-  //   let url = "http://sumitas.pythonanywhere.com/?temp="+room_temp+"&humid="+humid+"&moist="+moist+"&light="+light
-  //   console.log(url);
-  //   console.log(room_temp,humid,moist,light);
-  //   $.get(url, function(data,){
-  //     data = JSON.parse(data);
-  //     set_disease(data);
-  //   });
-  // } catch (error) {
-  //   set_disease(null);
-  //   console.log(error)
-  // }
+  try {
+    // let url = "http://sumitas.pythonanywhere.com/?temp="+room_temp+"&humid="+humid+"&moist="+moist+"&light="+light
+    let url = "http://127.0.0.1:5000/?temp="+room_temp+"&humid="+humid+"&moist="+moist+"&light="+light
+    console.log(url);
+    console.log(room_temp,humid,moist,light);
+    $.get(url, function(data,){
+      data = JSON.parse(data);
+      set_disease(data);
+    });
+  } catch (error) {
+    set_disease(null);
+    console.log(error)
+  }
   
   function set_disease(data) {
     console.log(data);
     if (data != null){
       let dis_in = document.getElementsByClassName("dis_detail_in");
-      let disName = data['possibleDisease'] ;
-      let disProb = data['probablity'] ;
+      let disName = data['disease_name'] ;
+      let disProb = data['disease_prob'] ;
   
-      dis_in[0].innerText = disName;
-      dis_in[1].innerText = disProb+" %";
+      document.getElementById("dis_name").innerText = disName;
+      document.getElementById("proba").innerText = disProb+" %";
   
-      if(data['possibleDisease'] != "No Disease"){
+      if(disName != "No Disease"){
         let dis_part = dis_json["disease"]
         for (var i = 0; i < dis_part.length; i++){
           if (dis_part[i].name == disName){
-            // console.log(dis_part[i].symptons)
-            dis_in[2].innerText = dis_part[i].symptons;
+            console.log(dis_part[i].symptons)
+            document.getElementById("symptoms").innerText = dis_part[i].symptons;
+            document.getElementById("fav-cond").innerText = dis_part[i]["Favourable condition"];
           }
         }
       } else {

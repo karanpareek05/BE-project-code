@@ -39,14 +39,17 @@ body{
     color: whitesmoke;
     width: 100vw;
     z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .header text{
     font-size: 25px;
-    float: left;
+    /* float: left; */
 }
 .header-right{
-    float: right;
-    right: 0;
+    /* float: right;
+    right: 0; */
 }
 .header-right a{
     font-size: 20px;

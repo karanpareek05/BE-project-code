@@ -6,11 +6,13 @@
 }
 :root {
   --web-view-ids: home;
-  --body-bg: #050B21;
-  --body-color: white;
+  /* --body-bg: #050B21; */
+  --body-bg: #efefef;
+  --body-color: black;
   --name-size : 33px;
   --nav-float : right;
-  --header-bg : #2F5D7F;
+  /* --header-bg : #2F5D7F; */
+  --header-bg : white;
 }
 * {
   margin: 0;
@@ -21,12 +23,16 @@
 body{
   font-size: 14px;
   background-color:var(--body-bg);/*#42668a;*/
-  display: flex;
-  justify-content: center;
-  align-content: center;
 }
 body::-webkit-scrollbar {
   display: none;
+}
+.webBody{
+  width: 100vw;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /*------------- Noti -----------------*/
 #enable_noti{
@@ -94,30 +100,56 @@ body::-webkit-scrollbar {
 /*------------- header -----------------*/
 .header{
   font-family: calibri;
-  background-color: pink;
   padding: 10px;
   width: 100vw;
-  height: 50px;
-  background-color: #2F5D7F;
-  color: whitesmoke;
-  position: fixed;
+  height: 70px;
+  background-color: white;
+  color: black;
   z-index: 2;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  box-shadow: 0px 0px 7px slategrey;
 }
 .header text{
-  font-size: large;
+  font-size: x-large;
 
 }
-
+.header-right{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
 .header-right a{
   font-size: large;
-  color: white;
+  color: black;
   text-decoration: none;
-  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
 }
-.header span{
+.header-right .vertical_line{
+  width: 1px;
+  height: 44px;
+  border: 1px solid black;
+  background: black;
+}
+.header-right a img{
+  width: 24px;
+  height: 24px;
+}
+.header-right a span{
+  font-size: large;
+  font-weight: bold;
+}
+.header-right a:hover{
+  background-color: var(--body-bg);
+  cursor: pointer;
+}
+/* .header span{
   position: relative;
   display: inline-block;
   width: 1px;
@@ -125,14 +157,15 @@ body::-webkit-scrollbar {
   background-color: rgba(255, 255, 255, 0.5);
   height: 22px;
   vertical-align: bottom;
-}
+} */
+
 #container{
-  height: 80vh;
+  height: auto;
   position: relative;
-  top: 50px;
+  /* top: 50px; */
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 0.7fr 1fr 1fr;
+  grid-template-rows: 0.7fr 1fr 0.3fr;
   /*transform: scale(0.9);*/
 }
 
@@ -193,6 +226,7 @@ body::-webkit-scrollbar {
   text-align: center;
   color: var(--body-color);
   background-color: var(--body-bg);
+  padding: 6px;
 }
 .live_data_box{
   position: relative;
@@ -200,22 +234,25 @@ body::-webkit-scrollbar {
   margin-top: 40px;
   /*margin-left: 11%;*/
   border-radius: 2px;
-  border: 1px #cecece solid;
-  background: transparent;
+  /* border: 1px #cecece solid; */
+  background: white;
   width: 1221px;
   height: 280px;
   padding-left: 30px;
   display: grid;
   grid-template-columns: repeat(4,1fr);
   align-content: center;
+  box-shadow: 0px 3px 7px slategrey;
 }
 .sensor-values{
   background-color: rgba(255,255,255);
   width: 273px;
   height: 230px;
   border-left: solid 5px #44bf44;
+  box-shadow: 0 8px 12px gray;
   transition: transform .3s ease;
   display: grid;
+  transform: scale(0.8);
 }
 #sensor-values:hover{
   transform: scale(1.1);
@@ -256,36 +293,35 @@ body::-webkit-scrollbar {
 #graph_lbl{
   position: absolute;
   font-family: fangsong;
-  font-size: 1.5em;
+  font-size: x-large;
   left: 200px;
   top: -14px;
   width: 250px;
   text-align: center;
   color: var(--body-color);
   background-color: var(--body-bg);
+  padding: 6px;
+  font-weight:200;
 }
 #graph_lbl2{
   position: absolute;
   font-family: fangsong;
-  font-size: 1.5em;
+  font-size: x-large;
   left: 820px;
   top: -14px;
   width: 200px;
   text-align: center;
   color: var(--body-color);
   background-color: var(--body-bg);
+  padding: 6px;
+  font-weight:200;
 }
 .graph_box{
+  background-color: white;
   position: relative;
-  float: left;
-  margin-top:40px;
-  
-  /*margin-left:11%;*/
-  background : transparent;
   border-radius: 2px;
-  border: 1px #cecece solid;
   width: 1221px;
-  height: 454px;
+  height: 504px;
   padding: 1em;
   display: grid;
   grid-template-columns:repeat(2,1fr);
@@ -293,6 +329,7 @@ body::-webkit-scrollbar {
   grid-gap:1em;
   align-items: center; 
   padding-top:30px;
+  box-shadow: 0px 3px 7px slategrey;
 }
 #graph1_heading{
   text-align: center;
@@ -302,6 +339,7 @@ body::-webkit-scrollbar {
   overflow: hidden;
 }
 .graph{
+
   position: relative;
   background-color: white;
   border-left: solid 5px;
@@ -315,6 +353,7 @@ body::-webkit-scrollbar {
   justify-content: center;
   overflow: hidden;
   flex-direction: row;
+  box-shadow: 2px 9px 12px gray;
 }
 .chart{
   height: 390px;
@@ -429,71 +468,46 @@ body::-webkit-scrollbar {
   height:40px;
   font-size: small;
 }
-/* #disease{
-  grid-column : 2/1;
-  width: 33.2vw;
-}
-#disease label{
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  position: relative;
-  right: 0;
-  color: #050B21;
-  font-size: larger;
-}
-.dis_detail_in{
-  color: #275883;
-  font-family: OCR A;
-}
-.dis_label{
-  text-align: left;
-  position: relative;
-  font-size: 25px;
-}
-.dis_rows{
-  justify-content: left;
-  text-align: left;
-  padding-left: 10px;
-}
-#symptoms{
-  font-size: large;
-}
 
-.lbl,.inlbl{
-  text-align: center;
-  width: 265px;
-  height: 95%;
-}
-.lbl{
-  color: #4a4a4a;
-  border-left: 5px solid #00b2ff;
-  background-color: #c4e0ec;
-}
-.inlbl{
-  font-family: OCR A;
-  color: #275883;
-  background-color: #e0e0e0;
-  border-left: 3px solid;
-  font-size: 24px;
-} */
 #buttons{
   position: relative;
-  margin-top: 10%;
-  left: 100%;
-  float: right;
-  /*background-color: pink;*/
-  /*display: grid;*/
-  /*grid-template-rows: 1fr 1fr;*/
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 120px;
+  gap: 30px;
 }
-#end_btn,#photo_btn{
-  position: relative;
-  margin: 20px 0px 0px 15px;
+.btns{
   height: 50px;
+  width: 155px;
+  background-color: coral;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: larger;
+  color: black;
+  font-weight: bold;
+}
+.btns:hover{
+  color: rgb(150, 192, 235);
+  cursor: pointer;
+}
+.btns svg{
+  width: 24px;
+  height: 24px;
+}
+#end_btn{
   width: 100px;
-  float: right; 
+}
+/* #end_btn,#photo_btn{
+  height: 50px;
+  width: 155px;
   background-color: coral;
   font-size: 20px;
   font-family: sans-serif;
-}
+  border-radius: 5px;
+} */
 
 #end_btn:active,#photo_btn:active{
   background-color: cornflowerblue;
