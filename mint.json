@@ -2,24 +2,24 @@
     "disease":[
         {
             "name":"Powdery Mildew",
-            "symptoms" : "",
-            "spread" : "",
-            "Favourable condition" : "",
-            "image" : ""
+            "symptoms" : "Powdery mildew appears on mint leaves, stems, and petioles as a powdery, white to gray coating of fungal mycelium and spores.",
+            "spread" : "Mildew spores are spread by the wind in warm, dry weather, but don't spread well when conditions are rainy and cool. Powdery mildew strains are specialized to certain groups of plants and generally don't spread to other plant families.",
+            "Favourable condition" : "Powdery mildew is often severe on mint grown in the greenhouse due to humid, shady conditions",
+            "image" : "https://plantpath.ifas.ufl.edu/u-scout/hydrangea/images/powdery-mildew/22161DD2C3964DF39A98F053EB87FBF3/04-591b%20CP%20NEW.jpg"
         },
         {
             "name":"Verticillium wilt",
-            "symptoms" : "",
-            "spread" : "",
-            "Favourable condition" : "",
-            "image" : ""
+            "symptoms" : "Powdery white patches are developed on the upper and lower surfaces of the leaves and stems. Under favourable conditions, the disease causes severe lossess. It also reduces the oil",
+            "spread" : "Spread of the pathogen occurs primarily by soil and movement of soil and water.",
+            "Favourable condition" : "Disease becomes severe when weather is dry and air circulation is poor (warm and humid weather)",
+            "image" : "https://www.apsnet.org/edcenter/disandpath/fungalasco/pdlessons/Article%20Images/VerticilliumWilt03.jpg"
         },
         {
             "name":"Mint Rust",
-            "symptoms" : "",
-            "spread" : "",
-            "Favourable condition" : "",
-            "image" : ""
+            "symptoms" : "Pale and distorted shoots in spring. Dusty orange pustules on the stems and leaves.Large areas of leaf tissue die and plants may lose leaves",
+            "spread" : "When the orange spore pustules mature and break open in June or July, the spores are spread to other plants by the wind",
+            "Favourable condition" : "Dry weather with high relative humidity",
+            "image" : "https://hargravetriffid.files.wordpress.com/2015/07/rust_puccinia_menthae_18-07-13_2.jpg"
         }
     ]
 }

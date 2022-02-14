@@ -65,7 +65,8 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 5px;
+    height: 61px;
+    width: 75px;
   }
   .header-right .vertical_line{
     width: 1px;
@@ -342,8 +343,8 @@ body{
 }
 
 .ask_box{
-    width: 500px;
-    height: 600px;
+    width: 659px;
+    height: 456px;
     background-color: whitesmoke;
     border-radius: 10px;
     padding: 10px;

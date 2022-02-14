@@ -129,7 +129,8 @@ body::-webkit-scrollbar {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 5px;
+  height: 61px;
+  width: 75px;
 }
 .header-right .vertical_line{
   width: 1px;
@@ -251,6 +252,7 @@ body::-webkit-scrollbar {
   background-color: rgba(255,255,255);
   width: 273px;
   height: 230px;
+  border: 1px solid lightgray;
   border-left: solid 5px #44bf44;
   box-shadow: 0 8px 12px gray;
   transition: transform .3s ease;
@@ -345,10 +347,7 @@ body::-webkit-scrollbar {
 
   position: relative;
   background-color: white;
-  border-left: solid 5px;
-  border-left-color: greenyellow;
-  border-right: solid 6px;
-  border-right-color: greenyellow;
+  border: 1px solid lightgray;
   height: 390px;
   width: 550px;
   display: flex;
@@ -469,11 +468,11 @@ body::-webkit-scrollbar {
 .disease-table tr textarea{
   width: 22vw;
   height:40px;
-  font-size: small;
+  font-size: large;
 }
 
 #buttons{
-  position: relative;
+  position: relative;border-top: none;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -492,11 +491,21 @@ body::-webkit-scrollbar {
   font-weight: bold;
   background: linear-gradient(45deg, #99ddff, #3bff85c4);
   transition: 0.3s;
+  box-shadow: 2px 3px 8px lightsteelblue;
 }
 .btns:hover{
   color: black;
   cursor: pointer;
   background: linear-gradient(233deg, #99ddff, #3bff85c4);
+  box-shadow: 2px 3px 8px gray;
+}
+#end_btn:active{
+  box-shadow: 2px 3px 8px rgb(255, 46, 46);
+  color: rgb(255, 46, 46);
+}
+#photo_btn:active{
+  box-shadow: 2px 3px 8px dodgerblue;
+  color: dodgerblue;
 }
 .btns svg{
   width: 24px;
