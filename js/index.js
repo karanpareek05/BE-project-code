@@ -36,16 +36,16 @@ function noti(color,notiText) {
 
 // --------------------------- Start Scripts --------------------
 
-// $.get("./fetch.php?flag=0", function(data, status){
-//   try {
-//     data = JSON.parse(data);
-//     check_data(data);
-//     console.log(data);
-//   } catch (error) {
-//     console.log(error);
-//     check_data(null);
-//   } 
-//   });  
+$.get("./fetch.php?flag=0", function(data, status){
+  try {
+    data = JSON.parse(data);
+    check_data(data);
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+    check_data(null);
+  } 
+  });  
 setInterval(function() {
   $.get("./fetch.php?flag=0", function(data, status){
     try {
@@ -198,8 +198,9 @@ if (data != null) {
 }
 else{
   alert("Currently Not Monitoring Any data");
-  document.getElementById('end_btn').style.display="none";
-  document.getElementById('photo_btn').style.display="none";
+  document.getElementById('container').style.display="none";
+  // document.getElementById('end_btn').style.display="none";
+  // document.getElementById('photo_btn').style.display="none";
   
   }
 }

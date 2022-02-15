@@ -52,11 +52,33 @@ while($row = mysqli_fetch_assoc($test)){
 	<div class="container-box">
 		<section class="upper">
 			<div id="container_1">
-				<div class="details"><span class="label">Genration</span><span class="details_in" id="gen_in"></span></div>
+				<table>
+				<tr>
+					<td>Genration</td>
+					<td id="gen_in"></td>
+				</tr>
+				<tr>
+					<td>Plant</td>
+					<td id="plant_in">></td>
+				</tr>
+				<tr>
+					<td>Condition</td>
+					<td id="condition"></td>
+				</tr>
+				<tr>
+					<td>Start Date</td>
+					<td id="start_dt"></td>
+				</tr>
+				<tr>
+					<td>End Date</td>
+					<td id="end_dt"></td>
+				</tr>
+				</table>
+				<!-- <div class="details"><span class="label">Genration</span><span class="details_in" id="gen_in"></span></div>
 				<div class="details"><span class="label">Plant</span><span class="details_in" id="plant_in"></span></div>
 				<div class="details"><span class="label">Condition</span><span class="details_in" id="condition"></span></div>
 				<div class="details"><span class="label">Start Date</span><span class="details_in" id="start_dt"></span></div>
-				<div class="details"><span class="label">End Date</span><span class="details_in" id="end_dt"></span></div>
+				<div class="details"><span class="label">End Date</span><span class="details_in" id="end_dt"></span></div> -->
 			</div>
 			<div id="container_2">
 				<div class="details"><span class="label">Quality of the plant</span><span class="details_in" id="quality_in"></span></div>

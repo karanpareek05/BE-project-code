@@ -116,15 +116,15 @@
           <table class="details-table">
             <tr>
               <td>Plant Name</td>
-              <td id="plnt_name">Mint</td>
+              <td id="plnt_name">-</td>
             </tr>
             <tr>
               <td>Generation</td>
-              <td id="gen_name" >BG01</td>
+              <td id="gen_name" >-</td>
             </tr>
             <tr>
               <td>Condition</td>
-              <td id="gen_cond" >Balanced</td>
+              <td id="gen_cond" >-</td>
             </tr>
             <tr>
               <td>Days</td>
