@@ -41,6 +41,17 @@ include("database_connect.php");
 			}
 			array_push($whole,$ary);
 			
+			$prevDate = date('Y.m.d',strtotime("-1 days"));
+			$test = mysqli_query($conn,"select ROUND(AVG(room_temp)) as avgTemp,
+			ROUND(AVG(humidity)) as avgHumid,
+			ROUND(AVG(moisture)) as avgMoist,
+			ROUND(AVG(light)) as avgLight
+			from `".$table."` where date='".$prevDate."'");
+			while ($row = mysqli_fetch_assoc($test)) {
+				array_push($whole,$row);
+			}
+
+
 			echo json_encode($whole);
 
 			break;

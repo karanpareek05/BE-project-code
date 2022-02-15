@@ -36,16 +36,16 @@ function noti(color,notiText) {
 
 // --------------------------- Start Scripts --------------------
 
-$.get("./fetch.php?flag=0", function(data, status){
-  try {
-    data = JSON.parse(data);
-    check_data(data);
-    console.log(data);
-  } catch (error) {
-    console.log(error);
-    check_data(null);
-  } 
-  });  
+// $.get("./fetch.php?flag=0", function(data, status){
+//   try {
+//     data = JSON.parse(data);
+//     check_data(data);
+//     console.log(data);
+//   } catch (error) {
+//     console.log(error);
+//     check_data(null);
+//   } 
+//   });  
 setInterval(function() {
   $.get("./fetch.php?flag=0", function(data, status){
     try {
@@ -217,6 +217,13 @@ function main(data){
   const third_data = data[3];
   const images = data[4];
 
+
+  document.getElementById("avg_temp").innerText = data[5]["avgTemp"]+" °C";
+  document.getElementById("avg_humid").innerText = data[5]["avgHumid"]+" %";
+  document.getElementById("avg_moist").innerText = data[5]["avgMoist"]+" %";
+  document.getElementById("avg_light").innerText = data[5]["avgLight"]+" lux";
+
+  
   if (third_data.length != 0){
     var dt1 = third_data[0]['date'];
     var dt2 = third_data[third_data.length-1]['date'];
@@ -305,6 +312,7 @@ function main(data){
     document.getElementById("photos_box").style.display = "none";
   } else {
     for (let i = 0; i < images.length; i++) {
+      document.getElementById("photos_box").style.display = "block";
       add_image(images,i);
     }
   }
@@ -348,13 +356,11 @@ function main(data){
         reader.onload = function (e) {
             $('#set_image').attr('src', e.target.result);
         }
-
         reader.readAsDataURL(input.files[0]);
       }
   }
   $("#get_image").change(function(){
     readURL(this);
-
   });
 
 
@@ -377,7 +383,7 @@ function main(data){
             },
             error:function(xhr, ajaxOptions, thrownError){alert(xhr.responseText); ShowMessage("??? ?? ?????? ??????? ????","fail");}
           });
-  document.getElementById("set_image").src = ''
+  document.getElementById("set_image").src = '';
   }
 
 
@@ -533,6 +539,8 @@ function main(data){
             console.log(dis_part[i]["symptoms"],i,dis_part[i])
             document.getElementById("symptoms").innerText = dis_part[i]["symptoms"];
             document.getElementById("fav-cond").innerText = dis_part[i]["Favourable condition"];
+            document.getElementById("spread").innerText = dis_part[i]["spread"];
+            document.getElementById("dis_image").src = dis_part[i]["image"];
           }
         }
       } else {

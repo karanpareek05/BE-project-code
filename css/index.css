@@ -166,10 +166,11 @@ body::-webkit-scrollbar {
 #container{
   height: auto;
   position: relative;
-  /* top: 50px; */
+  top: 50px;
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 0.7fr 1fr 0.3fr;
+  grid-template-rows: auto;
+  gap: 50px;
   /*transform: scale(0.9);*/
 }
 
@@ -201,16 +202,14 @@ body::-webkit-scrollbar {
 /* --------------------- Photo  --------------------- */
 
 #photos_box{
-  margin-top: 10px;
   width: 100%;
   height: 400px;
-  color: slategray;
+  padding: 10px;
+  box-sizing: content-box;
+  background: white;
+  box-shadow: 0px 3px 7px slategrey;
 }
-#image-cont{
-  width: 1220px;
-  border: lightgrey 5px solid;
-  border-radius: 18px;
-}
+
 
 .carousel-caption{
   bottom: 0.0rem;
@@ -235,10 +234,7 @@ body::-webkit-scrollbar {
 .live_data_box{
   position: relative;
   float: left;
-  margin-top: 40px;
-  /*margin-left: 11%;*/
   border-radius: 2px;
-  /* border: 1px #cecece solid; */
   background: white;
   width: 1221px;
   height: 280px;
@@ -328,12 +324,10 @@ body::-webkit-scrollbar {
   width: 1221px;
   height: 504px;
   padding: 1em;
-  display: grid;
-  grid-template-columns:repeat(2,1fr);
-  padding-left: 40px;
-  grid-gap:1em;
+  display: flex;
+  gap: 50px;
+  justify-content: center;
   align-items: center; 
-  padding-top:30px;
   box-shadow: 0px 3px 7px slategrey;
 }
 #graph1_heading{
@@ -415,61 +409,125 @@ body::-webkit-scrollbar {
 
 #details{
   font-family: calibri;
-
   position: relative;
   font-size: 24px;
   height: auto;
   width: auto;
   margin: 5px 0px 0px 0px ;
+  padding: 10px;
 }
 #details .details-table{
-  width: 35vw;
-  height: 9.5vw;
+  width: 100%;
+  height: 100%;
   justify-content: space-evenly;
-  margin-left: 10px;
   text-align: center;
   border-collapse: separate;
-  border-spacing: 2px 2px;
-
 }
 #details .details-table td:nth-child(odd){
-  border-left: 5px solid #00b2ff;
-  background-color: #c4e0ec;
+  /* border-left: 5px solid #00b2ff;
+  background-color: #c4e0ec; */
   width: 16.25vw;
 }
 #details .details-table td:nth-child(even){
-  border-left: 5px solid slategray;
-  background-color: #e0e0e0;
+  /* border-left: 5px solid slategray;
+  background-color: #e0e0e0; */
   width: 16.25vw;
+}
+
+#details .details-table tr:nth-child(odd){
+  background-color: #c4e0ec;
+}
+#details .details-table tr:nth-child(even){
+  background-color: #e0e0e0;
 }
 
 #details .details-table tr{
   margin-bottom: 5px;
 }
-.disease-table{
-  width: 35vw;
-  border-collapse: separate;
-  border-spacing: 5px 2px;
+#details .details-table th{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-left: 20px;
+  background-color: white;
 }
-.disease-table th{
-  text-align: center;
+.details-table th svg{
+  width: 25px;
+  height: 25px;
+}
 
-  border-bottom: 2px solid slategray;
+
+/* -------------------  */
+.disease_box{
+  position: relative;
+  background-color: white;
+  height: 458px;
+  box-shadow: 0px 3px 7px slategrey;
+  /* margin-top: 40px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  padding: 20px;
 }
-.details-table td{
-  font-size: 18px;
+.disease_box .box table{
+  padding: 10px;
+  width: 100%;
+  height: 100%;
 }
-.disease-table td:nth-child(odd){
-  text-align: right;
+.disease_lbl{
+  margin-top: 20px;
+  position: absolute;
+  left: 40%;
+  top: -43PX;
+  width: 304px;
+  font-family: Bebas Neue;
+  font-size: x-large;
+  text-align: center;
+  color: var(--body-color);
+  background-color: var(--body-bg);
+  padding: 6px;
 }
-.disease-table tr:nth-child(3),.disease-table tr:nth-child(4){
-  height: 50px;
+
+.disease_box .box{
+  height: 377px;
+  width: 500px;
+  /* background-color: whitesmoke; */
+  /* border: 1px solid lightgray; */
+  /* box-shadow: 2px 9px 12px grey; */
+  font-size: 20px;
+  padding:10px;
+  border: 1px solid lightgray;
+  box-shadow: 2px 9px 12px grey;
 }
-.disease-table tr textarea{
-  width: 22vw;
-  height:40px;
-  font-size: large;
+.disease_box .box:nth-child(1){
+  width: 550px;
 }
+
+.disease_box  table tr:nth-child(even) {
+  background: whitesmoke;
+  text-align: center;
+}
+.disease_box  table tr:nth-child(odd) {
+  background: lightcyan;
+  text-align: center;
+}
+
+.disease_box textarea{
+  resize: vertical;
+    height: 80px;
+    /* background: white; */
+    width: 100%;
+    font-size: 18px;
+}
+#dis_image{
+  width: 100%;
+}
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* --------------- Buttons ------------------- */
 
 #buttons{
   position: relative;border-top: none;
