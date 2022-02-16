@@ -105,6 +105,7 @@ function main(divs){
     bgcolor = 'crimson';
     bordColor = 'darkgrey';
     $('#time_select').change(function(){
+      console.log("Change in Time_select")
       $('#graph_select').val("select")
       graph([0,0],'-','-');
       var check = $(this).val();
@@ -148,6 +149,7 @@ function main(divs){
     // graph(allData,'light','Light Intensity',);
     graph(allData,'room_temp','Temprature');
     $('#graph_select').change(function(){
+      console.log("Change in Graph_select")
       var check = $(this).val();
       switch (check) {
         case 'temp':
@@ -274,12 +276,12 @@ function main(divs){
     document.getElementById('dis_name_in').innerText = detail_val['dis_name'];
     document.getElementById('dis_detail_in').innerText = detail_val['dis_details'];
 
-    document.getElementById('temp_day').innerText = day_val['day_temp'];
-    document.getElementById('temp_night').innerText = night_val['night_temp'];
-    document.getElementById('humid_day').innerText = day_val['day_humid'];
-    document.getElementById('humid_night').innerText = night_val['night_humid'];
-    document.getElementById('moist_day').innerText = day_val['day_moist'];
-    document.getElementById('moist_night').innerText = night_val['night_moist'];
+    document.getElementById('temp_day').innerText = day_val['day_temp']+" °C";
+    document.getElementById('temp_night').innerText = night_val['night_temp']+" °C";
+    document.getElementById('humid_day').innerText = day_val['day_humid']+" %";
+    document.getElementById('humid_night').innerText = night_val['night_humid']+" %";
+    document.getElementById('moist_day').innerText = day_val['day_moist']+" lux";
+    document.getElementById('moist_night').innerText = night_val['night_moist']+" lux";
   }
   function add_image(data,i){
     const div = document.createElement("div");

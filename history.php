@@ -51,26 +51,26 @@ while($row = mysqli_fetch_assoc($test)){
 	</div>
 	<div class="container-box">
 		<section class="upper">
-			<div id="container_1">
+			<div id="container_1" class="detail-cont">
 				<table>
 				<tr>
-					<td>Genration</td>
+					<td>Genration : </td>
 					<td id="gen_in"></td>
 				</tr>
 				<tr>
-					<td>Plant</td>
+					<td>Plant : </td>
 					<td id="plant_in">></td>
 				</tr>
 				<tr>
-					<td>Condition</td>
+					<td>Condition : </td>
 					<td id="condition"></td>
 				</tr>
 				<tr>
-					<td>Start Date</td>
+					<td>Start Date : </td>
 					<td id="start_dt"></td>
 				</tr>
 				<tr>
-					<td>End Date</td>
+					<td>End Date : </td>
 					<td id="end_dt"></td>
 				</tr>
 				</table>
@@ -80,15 +80,56 @@ while($row = mysqli_fetch_assoc($test)){
 				<div class="details"><span class="label">Start Date</span><span class="details_in" id="start_dt"></span></div>
 				<div class="details"><span class="label">End Date</span><span class="details_in" id="end_dt"></span></div> -->
 			</div>
-			<div id="container_2">
-				<div class="details"><span class="label">Quality of the plant</span><span class="details_in" id="quality_in"></span></div>
+			<div id="container_2" class="detail-cont">
+			<table>
+				<tr>
+					<td>Quality of the plant : </td>
+					<td id="quality_in"></td>
+				</tr>
+				<tr>
+					<td>Growth Rate : </td>
+					<td id="growth_in">></td>
+				</tr>
+				<tr>
+					<td>Disease Name : </td>
+					<td id="dis_name_in"></td>
+				</tr>
+				<tr>
+					<td>Disease Details : </td>
+					<td id="dis_detail_in"></td>
+				</tr>
+				</table>
+				<!-- <div class="details"><span class="label">Quality of the plant</span><span class="details_in" id="quality_in"></span></div>
 				<div class="details"><span class="label">Growth Rate</span><span class="details_in" id="growth_in"></span></div>
 				<div class="details"><span class="label">Disease Name</span><span class="details_in" id="dis_name_in"></span></div>
 				<div class="details"><span class="label">Disease Details</span><span class="details_in"  id="dis_detail_in"></span></div>
-				<div class="details"><span class="label"></span><span class="details_in"></span></div>
+				<div class="details"><span class="label"></span><span class="details_in"></span></div> -->
 			</div>
-			<div id="container_3">
-				<div class="details">Room Temperature</div>
+			<div id="container_3" class="detail-cont">
+				<table>
+					<th colspan="3" >Room Temperature</th>
+					<tr>
+						<td>Day : </td>
+						<td id="temp_day"></td>
+						<td>Night : </td>
+						<td id="temp_night">></td>
+					</tr>
+					<th colspan="2" >Humidity</th>
+					<tr>
+						<td>Day : </td>
+						<td id="humid_day"></td>
+						<td>Night : </td>
+						<td id="humid_night">></td>
+					</tr>
+					<th colspan="2" >Moisture</th>
+					<tr>
+						<td>Day : </td>
+						<td id="moist_day"></td>
+						<td>Night : </td>
+						<td id="moist_night">></td>
+					</tr>
+				</table>
+				<!-- <div class="details">Room Temperature</div>
 				<div class="details">
 					<span class="label">Day&nbsp;:&nbsp;</span><span class="details_in" id="temp_day"></span>
 					<span class="label">Night&nbsp;:&nbsp;</span><span class="details_in" id="temp_night"></span>
@@ -102,7 +143,7 @@ while($row = mysqli_fetch_assoc($test)){
 				<div class="details">
 					<span class="label">Day&nbsp;:&nbsp;</span><span class="details_in" id="moist_day"></span>
 					<span class="label">Night&nbsp;:&nbsp;</span><span class="details_in" id="moist_night"></span>
-				</div>
+				</div> -->
 			</div>
 			<!-- <div>4</div> -->
 		</section>
