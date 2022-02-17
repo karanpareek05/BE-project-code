@@ -1,10 +1,10 @@
 <?php 
 include("database_connect.php");
-$test = mysqli_query($conn,"select * from gen_data where  live_check=0 ");
-$gen = array();
-while($row = mysqli_fetch_assoc($test)){
-  $gen[] = $row['gen_name'];
-}
+// $test = mysqli_query($conn,"select * from gen_data where  live_check=0 ");
+// $gen = array();
+// while($row = mysqli_fetch_assoc($test)){
+//   $gen[] = $row['gen_name'];
+// }
 
 ?>
 
@@ -149,21 +149,24 @@ while($row = mysqli_fetch_assoc($test)){
 		</section>
 		<section class="middle">
 			<div class="graph">
-				<select name="para" class="slct" id="graph_select">
-					<option value="select">- Select -</option>
-					<option value="temp"  selected="selected" >Room Temprature</option>
-					<option value="humid" >Humidity</option>
-					<option value="moist" >Moisture</option>
-					<option value="light" >Light</option>
-				</select>
-				<select name="para" class="slct" id="time_select">
-					<option value="select" selected="selected">- All -</option>
-					<option value="day" >Day</option>
-					<option value="night" >Night</option>
-				</select>
-				<select name="para" class="slct" id="day_select">
-					<option value="select" selected="selected">- All -</option>
-				</select>
+				<div class="select-options">
+					<select name="para" class="slct" id="day_select">
+						<option value="select" selected="selected">- All -</option>
+					</select>
+					<select name="para" class="slct" id="time_select">
+						<option value="select" selected="selected">- Select -</option>
+						<option value="all" >24 Hrs</option>
+						<option value="day" >Day</option>
+						<option value="night" >Night</option>
+					</select>
+					<select name="para" class="slct" id="graph_select">
+						<option value="select">- Select -</option>
+						<option value="temp"  selected="selected" >Temprature</option>
+						<option value="humid" >Humidity</option>
+						<option value="moist" >Moisture</option>
+						<option value="light" >Light</option>
+					</select>
+				</div>
 				<div class="chart">
 					<canvas id="myChart" height="26%" width="100%"></canvas>
 					<!-- <canvas id="temp_chart" height="26%" width="100%"></canvas>

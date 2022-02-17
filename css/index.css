@@ -44,7 +44,7 @@ body::-webkit-scrollbar {
   height: 10vh;
   padding: 10px;
   font-family: 'Courier New', Courier, monospace;
-  top: -100px;
+  top: -500px;
   opacity: 0;
   /* animation-name: animateDown; */
   animation-duration: 0.8s;
@@ -56,7 +56,7 @@ body::-webkit-scrollbar {
   /* 10%{top: 10px;opacity: 1;}
   90%{top: 10px;opacity: 1;}
   100%{top: -100px;opacity: 0;} */
-  from{top: -100px;opacity: 0;}
+  from{top: -500px;opacity: 0;}
   to{top: 0;opacity: 1;}
 }
 @keyframes animateUp {
@@ -65,7 +65,7 @@ body::-webkit-scrollbar {
       opacity: 1;
   }
   to{
-      top: -100px;
+      top: -500px;
       opacity: 0;
   }
 }
@@ -174,7 +174,7 @@ body::-webkit-scrollbar {
   /*transform: scale(0.9);*/
 }
 
-@media screen and (max-width: 1500px){
+/* @media screen and (max-width: 1500px){
   #container{
   position: absolute;
   margin-left: 0;
@@ -192,7 +192,7 @@ body::-webkit-scrollbar {
   top: -50px;
   left: -12%;
   }
-}
+} */
 
 /* @media screen and (max-width: 320px){
   #container{

@@ -11,7 +11,10 @@ var mos_chk = '';
 var table = '';
 var disease_prob;
 var dis_json;
-
+Notification.requestPermission();
+if(Notification.permission == 'default' || Notification.permission == 'denied'){
+  Notification.requestPermission();
+}
 
 // --------------------------- Test Scripts --------------------
 function noti(color,notiText) {
@@ -450,6 +453,9 @@ function main(data){
 
     switch (type) {
       case 1:
+        if(Notification.permission == 'denied'){
+          Notification.requestPermission();
+        }
         if(temp_chk == 'high'){
         change_color('temperature','high','Maximum');
         }
@@ -479,9 +485,6 @@ function main(data){
         } 
         break;
       case 2:
-        if(Notification.permission == 'denied'){
-            Notification.requestPermission();
-          }
         if(temp_chk == 'high'){
           send_noti('temperature','high','Maximum');
         }

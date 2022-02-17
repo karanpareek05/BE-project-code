@@ -1,3 +1,27 @@
+// var ratio;
+// var left;
+// resize();
+
+// $(window).resize(function () {resize();});
+
+// function resize()
+// {
+//     ratio = window.innerHeight / $('body').innerHeight();
+//     if (window.innerWidth / $('body').innerWidth() < ratio) {
+//         ratio = window.innerWidth / $('body').innerWidth();
+//     }
+//     ratio -= .04;
+//     $('body').css('-ms-zoom', ratio);
+//     $('body').css('-moz-transform', 'scale(' + ratio + ')');
+//     $('body').css('-o-transform', 'scale(' + ratio + ')');
+//     $('body').css('-webkit-transform', 'scale(' + ratio + ')');
+//     $('body').css('transform', 'scale(' + ratio + ')');
+//     left = ($(window).innerWidth() - $('body').outerWidth() * ratio) / 2;
+//     $('body').css('left', left);
+// }
+
+
+
 function getRandomColor() {
   var letters = '0123456789ABCDEF';
   var color = '#';
@@ -101,11 +125,10 @@ function main(divs){
     });
     dayHrs = [7,8,9,10,11,12,13,14,15,16,17,18]
     nightHrs = [19,20,21,22,23,24,1,2,3,4,5,6]
-    test = allData;
-    bgcolor = 'crimson';
-    bordColor = 'darkgrey';
+    // test = allData;
+    // bgcolor = 'crimson';
+    // bordColor = 'darkgrey';
     $('#time_select').change(function(){
-      console.log("Change in Time_select")
       $('#graph_select').val("select")
       graph([0,0],'-','-');
       var check = $(this).val();
@@ -131,9 +154,7 @@ function main(divs){
           bordColor = 'darkslateblue';
           // allData = genData[2];
           break;
-        case 'select':
-          $('#graph_select').val("select")
-          graph([0,0],'-','-');
+        case 'all':
           test = allData;
           bgcolor = 'crimson';
           bordColor = 'darkgrey';
@@ -149,28 +170,31 @@ function main(divs){
     // graph(allData,'light','Light Intensity',);
     graph(allData,'room_temp','Temprature');
     $('#graph_select').change(function(){
-      console.log("Change in Graph_select")
-      var check = $(this).val();
-      switch (check) {
-        case 'temp':
-          graph(test,'room_temp','Temprature');
-          break;
-        case 'humid':
-          // chart.destroy();
-          graph(test,'humidity','Humidity');
-          break;
-        case 'moist':
-          graph(test,'moisture','Soil Moisture');
-          break;
-        case 'light':
-          graph(test,'light','Light Intensity');
-          break;
-        case 'select':
-          graph([0,0],'-','-');
-          break;
-        default:
-          graph(allData,'room_temp','Temprature');
-          break;
+      if($('#graph_select').val() == "select"){
+        alert("choose time of the day!")
+      } else{
+        var check = $(this).val();
+        switch (check) {
+          case 'temp':
+            graph(test,'room_temp','Temprature');
+            break;
+          case 'humid':
+            // chart.destroy();
+            graph(test,'humidity','Humidity');
+            break;
+          case 'moist':
+            graph(test,'moisture','Soil Moisture');
+            break;
+          case 'light':
+            graph(test,'light','Light Intensity');
+            break;
+          case 'select':
+            graph([0,0],'-','-');
+            break;
+          default:
+            graph(allData,'room_temp','Temprature');
+            break;
+        }
       }
     });
 
