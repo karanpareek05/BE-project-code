@@ -81,33 +81,8 @@ include("database_connect.php");
 				<div class="details"><span class="label">End Date</span><span class="details_in" id="end_dt"></span></div> -->
 			</div>
 			<div id="container_2" class="detail-cont">
-			<table>
-				<tr>
-					<td>Quality of the plant : </td>
-					<td id="quality_in"></td>
-				</tr>
-				<tr>
-					<td>Growth Rate : </td>
-					<td id="growth_in">></td>
-				</tr>
-				<tr>
-					<td>Disease Name : </td>
-					<td id="dis_name_in"></td>
-				</tr>
-				<tr>
-					<td>Disease Details : </td>
-					<td id="dis_detail_in"></td>
-				</tr>
-				</table>
-				<!-- <div class="details"><span class="label">Quality of the plant</span><span class="details_in" id="quality_in"></span></div>
-				<div class="details"><span class="label">Growth Rate</span><span class="details_in" id="growth_in"></span></div>
-				<div class="details"><span class="label">Disease Name</span><span class="details_in" id="dis_name_in"></span></div>
-				<div class="details"><span class="label">Disease Details</span><span class="details_in"  id="dis_detail_in"></span></div>
-				<div class="details"><span class="label"></span><span class="details_in"></span></div> -->
-			</div>
-			<div id="container_3" class="detail-cont">
 				<table>
-					<th colspan="3" >Room Temperature</th>
+					<th colspan="3" >Temperature</th>
 					<tr>
 						<td>Day : </td>
 						<td id="temp_day"></td>
@@ -144,6 +119,33 @@ include("database_connect.php");
 					<span class="label">Day&nbsp;:&nbsp;</span><span class="details_in" id="moist_day"></span>
 					<span class="label">Night&nbsp;:&nbsp;</span><span class="details_in" id="moist_night"></span>
 				</div> -->
+			</div>
+			<div id="container_3" class="detail-cont">
+			<table>
+				<tr>
+					<td>Quality of the plant : </td>
+					<td id="quality_in">
+						
+					</td>
+				</tr>
+				<tr>
+					<td>Growth Rate : </td>
+					<td id="growth_in">></td>
+				</tr>
+				<tr>
+					<td>Disease Name : </td>
+					<td id="dis_name_in"></td>
+				</tr>
+				<tr>
+					<td>Disease Details : </td>
+					<td id="dis_detail_in"></td>
+				</tr>
+				</table>
+				<!-- <div class="details"><span class="label">Quality of the plant</span><span class="details_in" id="quality_in"></span></div>
+				<div class="details"><span class="label">Growth Rate</span><span class="details_in" id="growth_in"></span></div>
+				<div class="details"><span class="label">Disease Name</span><span class="details_in" id="dis_name_in"></span></div>
+				<div class="details"><span class="label">Disease Details</span><span class="details_in"  id="dis_detail_in"></span></div>
+				<div class="details"><span class="label"></span><span class="details_in"></span></div> -->
 			</div>
 			<!-- <div>4</div> -->
 		</section>

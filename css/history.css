@@ -171,7 +171,7 @@ table{
     height: 100%;
 }
 
-#container_2{
+#container_3{
     width: 570px;
     /* width: auto; */
     max-width: 538px;
@@ -180,11 +180,11 @@ table{
     background: white;
     border-radius: 5px;
 }
-#container_2 table td:nth-child(odd){
+#container_3 table td:nth-child(odd){
     width: 228px;
 }
 
-#container_3{
+#container_2{
     width: 425px;
     height: 395px;
     padding: 20px;
@@ -221,26 +221,23 @@ table{
 /* ---------------- middle ----------------------- */
 
 .middle{
-    height: 500px;
+    /* height: 500px; */
     /* background-color: #7f89ff; */
     padding: 30px;
     box-sizing: content-box;
 }
 .graph{
     position: relative;
-    width: 100%;
-    height: 100%;
+    /* width: 100%; */
+    /* height: 100%; */
+
     background-color: white;
     box-shadow: 0 4px 8px 0 #242a74, 0 6px 20px 0 rgb(0 0 0 / 19%);
     border: 1px solid lightgray;
     box-shadow: 0 4px 12px gray;
     padding: 5px;
     padding-left: 5px;
-    box-sizing: border-box;
-    overflow: hidden;
     box-sizing: content-box;
-    /* background-color: rgb(0,0,0); */
-    /* color: white; */
 }
 .chart{
     display: grid;
@@ -468,5 +465,28 @@ select.select_gen{
 } */
 
 @media screen and (max-width: 1500px){
-    
+    .ask_gen{
+        background: #000000bf;
+    }
+    .upper{
+        box-sizing: content-box;
+        height: auto;
+        gap: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 30px;
+        justify-items: center;
+    }
+    #container_3{
+        grid-column: 1/3;
+    }
+    .graph{
+        overflow: auto;
+    }
+    #myChart{
+        width: 100em !important;
+    }
+    .bottom{
+        grid-template-columns: repeat(3,1fr);
+    }
 }

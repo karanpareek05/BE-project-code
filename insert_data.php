@@ -15,8 +15,15 @@ if(isset($_GET['flag'])){
 			$light = $_GET['light'];
 			$hum = $_GET['humid'];
 			$moi = $_GET['moist'];
-			$try = mysqli_query($conn,"insert into `".$table."`  values('',".$rtemp.",".$hum.",".$moi.",".$light.",'".$date."','".$date."','".$date."')");
-			echo 'sucess';
+			try {
+				$try = mysqli_query($conn,"insert into `".$table."`  values('',".$rtemp.",".$hum.",".$moi.",".$light.",'".$date."','".$date."','".$date."')");
+				echo 'sucess';
+			} catch (\Throwable $th) {
+				echo mysqli_error($conn); 
+				throw $th;
+			}
+			
+			
 			break;	
 		case '1':
 			mysqli_query($conn,"update gen_data set live_check = 0, end_date = '".$date."' where end_date is null and gen_name='".$table."'");

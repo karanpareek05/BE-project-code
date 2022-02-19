@@ -202,7 +202,7 @@ body::-webkit-scrollbar {
 /* --------------------- Photo  --------------------- */
 
 #photos_box{
-  width: 100%;
+  width: 75vw;
   height: 400px;
   padding: 10px;
   box-sizing: content-box;
@@ -1060,4 +1060,14 @@ transition: all 0.3s ease;
 }
 form .btn button:hover{
 background: #1b1b1b;
+}
+
+@media screen and (max-width: 1500px){
+  #container{
+    top: -150px;
+    transform: scale(0.8);
+  }
+  #photos_box{
+    width: 100%;
+  }
 }

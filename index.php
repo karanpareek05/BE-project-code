@@ -25,7 +25,7 @@
     </div>
   </div>
   <div class="header">
-    <text>Smart Plant Management System</text>
+    <text>Smart Plant Monitoring System</text>
     <div class="header-right">
       <a href="./index.php" class="active">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Home-icon.svg/1200px-Home-icon.svg.png" alt="">
@@ -225,8 +225,6 @@
         </svg>
           <span>Add Photo</span>
         </div>
-        <!-- <button  id="end_btn">End</button>
-        <button id="photo_btn">Add Photo</button> -->
       </div>
   </div>
 

@@ -47,7 +47,7 @@ $.get("./fetch.php?flag=0", function(data, status){
   } catch (error) {
     console.log(error);
     check_data(null);
-  } 
+    } 
   });  
 setInterval(function() {
   $.get("./fetch.php?flag=0", function(data, status){
@@ -58,7 +58,7 @@ setInterval(function() {
     } catch (error) {
       console.log(error);
       check_data(null);
-    } 
+      } 
     });
 },interval);
 
@@ -201,7 +201,7 @@ if (data != null) {
 }
 else{
   alert("Currently Not Monitoring Any data");
-  document.getElementById('container').style.display="none";
+  // document.getElementById('container').style.display="none";
   // document.getElementById('end_btn').style.display="none";
   // document.getElementById('photo_btn').style.display="none";
   
