@@ -204,7 +204,7 @@ function mainGraph_temp(gen1,gen2,data1,data2,days) {
       for(let i=0;i<data.length-1;i++){
           // console.log(data[i]['room_temp'])
                 // timestamp1.push(one[i]['timestamp']);
-                temp.push(data[i]['room_temp']);
+                temp.push(data[i]['moisture']);
                 // humid.push(one[i]['humidity']);
                 // moist.push(one[i]['moisture']);
                 // light.push(one[i]['light']);
@@ -255,7 +255,7 @@ function mainGraph_temp(gen1,gen2,data1,data2,days) {
         y:{ suggestedMin: 0, suggestedMax: 50 },
         // x:{},     
         yAxis: {
-          title: { display: true, text : 'Temperature ( °C )', font: {size: 20} }, 
+          title: { display: true, text : 'Moisture ( % )', font: {size: 20} }, 
           ticks: { suggestedMin: 0, max: 50 } ,
         },
         xAxis: {
@@ -280,28 +280,28 @@ function quality(starNo,headerName,className) {
   let header = document.getElementById(headerName);
   classNo  = 6 - starNo - 1;
   console.log(classNo);
-  stars[classNo].checked = true;
-  switch (starNo) {
-          case 1:
-            header.innerText = "Worst";
-            break;
-          case 2:
-            header.innerText = "Bad";
-            break;
-          case 3:
-            header.innerText = "Acceptable";
-            break;
-          case 4:
-            header.innerText = "Very Good";
-            break;
-          case 5:
-            header.innerText = "Excellent";
-            break;
-        }
+  // stars[classNo].checked = true;
+  // switch (starNo) {
+  //         case 1:
+  //           header.innerText = "Worst";
+  //           break;
+  //         case 2:
+  //           header.innerText = "Bad";
+  //           break;
+  //         case 3:
+  //           header.innerText = "Acceptable";
+  //           break;
+  //         case 4:
+  //           header.innerText = "Very Good";
+  //           break;
+  //         case 5:
+  //           header.innerText = "Excellent";
+  //           break;
+  //       }
   }  
 
-// quality(5,"header-one","stars-one");
-// quality(2,"header-two","stars-two");
+quality(5,"header-one","stars-one");
+quality(2,"header-two","stars-two");
 
 function drawGraphs(genOneName,genTwoName,valueOne,valueTwo,divId,lable,title,fill,stroke,genOne,genTwo) {
   google.charts.load('current', {'packages':['bar']});
@@ -364,55 +364,55 @@ function drawGraphs(genOneName,genTwoName,valueOne,valueTwo,divId,lable,title,fi
 // drawGraphs("light_chart","Light ( lux )","Light","#cbe4f9","violet");
 
 
-function setDark() {
-  document.querySelector("h3>center").style.color = "lavander";
-  $(":root").get(0).style.setProperty("--bg-color","#1f1f1f")
-  document.querySelector("*").style.color = "lavander";
-  $(":root").get(0).style.setProperty("--border-all","1px solid 1px solid #161616");
-  $(":root").get(0).style.setProperty("--box-sh-header"," 0px 5px 5px  rgb(8 8 8 / 87%)");
-  $(":root").get(0).style.setProperty("--box-sh-other","3px 7px 8px rgb(8 8 8 / 87%)");
+// function setDark() {
+//   document.querySelector("h3>center").style.color = "lavander";
+//   $(":root").get(0).style.setProperty("--bg-color","#1f1f1f")
+//   document.querySelector("*").style.color = "lavander";
+//   $(":root").get(0).style.setProperty("--border-all","1px solid 1px solid #161616");
+//   $(":root").get(0).style.setProperty("--box-sh-header"," 0px 5px 5px  rgb(8 8 8 / 87%)");
+//   $(":root").get(0).style.setProperty("--box-sh-other","3px 7px 8px rgb(8 8 8 / 87%)");
 
-}
+// }
 
-function setLight() {
-  document.querySelector("h3>center").style.color = "slategrey";
+// function setLight() {
+//   document.querySelector("h3>center").style.color = "slategrey";
   
-  $(":root").get(0).style.setProperty("--bg-color","white")
-  $(":root").get(0).style.setProperty("--box-sh-header","0px 5px 5px rgb(212, 209, 209)");
-  $(":root").get(0).style.setProperty("--box-sh-other","3px 7px 8px rgb(212, 209, 209)");
-  $(":root").get(0).style.setProperty("--border-all","1px solid lightgrey");
+//   $(":root").get(0).style.setProperty("--bg-color","white")
+//   $(":root").get(0).style.setProperty("--box-sh-header","0px 5px 5px rgb(212, 209, 209)");
+//   $(":root").get(0).style.setProperty("--box-sh-other","3px 7px 8px rgb(212, 209, 209)");
+//   $(":root").get(0).style.setProperty("--border-all","1px solid lightgrey");
 
-}
+// }
 
-var light = document.getElementById("light");
-var dark = document.getElementById("dark");
+// var light = document.getElementById("light");
+// var dark = document.getElementById("dark");
 
-light.onclick = function () {
-  dark.style.setProperty("background-color","whitesmoke");
-  dark.style.setProperty("color","grey");
-  dark.style.setProperty("border","1px solid grey");
-  dark.style.setProperty("border-left","0px");
+// light.onclick = function () {
+//   dark.style.setProperty("background-color","whitesmoke");
+//   dark.style.setProperty("color","grey");
+//   dark.style.setProperty("border","1px solid grey");
+//   dark.style.setProperty("border-left","0px");
 
-  light.style.setProperty("background-color","dodgerblue");
-  light.style.setProperty("color","white");
-  light.style.setProperty("border","0px");
+//   light.style.setProperty("background-color","dodgerblue");
+//   light.style.setProperty("color","white");
+//   light.style.setProperty("border","0px");
 
-  setLight();
+//   setLight();
   
-}
+// }
 
-dark.onclick = function () {
-  light.style.setProperty("background-color","whitesmoke");
-  light.style.setProperty("color","grey");
-  light.style.setProperty("border","1px solid grey");
-  light.style.setProperty("border-right","0px");
+// dark.onclick = function () {
+//   light.style.setProperty("background-color","whitesmoke");
+//   light.style.setProperty("color","grey");
+//   light.style.setProperty("border","1px solid grey");
+//   light.style.setProperty("border-right","0px");
 
-  dark.style.setProperty("background-color","dodgerblue");
-  dark.style.setProperty("color","white");
-  dark.style.setProperty("border","0px");
+//   dark.style.setProperty("background-color","dodgerblue");
+//   dark.style.setProperty("color","white");
+//   dark.style.setProperty("border","0px");
 
-  setDark();
-}
+//   setDark();
+// }
 
 // setDark();
 
@@ -422,8 +422,8 @@ dark.onclick = function () {
 
 // ------------------------ Calling Main Function ----------------------
 
-var promise = $.get('./test.php',(data) =>{
 // var promise = $.get('./test.php',(data) =>{
+var promise = $.get('http://localhost/test/test.php',(data) =>{
   main(data);
   console.log(data);
 },'json')

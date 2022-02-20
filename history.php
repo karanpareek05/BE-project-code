@@ -125,7 +125,7 @@ include("database_connect.php");
 				<tr>
 					<td>Quality of the plant : </td>
 					<td id="quality_in">
-						
+
 					</td>
 				</tr>
 				<tr>
