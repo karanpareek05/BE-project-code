@@ -1,25 +1,3 @@
-// var ratio;
-// var left;
-// resize();
-
-// $(window).resize(function () {resize();});
-
-// function resize()
-// {
-//     ratio = window.innerHeight / $('body').innerHeight();
-//     if (window.innerWidth / $('body').innerWidth() < ratio) {
-//         ratio = window.innerWidth / $('body').innerWidth();
-//     }
-//     ratio -= .04;
-//     $('body').css('-ms-zoom', ratio);
-//     $('body').css('-moz-transform', 'scale(' + ratio + ')');
-//     $('body').css('-o-transform', 'scale(' + ratio + ')');
-//     $('body').css('-webkit-transform', 'scale(' + ratio + ')');
-//     $('body').css('transform', 'scale(' + ratio + ')');
-//     left = ($(window).innerWidth() - $('body').outerWidth() * ratio) / 2;
-//     $('body').css('left', left);
-// }
-
 
 
 function getRandomColor() {
@@ -33,6 +11,7 @@ function getRandomColor() {
 var frame = document.getElementById('ask_frame');
 frame.onclick = function(){
   frame.style.display = 'none';
+  // document.getElementById('comp_gen_btn').classList.add("disabled-link");
 }
 
 $.get("./fetch.php?flag=3", function(data, status){
@@ -48,7 +27,7 @@ $.get("./fetch.php?flag=3", function(data, status){
     gne.setAttribute("id",genes[i]);
     // gne.style.backgroundColor = getRandomColor();
     gne.onclick = function(){
-      main(genes[i]);
+      main(genes[i],genes);
     }
     frame.appendChild(gne);
     
@@ -71,8 +50,13 @@ $.get("./fetch.php?flag=3", function(data, status){
 var myData;
 var chart =  document.getElementById('myChart');
 
-function main(divs){
-
+function main(divs,genes){
+  // try {
+  //   document.getElementById('comp_gen_btn').classList.remove("disabled-link");
+  // } catch (error) {
+  //   console.log(error);
+  // }
+  
   // console.log(divs);
   document.getElementById('ask_frame').style.display = 'none';
   var allData;
@@ -295,6 +279,33 @@ function main(divs){
     document.getElementById('condition').innerText = detail_val['plant_condition'];
     document.getElementById('start_dt').innerText = detail_val['start_date'];
     document.getElementById('end_dt').innerText = detail_val['end_date'];
+
+    document.getElementById("comp_gen_btn").onclick = function(){
+      $('.comp_gen').get(0).style.display = 'flex';
+      $('.comp_box h3').get(0).innerText = "Compare "+detail_val['gen_name']+" with ....";
+      var frame = document.getElementsByClassName("comp_contain")[0];
+      for (let i = 0; i < genes.length; i++) {
+        if (genes[i] == detail_val['gen_name']) {
+          continue;
+        }
+        var gne = document.createElement("DIV");
+        gne.setAttribute("class","generations");
+        gne.setAttribute("id",genes[i]);
+        // gne.style.backgroundColor = getRandomColor();
+
+        gne.onclick = function(){
+          url = "./compare.php?one="+detail_val['gen_name']+"&two="+genes[i];
+          console.log(url);
+          window.location.replace(url);
+        }
+        frame.appendChild(gne);
+        
+        var kne = document.createElement("SPAN");
+        kne.innerHTML = genes[i];
+        gne.appendChild(kne);
+        
+      }
+    }
 
     // document.getElementById('quality_in').innerText = detail_val['quantity'];
     starsvg = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">

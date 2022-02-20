@@ -20,6 +20,11 @@
     box-sizing: border-box;
     border: none;
 }
+
+.disabled-link {
+    pointer-events: none;
+  }
+  
 body::-webkit-scrollbar {
     display: none;
   }
@@ -404,6 +409,10 @@ table{
     grid-template-columns: repeat(3,1fr);
     padding: 20px;
     padding-left: 12%;
+}
+
+.comp_gen{
+    display: none;
 }
 /* #choose_gen{
     width: 150px;

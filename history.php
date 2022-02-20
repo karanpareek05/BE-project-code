@@ -34,7 +34,7 @@ include("database_connect.php");
 			<span>History</span>
 		</a>
 		<span class="vertical_line"></span>
-		<a  id="new_gen_btn" >
+		<a  id="comp_gen_btn" >
 			<img src="https://user-images.githubusercontent.com/21024245/35808218-c177e6cc-0a8d-11e8-929c-f8452748642b.png" alt="">
 			<span>Compare</span>
 		</a>
@@ -118,35 +118,6 @@ include("database_connect.php");
 
 			</div>
 		</section>
-		<section class="middle">
-			<div class="graph">
-				<div class="select-options">
-					<select name="para" class="slct" id="day_select">
-						<option value="select" selected="selected">- All -</option>
-					</select>
-					<select name="para" class="slct" id="time_select">
-						<option value="select" selected="selected">- Select -</option>
-						<option value="all" >24 Hrs</option>
-						<option value="day" >Day</option>
-						<option value="night" >Night</option>
-					</select>
-					<select name="para" class="slct" id="graph_select">
-						<option value="select">- Select -</option>
-						<option value="temp"  selected="selected" >Temprature</option>
-						<option value="humid" >Humidity</option>
-						<option value="moist" >Moisture</option>
-						<option value="light" >Light</option>
-					</select>
-				</div>
-				<div class="chart">
-					<canvas id="myChart" height="26%" width="100%"></canvas>
-					<!-- <canvas id="temp_chart" height="26%" width="100%"></canvas>
-					<canvas id="humid_chart" height="26%" width="100%"></canvas>
-					<canvas id="moist_chart" height="26%" width="100%"></canvas>
-					<canvas id="light_chart" height="26%" width="100%"></canvas> -->
-				</div>
-			</div>
-		</section>
 		<section class="bottom">
 			<div id="temp">
 				<span class="unit_lbl">°C</span>
@@ -179,23 +150,41 @@ include("database_connect.php");
 				<label for="">No of days</label>
 			</div>
 		</section>
+		<section class="middle">
+			<div class="graph">
+				<div class="select-options">
+					<select name="para" class="slct" id="day_select">
+						<option value="select" selected="selected">- All -</option>
+					</select>
+					<select name="para" class="slct" id="time_select">
+						<option value="select" selected="selected">- Select -</option>
+						<option value="all" >24 Hrs</option>
+						<option value="day" >Day</option>
+						<option value="night" >Night</option>
+					</select>
+					<select name="para" class="slct" id="graph_select">
+						<option value="select">- Select -</option>
+						<option value="temp"  selected="selected" >Temprature</option>
+						<option value="humid" >Humidity</option>
+						<option value="moist" >Moisture</option>
+						<option value="light" >Light</option>
+					</select>
+				</div>
+				<div class="chart">
+					<canvas id="myChart" height="26%" width="100%"></canvas>
+					<!-- <canvas id="temp_chart" height="26%" width="100%"></canvas>
+					<canvas id="humid_chart" height="26%" width="100%"></canvas>
+					<canvas id="moist_chart" height="26%" width="100%"></canvas>
+					<canvas id="light_chart" height="26%" width="100%"></canvas> -->
+				</div>
+			</div>
+		</section>
 		<section class="image-sec" id="sec4">
 			<h3>Images</h3>
 			<div id="photos_box">
 				<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-			<!-- <div class="carousel-indicators">
-				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-			</div> -->
 			<div class="carousel-inner" id="image-cont">
-				<!-- <div class="carousel-item active" >
-				<img src="..." class="d-block w-100 "  height=400 id="sumit" alt="...">
-				<div class="carousel-caption d-none d-md-block">
-					<h5 id=h5-1 >First slide label</h5>
-					<p  id=p-2 >Some representative placeholder content for the first slide.</p>
-				</div>
-				</div> -->
+
 			</div>
 			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -212,19 +201,19 @@ include("database_connect.php");
 		<div class="ask_box">
 			<div><center><h3>Choose Genration to view History</h3></center></div>
 			<div class="ask_contain">
-		</div>
-
+			</div>
 		</div>	
 	</div>
 
 	<div class="comp_gen" id="comp_frame">
 		<div class="comp_box">
-			<div><center><h3>Choose Genration to view History</h3></center></div>
+			<div><center><h3>Compare with ....</h3></center></div>
 			<div class="comp_contain"></div>
 		</div>
 	</div>
 
-	
+
+
 	<script src="./js/history.js"></script>
 </body>
 
