@@ -247,10 +247,18 @@ else{
             </div>
             <div class="row5">
                 <div class="main-graphs">
-                    <canvas id="tempChart"></canvas>
-                    <canvas id="humidChart"></canvas>
-                    <canvas id="moistChart"></canvas>
-                    <canvas id="lightChart"></canvas>
+                    <div>
+                        <canvas id="tempChart"></canvas>
+                    </div>
+                    <div>
+                        <canvas id="humidChart"></canvas>
+                    </div>
+                    <div>
+                        <canvas id="moistChart"></canvas>
+                    </div>
+                    <div>
+                        <canvas id="lightChart"></canvas>
+                    </div>
                 </div>
             </div>
 

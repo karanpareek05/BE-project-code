@@ -355,20 +355,27 @@ form header{
 
 
 .row5{
+    flex: 1;
     display: flex;
+    border: var(--border-all);
+    box-shadow: var(--box-sh-other);
     /* display: none; */
 }
 
 .main-graphs{
-    height: 500px;
+    height: 525px;
+    width: 500px;
     flex: 1;
     padding: 10px;
-    border:var(--border-all);
-    box-shadow: var(--box-sh-other);
     border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+}
+.set-col-grid{
+    grid-gap: 10px;
+    grid-template-columns: repeat(5,1fr);
+}
+.main-graphs div{
+    box-sizing: border-box;
 }
 
 

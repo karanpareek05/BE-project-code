@@ -273,9 +273,10 @@ function main(data) {
 
     mainGraph_temp(firstgen['gen_name'],secondgen['gen_name'],data1,data2,days,'tempChart','room_temp','Temperature ( °C )');
     mainGraph_temp(firstgen['gen_name'],secondgen['gen_name'],data1,data2,days,'humidChart','humidity','Humidity ( % )');
-    // mainGraph_temp(firstgen['gen_name'],secondgen['gen_name'],data1,data2,days,'moistChart','moisture','Moisture ( % )');
-    // mainGraph_temp(firstgen['gen_name'],secondgen['gen_name'],data1,data2,days,'lightChart','light','Light ( lux )');
+    mainGraph_temp(firstgen['gen_name'],secondgen['gen_name'],data1,data2,days,'moistChart','moisture','Moisture ( % )');
+    mainGraph_temp(firstgen['gen_name'],secondgen['gen_name'],data1,data2,days,'lightChart','light','Light ( lux )');
 
+    $(".main-graphs").addClass("set-col-grid");
 }
 
 
