@@ -218,6 +218,26 @@ table{
 .upper table td:nth-child(even){
     text-align: center;
 }
+
+/* #quality_in{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    
+} */
+
+#quality_in svg{
+    width: 30px;
+    height: 30px;
+    stroke: dodgerblue;
+    fill: yellow;
+    margin-right: 10px;
+}
+
+
+
 /* ---------------- middle ----------------------- */
 
 .middle{
@@ -355,7 +375,7 @@ table{
 
 /* --------------- ask gen frame ------------------ */
 
-.ask_gen{
+.ask_gen, .comp_gen{
     display: block; 
     position: fixed; 
     z-index: 2; 
@@ -370,7 +390,7 @@ table{
     justify-content: center;
 }
 
-.ask_box{
+.ask_box, .comp_box{
     width: 659px;
     height: 456px;
     background-color: whitesmoke;
@@ -378,14 +398,14 @@ table{
     padding: 10px;
 }
 
-.ask_contain{
+.ask_contain, .comp_contain{
     margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     padding: 20px;
     padding-left: 12%;
 }
-#choose_gen{
+/* #choose_gen{
     width: 150px;
     height: 150px;
     font-family: 'Times New Roman', Times, serif;
@@ -394,7 +414,7 @@ table{
     position: relative;
     top: -50px;
     left: 20em;
-}
+} */
 .generations{
     position: relative;
     margin-bottom: 50px;

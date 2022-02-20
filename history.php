@@ -40,14 +40,7 @@ include("database_connect.php");
 		</a>
 		</div>
 	</div>
-	<!-- <div class="header">
-		<text>Smart Plant Monitoring System</text>
-		<div class="header-right">
-			<a href="./index.php">Home</a>
-			<span></span>
-			<a href="./history.php">History</a>
-			<a href="./compare.html" id="compare" >Compare</a>
-		</div> -->
+
 	</div>
 	<div class="container-box">
 		<section class="upper">
@@ -74,11 +67,7 @@ include("database_connect.php");
 					<td id="end_dt"></td>
 				</tr>
 				</table>
-				<!-- <div class="details"><span class="label">Genration</span><span class="details_in" id="gen_in"></span></div>
-				<div class="details"><span class="label">Plant</span><span class="details_in" id="plant_in"></span></div>
-				<div class="details"><span class="label">Condition</span><span class="details_in" id="condition"></span></div>
-				<div class="details"><span class="label">Start Date</span><span class="details_in" id="start_dt"></span></div>
-				<div class="details"><span class="label">End Date</span><span class="details_in" id="end_dt"></span></div> -->
+
 			</div>
 			<div id="container_2" class="detail-cont">
 				<table>
@@ -104,28 +93,13 @@ include("database_connect.php");
 						<td id="moist_night">></td>
 					</tr>
 				</table>
-				<!-- <div class="details">Room Temperature</div>
-				<div class="details">
-					<span class="label">Day&nbsp;:&nbsp;</span><span class="details_in" id="temp_day"></span>
-					<span class="label">Night&nbsp;:&nbsp;</span><span class="details_in" id="temp_night"></span>
-				</div>
-				<div class="details">Humidity</div>
-				<div class="details">
-					<span class="label">Day&nbsp;:&nbsp;</span><span class="details_in" id="humid_day"></span>
-					<span class="label">Night&nbsp;:&nbsp;</span><span class="details_in" id="humid_night"></span>
-				</div>
-				<div class="details">Moisture</span></div>
-				<div class="details">
-					<span class="label">Day&nbsp;:&nbsp;</span><span class="details_in" id="moist_day"></span>
-					<span class="label">Night&nbsp;:&nbsp;</span><span class="details_in" id="moist_night"></span>
-				</div> -->
+
 			</div>
 			<div id="container_3" class="detail-cont">
 			<table>
 				<tr>
 					<td>Quality of the plant : </td>
 					<td id="quality_in">
-
 					</td>
 				</tr>
 				<tr>
@@ -141,13 +115,8 @@ include("database_connect.php");
 					<td id="dis_detail_in"></td>
 				</tr>
 				</table>
-				<!-- <div class="details"><span class="label">Quality of the plant</span><span class="details_in" id="quality_in"></span></div>
-				<div class="details"><span class="label">Growth Rate</span><span class="details_in" id="growth_in"></span></div>
-				<div class="details"><span class="label">Disease Name</span><span class="details_in" id="dis_name_in"></span></div>
-				<div class="details"><span class="label">Disease Details</span><span class="details_in"  id="dis_detail_in"></span></div>
-				<div class="details"><span class="label"></span><span class="details_in"></span></div> -->
+
 			</div>
-			<!-- <div>4</div> -->
 		</section>
 		<section class="middle">
 			<div class="graph">
@@ -245,8 +214,17 @@ include("database_connect.php");
 			<div class="ask_contain">
 		</div>
 
+		</div>	
+	</div>
+
+	<div class="comp_gen" id="comp_frame">
+		<div class="comp_box">
+			<div><center><h3>Choose Genration to view History</h3></center></div>
+			<div class="comp_contain"></div>
 		</div>
 	</div>
+
+	
 	<script src="./js/history.js"></script>
 </body>
 
