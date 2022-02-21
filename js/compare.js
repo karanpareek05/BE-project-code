@@ -6,7 +6,41 @@ function sortData(data, param) {
         }
   return(array);
 }
-
+let count = 0;
+function right_graph(){
+  switch (count) {
+    case 0:
+      $('.main-graphs').get(0).style.left = '-1026px';
+      count ++;
+      break;
+    case 1:
+      $('.main-graphs').get(0).style.left = '-2056px';
+      count ++;
+      break;
+    case 2:
+      $('.main-graphs').get(0).style.left = '-3081px';
+      break;
+    default:
+      break;
+  }
+}
+function left_graph(){
+  switch (count) {
+    case 0:
+      $('.main-graphs').get(0).style.left = '0px';
+      break;
+    case 1:
+      $('.main-graphs').get(0).style.left = '-1026px';
+      count --;
+      break;
+    case 2:
+      $('.main-graphs').get(0).style.left = '-2056px';
+      count --;
+      break;
+    default:
+      break;
+  }
+}
 
 
 function mainGraph_temp(gen1,gen2,data1,data2,days,canvasId,param,yLable) {
@@ -48,6 +82,7 @@ function mainGraph_temp(gen1,gen2,data1,data2,days,canvasId,param,yLable) {
     type: 'line',
     data: data,
     options: {
+      responsive: true,
       plugins: {
         title: {
           display: true,
@@ -56,11 +91,11 @@ function mainGraph_temp(gen1,gen2,data1,data2,days,canvasId,param,yLable) {
         }
       },
       scales: {
-        y:{ suggestedMin: 0, suggestedMax: 50 },
+        // y:{ suggestedMin: 10, suggestedMax: 60 },
         // x:{},     
         yAxis: {
           title: { display: true, text : yLable, font: {size: 20} }, 
-          ticks: { suggestedMin: 0, max: 50 } ,
+          // ticks: { suggestedMin: 0, max: 50 } ,
         },
         xAxis: {
           title: { display: true, text : 'Days', font: {size: 16}},

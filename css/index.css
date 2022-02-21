@@ -363,7 +363,9 @@ body::-webkit-scrollbar {
   transition-property: left;
   transition-duration: 0.8s;
 }
-
+.chart:nth-child(2){
+  display: none;
+}
 .graph_box select{
   position: absolute;
   left: 430px;

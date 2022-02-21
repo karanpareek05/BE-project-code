@@ -153,7 +153,8 @@ body{
 .container-cent{
     padding: 10px ;
     position: relative;
-    display: flex;
+    /* display: flex; */
+    display: grid;
     flex-direction: column;
     width: 1055px;
     height: 90%;
@@ -360,7 +361,39 @@ form header{
     border: var(--border-all);
     box-shadow: var(--box-sh-other);
     /* display: none; */
+    overflow: hidden;
+    height: 520px;
+    position: relative;
 }
+.graph-slide{
+    position: absolute;
+    height: 100%;
+    width: 120px;
+    background: transparent;
+    cursor: pointer;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.graph-slide svg{
+    width: 24px;
+    height: auto;
+}
+.graph-slide svg:hover{
+    transform: scale(1.5);
+}
+
+#left{
+    left: 0;
+    justify-content: flex-start;
+}
+
+#right{
+   right: 0;
+   justify-content: flex-end;
+}
+
 
 .main-graphs{
     height: 525px;
@@ -369,7 +402,12 @@ form header{
     padding: 10px;
     border-radius: 5px;
     display: grid;
+    position: relative;
+    left: 0px;
+    transition-property: left;
+    transition-duration: 0.6s;
 }
+
 .set-col-grid{
     grid-gap: 10px;
     grid-template-columns: repeat(5,1fr);

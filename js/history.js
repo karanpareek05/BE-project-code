@@ -200,8 +200,6 @@ function main(divs,genes){
           label: myLabel,
           backgroundColor: bgcolor,
           borderColor: bordColor,
-          // backgroundColor: 'darkblue', // night
-          // borderColor: 'dodgerblue',
           data: temp,
           fill: true,
           tension: 0.5
