@@ -47,7 +47,7 @@ $.get("./fetch.php?flag=0", function(data, status){
   } catch (error) {
     console.log(error);
     check_data(null);
-    } 
+  } 
   });  
 setInterval(function() {
   $.get("./fetch.php?flag=0", function(data, status){
@@ -58,7 +58,7 @@ setInterval(function() {
     } catch (error) {
       console.log(error);
       check_data(null);
-      } 
+    } 
     });
 },interval);
 
@@ -185,6 +185,7 @@ left.onclick = function(){
 
 function check_data(data){
 // console.log("sumit"+data);
+
 if (data != null) {
   let live_check = data[0]['live_check'];
   console.log(live_check);
@@ -195,13 +196,12 @@ if (data != null) {
   }
   else if(live_check == 1){
     main(data);
-    // console.log("in else if check = 1 call main");
   }
 
 }
 else{
   alert("Currently Not Monitoring Any data");
-  // document.getElementById('container').style.display="none";
+//   document.getElementById('container').style.display="none";
   // document.getElementById('end_btn').style.display="none";
   // document.getElementById('photo_btn').style.display="none";
   
@@ -513,8 +513,8 @@ function main(data){
   moist = document.getElementById('mos_in').innerText;
   light = document.getElementById('light_in').innerText;
   try {
-    // let url = "http://sumitas.pythonanywhere.com/?temp="+room_temp+"&humid="+humid+"&moist="+moist+"&light="+light
-    let url = "http://127.0.0.1:5000/?temp="+room_temp+"&humid="+humid+"&moist="+moist+"&light="+light
+    let url = "https://sumitas.pythonanywhere.com/?temp="+room_temp+"&humid="+humid+"&moist="+moist+"&light="+light
+    // let url = "http://127.0.0.1:5000/?temp="+room_temp+"&humid="+humid+"&moist="+moist+"&light="+light
     console.log(url);
     console.log(room_temp,humid,moist,light);
     $.get(url, function(data,){
@@ -771,6 +771,3 @@ function end_gen(table,plant,getCmd) {
     });
   }
 }
-
-
-

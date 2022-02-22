@@ -356,6 +356,43 @@ form header{
 
 
 .row5{
+    position: relative;
+    width: 100%;
+    height: 305px;
+    flex: 1;
+    /* padding: 10px; */
+    display: flex;
+    gap: 30px;
+}
+.row5 h5, .row5 p{
+    color: white;
+}
+.carousel-caption{
+    top: 190px;
+}
+
+.photo{
+    flex: 1;
+    height: 100%;
+    border:var(--border-all);
+    box-shadow: var(--box-sh-other);
+    padding: 10px;
+    overflow: hidden;
+    width: 510px;
+}
+#photoBox1,#photoBox2{
+    display: flex;
+    position: relative;
+    left: 0;
+    gap: 17px;
+}
+.photo img{
+    height: auto;
+    width: 485px;
+}
+
+
+.row6{
     flex: 1;
     display: flex;
     border: var(--border-all);
@@ -364,6 +401,7 @@ form header{
     overflow: hidden;
     height: 520px;
     position: relative;
+    padding-left: 10px;
 }
 .graph-slide{
     position: absolute;
@@ -409,25 +447,10 @@ form header{
 }
 
 .set-col-grid{
-    grid-gap: 10px;
+    grid-gap: 20px;
     grid-template-columns: repeat(5,1fr);
 }
 .main-graphs div{
     box-sizing: border-box;
 }
 
-
-.row6{
-    width: 100%;
-    height: 500px;
-    flex: 1;
-    padding: 10px;
-    display: flex;
-    gap: 30px;
-}
-.photo{
-    flex: 1;
-    height: 100%;
-    border:var(--border-all);
-    box-shadow: var(--box-sh-other);
-}

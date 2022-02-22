@@ -1,3 +1,16 @@
+$(".graph-slide#left").hover(function(){
+  $('.graph-slide#left svg').css("transform", "scale(1.5)");
+  }, function(){
+    $('.graph-slide#left svg').css("transform", "scale(1)");
+});
+
+$(".graph-slide#right").hover(function(){
+  $('.graph-slide#right svg').css("transform", "scale(1.5)");
+  }, function(){
+    $('.graph-slide#right svg').css("transform", "scale(1)");
+});
+
+
 function sortData(data, param) {
   // let [temp, timestamp1,humid,moist,light] = [];
   let array = [];
@@ -10,31 +23,32 @@ let count = 0;
 function right_graph(){
   switch (count) {
     case 0:
-      $('.main-graphs').get(0).style.left = '-1026px';
+      $('.main-graphs').get(0).style.left = '-1043px';
       count ++;
       break;
     case 1:
-      $('.main-graphs').get(0).style.left = '-2056px';
+      $('.main-graphs').get(0).style.left = '-2082px';
       count ++;
       break;
     case 2:
-      $('.main-graphs').get(0).style.left = '-3081px';
+      $('.main-graphs').get(0).style.left = '-3119px';
       break;
     default:
       break;
   }
 }
+
 function left_graph(){
   switch (count) {
     case 0:
       $('.main-graphs').get(0).style.left = '0px';
       break;
     case 1:
-      $('.main-graphs').get(0).style.left = '-1026px';
+      $('.main-graphs').get(0).style.left = '-1043px';
       count --;
       break;
     case 2:
-      $('.main-graphs').get(0).style.left = '-2056px';
+      $('.main-graphs').get(0).style.left = '-2082px';
       count --;
       break;
     default:
@@ -242,11 +256,51 @@ function main(data) {
   var avgtwo = data[5];
 
   var imagesOne = data[6];
-  var imagesTwo = data[7]
+  var imagesTwo = data[7];
 
-  // for (let i = 0; i < imagesOne.length; i++) {
-  //   add_image(imagesOne,i,'image-cont-one');
-  // }
+
+  for (let i = 0; i < imagesOne.length; i++) {
+    if (i==0) {
+      elem = `<div class="carousel-item active">
+      <img src="`+imagesOne[i]['image']+`" class="d-block w-100" >
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Day `+imagesOne[i]['day']+`</h5>
+        <p>`+imagesOne[i]['timestamp']+`</p>
+      </div>
+    </div>`;
+    } else {
+      elem = `<div class="carousel-item ">
+      <img src="`+imagesOne[i]['image']+`" class="d-block w-100" >
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Day `+imagesOne[i]['day']+`</h5>
+        <p>`+imagesOne[i]['timestamp']+`</p>
+      </div>
+    </div>`;
+    }
+    $('#gen-one-carousel .carousel-inner').append(elem);
+  }
+
+  for (let i = 0; i < imagesTwo.length; i++) {
+  if (i==0) {
+    elem = `<div class="carousel-item active">
+    <img src="`+imagesTwo[i]['image']+`" class="d-block w-100" >
+    <div class="carousel-caption d-none d-md-block">
+      <h5>Day `+imagesTwo[i]['day']+`</h5>
+      <p>`+imagesTwo[i]['timestamp']+`</p>
+    </div>
+  </div>`;
+  } else {
+    elem = `<div class="carousel-item ">
+    <img src="`+imagesTwo[i]['image']+`" class="d-block w-100" >
+    <div class="carousel-caption d-none d-md-block">
+      <h5>Day `+imagesTwo[i]['day']+`</h5>
+      <p>`+imagesTwo[i]['timestamp']+`</p>
+    </div>
+  </div>`;
+  }
+  $('#gen-two-carousel .carousel-inner').append(elem);
+
+}
 
   // for (let i = 0; i < imagesTwo.length; i++) {
   //   add_image(imagesTwo,i,'image-cont-two');

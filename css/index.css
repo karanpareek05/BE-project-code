@@ -363,9 +363,7 @@ body::-webkit-scrollbar {
   transition-property: left;
   transition-duration: 0.8s;
 }
-.chart:nth-child(2){
-  display: none;
-}
+
 .graph_box select{
   position: absolute;
   left: 430px;
@@ -1063,6 +1061,7 @@ transition: all 0.3s ease;
 form .btn button:hover{
 background: #1b1b1b;
 }
+
 
 @media screen and (max-width: 1500px){
   #container{
