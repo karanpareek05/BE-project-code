@@ -23,7 +23,7 @@ include("database_connect.php");
 </head>
 <body>
 	<div class="header">
-		<text>Smart Plant Management System</text>
+		<text>Smart Plant Monitoring System</text>
 		<div class="header-right">
 		<a href="./index.php">
 			<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Home-icon.svg/1200px-Home-icon.svg.png" alt="">
@@ -47,7 +47,7 @@ include("database_connect.php");
 			<div id="container_1" class="detail-cont">
 				<table>
 				<tr>
-					<td>Genration : </td>
+					<td>Generation : </td>
 					<td id="gen_in"></td>
 				</tr>
 				<tr>

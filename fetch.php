@@ -141,7 +141,7 @@ include("database_connect.php");
 			}
 			$sql1 = "select round(AVG(temp)) as night_temp,round(AVG(humid)) as night_humid,round(AVG(moist)) as night_moist from (select cast(timestamp + 0.25 as date) as thenight, AVG(room_temp)as temp,AVG(humidity) as humid,AVG(moisture) as moist
 			from `".$_GET['table']."`
-			where DAY(timestamp) in (18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5)
+			where HOUR(timestamp) in (18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5)
 			group by cast(timestamp + 0.25 as date)
 			order by thenight desc)night";
 			$result2 = mysqli_query($conn,$sql1);
@@ -150,7 +150,7 @@ include("database_connect.php");
 			}
 			$sql2 = "select round(AVG(temp)) as day_temp,round(AVG(humid)) as day_humid,round(AVG(moist)) as day_moist from (select cast(timestamp + 0.25 as date) as thenight, AVG(room_temp)as temp,AVG(humidity) as humid,AVG(moisture) as moist
 			from `".$_GET['table']."`
-			where DAY(timestamp) in (6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17)
+			where HOUR(timestamp) in (6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17)
 			group by cast(timestamp + 0.25 as date)
 			order by thenight desc)night";
 			$result3 = mysqli_query($conn,$sql2);

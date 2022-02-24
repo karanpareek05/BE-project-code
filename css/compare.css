@@ -200,8 +200,9 @@ body{
     border:var(--border-all);
     box-shadow: var(--box-sh-other);
     border-radius: 5px;
-    height: 200px ;
+    /* height: 200px ; */
     font-size: x-large;
+    box-sizing: content-box;
 }
 .details-conatiner,.avg-cond-conatiner{
     display: flex;
@@ -215,9 +216,28 @@ body{
     align-items: center;
 }
 
-.details-conatiner .list span:nth-child(n-1), .avg-cond-conatiner .list span:nth-child(n-1){
-    color: cadetblue;
+.details-conatiner table{
+    width: 100%;
+    height: 100%;
+    border-collapse: separate;
 }
+
+.details-conatiner table td{
+    text-align: center;
+}
+
+/* .details-conatiner table tr:nth-child(odd){
+    text-align: center;
+    background-color: #a5e2ffcc;
+}
+
+.details-conatiner table tr:nth-child(even){
+    text-align: center;
+    background-color: bisque;
+} */
+/* .details-conatiner .list span:nth-child(n-1), .avg-cond-conatiner .list span:nth-child(n-1){
+    color: cadetblue;
+} */
 
 
 .conc-list li,.condition-list li{
@@ -364,6 +384,7 @@ form header{
     display: flex;
     gap: 30px;
 }
+
 .row5 h5, .row5 p{
     color: white;
 }

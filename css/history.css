@@ -218,7 +218,7 @@ table{
     border-collapse: separate;
 }
 .upper table td:nth-child(odd){
-    text-align: right;
+    /* text-align: right; */
 }
 .upper table td:nth-child(even){
     text-align: center;
@@ -394,6 +394,13 @@ table{
     display: flex;
     justify-content: center;
 }
+/* .comp_box{
+    background: linear-gradient(81deg, #76fff9, #61b1e9);
+}
+.comp_gen .generations{
+    background-color: white;
+    box-shadow: 2px 5px 12px #006bda;
+} */
 
 .ask_box, .comp_box{
     width: 659px;

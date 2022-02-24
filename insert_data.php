@@ -65,7 +65,7 @@ if(isset($_GET['flag'])){
 			}
 			break;
 		case '4':
-			$sql = "update  gen_data set quantity='".$_GET['quality']."',growthrate='".$_GET['growth']."',dis_name='".$_GET['disName']."',dis_details='".$_GET['disDetails']."' where gen_name='".$_GET['name']."'";
+			$sql = "update  gen_data set quality='".$_GET['quality']."',growthrate='".$_GET['growth']."',dis_name='".$_GET['disName']."',dis_details='".$_GET['disDetails']."' where gen_name='".$_GET['name']."'";
 			$test = mysqli_query($conn,$sql);
 			if(!empty($test)){
 				echo json_encode("success");

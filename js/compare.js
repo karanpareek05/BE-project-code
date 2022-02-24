@@ -316,15 +316,21 @@ function main(data) {
   document.getElementById("condition-one").innerText = firstgen['plant_condition'];
   document.getElementById("start-one").innerText = firstgen['start_date'];
   document.getElementById("end-one").innerText = firstgen['end_date'];
+  document.getElementById("dis-name-one").innerText = firstgen['dis_name'];
+  document.getElementById("dis-det-one").innerText = firstgen['dis_details'];
+  document.getElementById("growthrate-one").innerText = firstgen['growthrate'];
 
   document.getElementById("plant-name-two").innerText = secondgen['plant_name'];
   document.getElementById("condition-two").innerText = secondgen['plant_condition'];
   document.getElementById("start-two").innerText = secondgen['start_date'];
   document.getElementById("end-two").innerText = secondgen['end_date'];
+  document.getElementById("dis-name-two").innerText = secondgen['dis_name'];
+  document.getElementById("dis-det-two").innerText = secondgen['dis_details'];
+  document.getElementById("growthrate-two").innerText = secondgen['growthrate'];
 
  
-  quality(parseInt(firstgen.quantity),'ratingOne');
-  quality(parseInt(secondgen.quantity),'ratingTwo');
+  quality(parseInt(firstgen['quality']),'ratingOne');
+  quality(parseInt(secondgen['quality']),'ratingTwo');
 
 
   // document.getElementById("avg-temp-one").innerText = avgone['avgTemp']+" °C";

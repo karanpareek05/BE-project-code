@@ -113,8 +113,9 @@ left.onclick = function(){
     try {
       let table = document.getElementById('gen_name').innerText;
       let plant = document.getElementById('plnt_name').innerText;
-      console.log()
-      if (table != "" && plant != "") {
+      console.log(table,plant);
+      if (table != "-" && plant != "-") {
+        console.log(table,plant);
         end_gen(table,plant,0);
       }else{
         modal.style.display = "block";

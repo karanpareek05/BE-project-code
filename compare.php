@@ -189,12 +189,43 @@ else{
                         <center>Details</center>
                     </h3>
                     <div class="details-conatiner">
-                        <div class="list">
+                        <table>
+                            <tr>
+                                <td>Plant Name</td>
+                                <td id="plant-name-one"></td>
+                            </tr>
+                            <tr>
+                                <td>Condition</td>
+                                <td id="condition-one"></td>
+                            </tr>
+                            <tr>
+                                <td>Start Date</td>
+                                <td id="start-one"></td>
+                            </tr>
+                            <tr>
+                                <td>End Date</td>
+                                <td id="end-one"></td>
+                            </tr>
+                            <tr>
+                                <td>Disease Name</td>
+                                <td id="dis-name-one"></td>
+                            </tr>
+                            <tr>
+                                <td>Disease Details</td>
+                                <td id="dis-det-one"></td>
+                            </tr>
+                            <tr>
+                                <td>Growth Rate</td>
+                                <td id="growthrate-one"></td>
+                            </tr>
+
+                        </table>
+                        <!-- <div class="list">
                             <span>Plant Name : <span id="plant-name-one"></span></span>
                             <span>Condition : <span id="condition-one"></span></span>
                             <span>Start Date : <span id="start-one"></span></span>
                             <span>End Date : <span id="end-one"></span></span>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="gen_det">
@@ -202,13 +233,37 @@ else{
                         <center>Details</center>
                     </h3>
                     <div class="details-conatiner">
-                        <div class="list">
-                            <span>Plant Name : <span id="plant-name-two"></span></span>
-                            <span>Condition : <span id="condition-two"></span></span>
-                            <span>Start Date : <span id="start-two"></span></span>
-                            <span>End Date : <span id="end-two"></span></span>
-                            </divtwo </div>
-                        </div>
+                        <table>
+                            <tr>
+                                <td>Plant Name</td>
+                                <td id="plant-name-two"></td>
+                            </tr>
+                            <tr>
+                                <td>Condition</td>
+                                <td id="condition-two"></td>
+                            </tr>
+                            <tr>
+                                <td>Start Date</td>
+                                <td id="start-two"></td>
+                            </tr>
+                            <tr>
+                                <td>End Date</td>
+                                <td id="end-two"></td>
+                            </tr>
+                            <tr>
+                                <td>Disease Name</td>
+                                <td id="dis-name-two"></td>
+                            </tr>
+                            <tr>
+                                <td>Disease Details</td>
+                                <td id="dis-det-two"></td>
+                            </tr>
+                            <tr>
+                                <td>Growth Rate</td>
+                                <td id="growthrate-two"></td>
+                            </tr>
+
+                        </table>
                     </div>
                 </div>
             </div>
