@@ -1,219 +1,71 @@
-// var one;
-// var two;
-// var tale1 = 'gen1';
-// var tale2 = 'gen2';
+$(".graph-slide#left").hover(function(){
+  $('.graph-slide#left svg').css("transform", "scale(1.5)");
+  }, function(){
+    $('.graph-slide#left svg').css("transform", "scale(1)");
+});
+
+$(".graph-slide#right").hover(function(){
+  $('.graph-slide#right svg').css("transform", "scale(1.5)");
+  }, function(){
+    $('.graph-slide#right svg').css("transform", "scale(1)");
+});
 
 
-// $.get("./test.php?table=gen", function(data){
-//     data = JSON.parse(data);
-//     data1 = data[0];
-//     days1 = data[1][0]['days'];
-//     console.log('1 st :'+days1);
-//     $.get("./test.php?table=gen2", function(data){
-//         data = JSON.parse(data);
-//         data2 = data[0];
-//         days2 = data[1][0]['days'];
-//         console.log('2 nd :'+days2);
-//         // console.log(data1);
-//         // console.log(data2);
-//         if (days2 > days1){
-//             graph(data1,data2,days2);
-//         }
-//         else if (days1 > days2) {
-//             graph(data1,data2,days1);
-//         }
+function sortData(data, param) {
+  // let [temp, timestamp1,humid,moist,light] = [];
+  let array = [];
+  for(let i=0;i<data.length-1;i++){
+            array.push(data[i][param]);
+        }
+  return(array);
+}
+let count = 0;
+function right_graph(){
+  switch (count) {
+    case 0:
+      $('.main-graphs').get(0).style.left = '-1043px';
+      count ++;
+      break;
+    case 1:
+      $('.main-graphs').get(0).style.left = '-2082px';
+      count ++;
+      break;
+    case 2:
+      $('.main-graphs').get(0).style.left = '-3119px';
+      break;
+    default:
+      break;
+  }
+}
 
-//     });
-// });
-
-
-
-// function graph(one,two,days) {
-//     // genData = JSON.parse(genData);
-//     // genData =genData[0];
-//     // var count = Object.keys(genData).length;
-//     // console.log(genData);
-//     x_axis = [];
-//     for (let i = 1; i <= days; i++) {
-//         x_axis.push('day '+i);
-//     }
-//     // console.log(x_axis);
-//     timestamp1 = [];
-//     timestamp2 = [];
-//     temp1 = [];
-//     temp2 = [];
-//     humid = [];
-//     moist = [];
-//     light = [];
-//     for(let i=0;i<one.length;i++){
-//         timestamp1.push(one[i]['timestamp']);
-//         temp1.push(one[i]['room_temp']);
-//         humid.push(one[i]['humidity']);
-//         moist.push(one[i]['moisture']);
-//         light.push(one[i]['light']);
-//     }
-//     for(let i=0;i<two.length;i++){
-//         timestamp2.push(two[i]['timestamp']);
-//         temp2.push(two[i]['room_temp']);
-//     }
-
-//     const labels = x_axis;
-//     const data = {
-//         labels: labels,
-//         datasets: 
-//         [
-//             // {
-//             //     label: 'Room Temperature',
-//             //     backgroundColor: 'yellow',
-//             //     borderColor: 'orange',
-//             //     // backgroundColor: 'darkblue', // night
-//             //     // borderColor: 'dodgerblue',
-//             //     data: temp1
-//             // },
-//             {
-//                 label: 'Gen 1',
-//                 // backgroundColor: 'darkblue',
-//                 // borderColor: 'dodgerblue',
-//                 backgroundColor: 'yellow',
-//                 // borderColor: 'orange',
-//                 data: temp1,
-//                 tension: 0.5
-
-//             },
-//             {
-//                 label: 'Gen 2',
-//                 backgroundColor: 'rgb(28 221 168)',
-//                 // borderColor: 'rgb(255 0 58)',
-//                 // backgroundColor: 'darkblue', // night
-//                 // borderColor: 'dodgerblue',
-//                 data: temp2,
-//                 tension: 0.5
-//             }
-//         ]
-//     };
+function left_graph(){
+  switch (count) {
+    case 0:
+      $('.main-graphs').get(0).style.left = '0px';
+      break;
+    case 1:
+      $('.main-graphs').get(0).style.left = '-1043px';
+      count --;
+      break;
+    case 2:
+      $('.main-graphs').get(0).style.left = '-2082px';
+      count --;
+      break;
+    default:
+      break;
+  }
+}
 
 
-//     const config = {
-//         type: 'bar',
-//         data: data,
-//         options: {
-//           indexAxis: 'y',
-//           responsive: true,
-//           // Elements options apply to all of the options unless overridden in a dataset
-//           // In this case, we are setting the border of each horizontal bar to be 2px wide
-//           elements: {
-//             bar: {
-//               borderWidth: 2,
-//             }
-//           },
-//           responsive: true,
-//           animation: {
-//             onComplete: () => {
-//               delayed = true;
-//             },
-//             delay: (context) => {
-//               let delay = 0;
-//               if (context.type === 'data' && context.mode === 'default' && !delayed) {
-  //                 delay = context.dataIndex * 300 + context.datasetIndex * 100;
-  //               }
-  //               return delay;
-  //             },
-  //           },
-  //           scales: {
-    //                 x: {
-//                     min: 0,
-//                     max: 40,
-//                     display: true,
-//                     title: {
-  //                         display: true,
-  //                         text: 'Temperature °C',
-  //                         color: '#911',
-//                         font: {
-  //                         family: 'Comic Sans MS',
-//                         size: 20,
-//                         weight: 'bold',
-//                         lineHeight: 1.2,
-//                         },
-//                         padding: {top: 20, left: 0, right: 0, bottom: 0}
-//                     }
-//                 },
-//                 y: {
-  //                     display: true,
-  //                     title: {
-    //                         display: true,
-    //                         text: 'Days',
-    //                         color: '#191',
-    //                         font: {
-//                         family: 'Times',
-//                         size: 20,
-//                         style: 'normal',
-//                         lineHeight: 1.2
-//                         },
-//                         padding: {top: 30, left: 0, right: 0, bottom: 0
-//                     }
-//                 }
-//               }
-//             },
-//           plugins: {
-  //             legend: {
-    //               position: 'right',
-    //               onHover: 'handleHover',
-    //               onLeave: 'handleLeave'
-    //             },
-    //             title: {
-      //               display: true,
-//               text: 'Room Temperature'
-//             }
-//           }
-//         },
-//       };
-
-//     const config = {
-  //         type: 'line',
-  //         data: data,
-  //         options: {
-    //             responsive: true,
-    //         }
-//         };
-//         try {
-  //         const myChart = new Chart(
-    //             document.getElementById('myChart'),
-    //             config
-    //         );
-//         } catch (error) {
-//         let canvas = document.getElementById('myChart');
-//         const context = canvas.getContext('2d');
-//         canvas.clear();
-//         const myChart = new Chart(
-//           document.getElementById('myChart'),
-//           config
-//         );
-//         $("canvas#myChart").remove();
-//  
-
-function mainGraph_temp(gen1,gen2,data1,data2,days) {
+function mainGraph_temp(gen1,gen2,data1,data2,days,canvasId,param,yLable) {
 
     var x_axis = [];
     for (let i = 1; i <= parseInt(days); i++) {
         x_axis.push('day '+i);
     }
 
-    function getData(data) {
-      // let [temp, timestamp1,humid,moist,light] = [];
-      let temp = [];
-      for(let i=0;i<data.length-1;i++){
-          // console.log(data[i]['room_temp'])
-                // timestamp1.push(one[i]['timestamp']);
-                temp.push(data[i]['room_temp']);
-                // humid.push(one[i]['humidity']);
-                // moist.push(one[i]['moisture']);
-                // light.push(one[i]['light']);
-            }
-      return(temp);
-    }
-
-    var temp1 = getData(data1);
-    var temp2 = getData(data2);
+    var data1 = sortData(data1,param);
+    var data2 = sortData(data2,param);
 
   const labels = x_axis;
   
@@ -222,7 +74,7 @@ function mainGraph_temp(gen1,gen2,data1,data2,days) {
     datasets: [
       {
         label: gen1,
-        data: temp1,
+        data: data1,
         fill: true,
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
         borderColor: 'rgb(75, 192, 192)',
@@ -230,7 +82,7 @@ function mainGraph_temp(gen1,gen2,data1,data2,days) {
       },
       {
         label: gen2,
-        data: temp2,
+        data: data2,
         fill: true,
         backgroundColor: 'skyblue',
         borderColor: 'dodgerblue',
@@ -244,19 +96,20 @@ function mainGraph_temp(gen1,gen2,data1,data2,days) {
     type: 'line',
     data: data,
     options: {
+      responsive: true,
       plugins: {
         title: {
           display: true,
-          text: 'Room Temperature of both generation',
+          text: yLable+' of both generation',
           font: {size: 16}
         }
       },
       scales: {
-        y:{ suggestedMin: 0, suggestedMax: 50 },
+        // y:{ suggestedMin: 10, suggestedMax: 60 },
         // x:{},     
         yAxis: {
-          title: { display: true, text : 'Temperature ( °C )', font: {size: 20} }, 
-          ticks: { suggestedMin: 0, max: 50 } ,
+          title: { display: true, text : yLable, font: {size: 20} }, 
+          // ticks: { suggestedMin: 0, max: 50 } ,
         },
         xAxis: {
           title: { display: true, text : 'Days', font: {size: 16}},
@@ -267,7 +120,7 @@ function mainGraph_temp(gen1,gen2,data1,data2,days) {
   
   
   const myChart = new Chart(
-    document.getElementById('myChart'),
+    document.getElementById(canvasId),
     config
   );
 }
@@ -275,33 +128,45 @@ function mainGraph_temp(gen1,gen2,data1,data2,days) {
 // mainGraph_temp();
 
 
-function quality(starNo,headerName,className) {
-  let stars = document.getElementsByClassName(className);
-  let header = document.getElementById(headerName);
-  classNo  = 6 - starNo - 1;
-  console.log(classNo);
-  stars[classNo].checked = true;
-  switch (starNo) {
-          case 1:
-            header.innerText = "Worst";
-            break;
-          case 2:
-            header.innerText = "Bad";
-            break;
-          case 3:
-            header.innerText = "Acceptable";
-            break;
-          case 4:
-            header.innerText = "Very Good";
-            break;
-          case 5:
-            header.innerText = "Excellent";
-            break;
-        }
+function quality(starNo,divName) {
+  let star = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+  </svg>`; 
+  let rating_box = document.getElementById(divName);
+  for (let i = 0; i < 5; i++) {
+    $('#'+divName).append(star);
+  }
+
+  let allStars = $("#"+divName+" svg");
+  for (let i = 0; i < starNo; i++) {
+    allStars.get(i).style.fill = 'yellow';
+  }
+
+  // let stars = document.getElementsByClassName(className);
+  // let header = document.getElementById(headerName);
+  // classNo  = 6 - starNo - 1;
+  // console.log(classNo);
+  // stars[classNo].checked = true;
+  // switch (starNo) {
+  //         case 1:
+  //           header.innerText = "Worst";
+  //           break;
+  //         case 2:
+  //           header.innerText = "Bad";
+  //           break;
+  //         case 3:
+  //           header.innerText = "Acceptable";
+  //           break;
+  //         case 4:
+  //           header.innerText = "Very Good";
+  //           break;
+  //         case 5:
+  //           header.innerText = "Excellent";
+  //           break;
+  //       }
   }  
 
-// quality(5,"header-one","stars-one");
-// quality(2,"header-two","stars-two");
+
 
 function drawGraphs(genOneName,genTwoName,valueOne,valueTwo,divId,lable,title,fill,stroke,genOne,genTwo) {
   google.charts.load('current', {'packages':['bar']});
@@ -358,63 +223,6 @@ function drawGraphs(genOneName,genTwoName,valueOne,valueTwo,divId,lable,title,fi
 
 
 }
-// drawGraphs("temp_chart","Temperature ( °C )",'Temperature','yellow','orange',);
-// drawGraphs("humid_chart","Humidity ( % )",'Humidity','skyblue','dodgerblue');
-// drawGraphs("moist_chart","Moisture ( % )","Moisture","#ffd0c6","#ff9db0");
-// drawGraphs("light_chart","Light ( lux )","Light","#cbe4f9","violet");
-
-
-function setDark() {
-  document.querySelector("h3>center").style.color = "lavander";
-  $(":root").get(0).style.setProperty("--bg-color","#1f1f1f")
-  document.querySelector("*").style.color = "lavander";
-  $(":root").get(0).style.setProperty("--border-all","1px solid 1px solid #161616");
-  $(":root").get(0).style.setProperty("--box-sh-header"," 0px 5px 5px  rgb(8 8 8 / 87%)");
-  $(":root").get(0).style.setProperty("--box-sh-other","3px 7px 8px rgb(8 8 8 / 87%)");
-
-}
-
-function setLight() {
-  document.querySelector("h3>center").style.color = "slategrey";
-  
-  $(":root").get(0).style.setProperty("--bg-color","white")
-  $(":root").get(0).style.setProperty("--box-sh-header","0px 5px 5px rgb(212, 209, 209)");
-  $(":root").get(0).style.setProperty("--box-sh-other","3px 7px 8px rgb(212, 209, 209)");
-  $(":root").get(0).style.setProperty("--border-all","1px solid lightgrey");
-
-}
-
-var light = document.getElementById("light");
-var dark = document.getElementById("dark");
-
-light.onclick = function () {
-  dark.style.setProperty("background-color","whitesmoke");
-  dark.style.setProperty("color","grey");
-  dark.style.setProperty("border","1px solid grey");
-  dark.style.setProperty("border-left","0px");
-
-  light.style.setProperty("background-color","dodgerblue");
-  light.style.setProperty("color","white");
-  light.style.setProperty("border","0px");
-
-  setLight();
-  
-}
-
-dark.onclick = function () {
-  light.style.setProperty("background-color","whitesmoke");
-  light.style.setProperty("color","grey");
-  light.style.setProperty("border","1px solid grey");
-  light.style.setProperty("border-right","0px");
-
-  dark.style.setProperty("background-color","dodgerblue");
-  dark.style.setProperty("color","white");
-  dark.style.setProperty("border","0px");
-
-  setDark();
-}
-
-// setDark();
 
 
 
@@ -422,11 +230,20 @@ dark.onclick = function () {
 
 // ------------------------ Calling Main Function ----------------------
 
-var promise = $.get('./test.php',(data) =>{
 // var promise = $.get('./test.php',(data) =>{
+// var promise = $.get('http://localhost/test/test.php',(data) =>{
+
+  
+//   console.log(data);
+// },'json')
+
+if (data != null) {
   main(data);
-  console.log(data);
-},'json')
+  console.log(data)
+}
+else{
+  $(".container-cent").get(0).style.display = 'none';
+}
 
 // ------------------------  Main Function ----------------------
 
@@ -438,6 +255,59 @@ function main(data) {
   var avgone = data[4];
   var avgtwo = data[5];
 
+  var imagesOne = data[6];
+  var imagesTwo = data[7];
+
+
+  for (let i = 0; i < imagesOne.length; i++) {
+    if (i==0) {
+      elem = `<div class="carousel-item active">
+      <img src="`+imagesOne[i]['image']+`" class="d-block w-100" >
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Day `+imagesOne[i]['day']+`</h5>
+        <p>`+imagesOne[i]['timestamp']+`</p>
+      </div>
+    </div>`;
+    } else {
+      elem = `<div class="carousel-item ">
+      <img src="`+imagesOne[i]['image']+`" class="d-block w-100" >
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Day `+imagesOne[i]['day']+`</h5>
+        <p>`+imagesOne[i]['timestamp']+`</p>
+      </div>
+    </div>`;
+    }
+    $('#gen-one-carousel .carousel-inner').append(elem);
+  }
+
+  for (let i = 0; i < imagesTwo.length; i++) {
+  if (i==0) {
+    elem = `<div class="carousel-item active">
+    <img src="`+imagesTwo[i]['image']+`" class="d-block w-100" >
+    <div class="carousel-caption d-none d-md-block">
+      <h5>Day `+imagesTwo[i]['day']+`</h5>
+      <p>`+imagesTwo[i]['timestamp']+`</p>
+    </div>
+  </div>`;
+  } else {
+    elem = `<div class="carousel-item ">
+    <img src="`+imagesTwo[i]['image']+`" class="d-block w-100" >
+    <div class="carousel-caption d-none d-md-block">
+      <h5>Day `+imagesTwo[i]['day']+`</h5>
+      <p>`+imagesTwo[i]['timestamp']+`</p>
+    </div>
+  </div>`;
+  }
+  $('#gen-two-carousel .carousel-inner').append(elem);
+
+}
+
+  // for (let i = 0; i < imagesTwo.length; i++) {
+  //   add_image(imagesTwo,i,'image-cont-two');
+  // }
+
+  
+
 
   document.getElementById("gen-name-one").innerText = firstgen['gen_name'];
   document.getElementById("gen-name-two").innerText = secondgen['gen_name'];
@@ -446,17 +316,22 @@ function main(data) {
   document.getElementById("condition-one").innerText = firstgen['plant_condition'];
   document.getElementById("start-one").innerText = firstgen['start_date'];
   document.getElementById("end-one").innerText = firstgen['end_date'];
+  document.getElementById("dis-name-one").innerText = firstgen['dis_name'];
+  document.getElementById("dis-det-one").innerText = firstgen['dis_details'];
+  document.getElementById("growthrate-one").innerText = firstgen['growthrate'];
 
   document.getElementById("plant-name-two").innerText = secondgen['plant_name'];
   document.getElementById("condition-two").innerText = secondgen['plant_condition'];
   document.getElementById("start-two").innerText = secondgen['start_date'];
   document.getElementById("end-two").innerText = secondgen['end_date'];
+  document.getElementById("dis-name-two").innerText = secondgen['dis_name'];
+  document.getElementById("dis-det-two").innerText = secondgen['dis_details'];
+  document.getElementById("growthrate-two").innerText = secondgen['growthrate'];
 
  
-  
+  quality(parseInt(firstgen['quality']),'ratingOne');
+  quality(parseInt(secondgen['quality']),'ratingTwo');
 
-  quality( parseInt(firstgen.quantity),"header-one","stars-one");
-  quality(parseInt(secondgen.quantity),"header-two","stars-two");
 
   // document.getElementById("avg-temp-one").innerText = avgone['avgTemp']+" °C";
   // document.getElementById("avg-humid-one").innerText = avgone['avgHumid']+" %";
@@ -469,10 +344,10 @@ function main(data) {
   // document.getElementById("avg-light-two").innerText = avgtwo['avgLight']+" lux";
 
 
-drawGraphs(firstgen['gen_name'],secondgen['gen_name'],parseInt(avgone['avgTemp']),parseInt(avgtwo['avgTemp']),"temp_chart","Temperature ( °C )",'Temperature','yellow','orange',);
-drawGraphs(firstgen['gen_name'],secondgen['gen_name'],parseInt(avgone['avgHumid']),parseInt(avgtwo['avgHumid']),"humid_chart","Humidity ( % )",'Humidity','skyblue','dodgerblue');
-drawGraphs(firstgen['gen_name'],secondgen['gen_name'],parseInt(avgone['avgMoist']),parseInt(avgtwo['avgMoist']),"moist_chart","Moisture ( % )","Moisture","#ffd0c6","#ff9db0");
-drawGraphs(firstgen['gen_name'],secondgen['gen_name'],parseInt(avgone['avgLight']),parseInt(avgtwo['avgLight']),"light_chart","Light ( lux )","Light","#cbe4f9","violet");
+  drawGraphs(firstgen['gen_name'],secondgen['gen_name'],parseInt(avgone['avgTemp']),parseInt(avgtwo['avgTemp']),"temp_chart","Temperature ( °C )",'Temperature','yellow','orange',);
+  drawGraphs(firstgen['gen_name'],secondgen['gen_name'],parseInt(avgone['avgHumid']),parseInt(avgtwo['avgHumid']),"humid_chart","Humidity ( % )",'Humidity','skyblue','dodgerblue');
+  drawGraphs(firstgen['gen_name'],secondgen['gen_name'],parseInt(avgone['avgMoist']),parseInt(avgtwo['avgMoist']),"moist_chart","Moisture ( % )","Moisture","#ffd0c6","#ff9db0");
+  drawGraphs(firstgen['gen_name'],secondgen['gen_name'],parseInt(avgone['avgLight']),parseInt(avgtwo['avgLight']),"light_chart","Light ( lux )","Light","#cbe4f9","violet");
 
 
     data1 = dataone[0];
@@ -485,52 +360,56 @@ drawGraphs(firstgen['gen_name'],secondgen['gen_name'],parseInt(avgone['avgLight'
     console.log('2 nd : '+days2);
 
     if (days2 > days1){
-      mainGraph_temp(firstgen['gen_name'],secondgen['gen_name'],data1,data2,days2);
+      days = days2
     }
     else if (days1 > days2) {
-      mainGraph_temp(firstgen['gen_name'],secondgen['gen_name'],data1,data2,days1);
-      
+      days = days1
     }
 
+    mainGraph_temp(firstgen['gen_name'],secondgen['gen_name'],data1,data2,days,'tempChart','room_temp','Temperature ( °C )');
+    mainGraph_temp(firstgen['gen_name'],secondgen['gen_name'],data1,data2,days,'humidChart','humidity','Humidity ( % )');
+    mainGraph_temp(firstgen['gen_name'],secondgen['gen_name'],data1,data2,days,'moistChart','moisture','Moisture ( % )');
+    mainGraph_temp(firstgen['gen_name'],secondgen['gen_name'],data1,data2,days,'lightChart','light','Light ( lux )');
+
+    $(".main-graphs").addClass("set-col-grid");
 }
 
 
-// function binarySearch(arr,elem) {
-//   var start = 0;
-//   var end = arr.length - 1;
-//   var middle = Math.floor((start + end)/2);
- 
-//   while(arr[middle] != elem){
-//     if(arr[middle] > elem){
-//       end = middle - 1;
-//     }else{
-//       start = middle + 2;
-//     }
-//     middle = Math.floor((start + end)/2)
-//   }
-//   return  middle;
-// }
+function add_image(data,i,apdName){
+    const div = document.createElement("div");
+    div.classList.add("carousel-item");
+    if(i == 0){
+      div.classList.add("active");
+    }
 
-// function binarySearch(arr,elem) {
-//   var start = 0;
-//   var end = arr.length - 1;
-//   var middle = Math.floor((start + end)/2);
- 
-//   if(arr[middle] != elem){
-//     if(arr[middle] > elem){
-//       binarySearch(arr[start:middle] ,elem);
-//     }else{
-//       start = middle + 2;
-//     }
-    
-//   }
-//   else{
-//     return  middle;
-//   }
-// }
+    const img = document.createElement("img");
+    img.classList.add("d-block");
+    img.classList.add("w-100");
+    img.src = data[i]['image'];
+    img.style.width = "800px !important";
+    img.style.height = "400px";
 
 
-// binarySearch([2,5,6,9,12,13,15,17,19,20,24,26,28],19)
+    const div2 = document.createElement("div");
+    div2.classList.add("carousel-caption");
+    div2.classList.add("d-none");
+    div2.classList.add("d-md-block");
+
+    const h5 = document.createElement("h5");
+    h5.innerText = "Day "+data[i]['day']
+
+    const p = document.createElement("p");
+    p.innerText = data[i]['timestamp']
+
+    div.appendChild(img);
+    div.appendChild(div2);
+    div2.appendChild(h5);
+    div2.appendChild(p);
+    document.getElementById(apdName).appendChild(div);
+  }
+
+
+  // add_image(data,i,'image-cont-one')
 
 
 

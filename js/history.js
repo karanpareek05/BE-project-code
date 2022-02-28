@@ -1,3 +1,5 @@
+
+
 function getRandomColor() {
   var letters = '0123456789ABCDEF';
   var color = '#';
@@ -9,6 +11,7 @@ function getRandomColor() {
 var frame = document.getElementById('ask_frame');
 frame.onclick = function(){
   frame.style.display = 'none';
+  // document.getElementById('comp_gen_btn').classList.add("disabled-link");
 }
 
 $.get("./fetch.php?flag=3", function(data, status){
@@ -24,7 +27,7 @@ $.get("./fetch.php?flag=3", function(data, status){
     gne.setAttribute("id",genes[i]);
     // gne.style.backgroundColor = getRandomColor();
     gne.onclick = function(){
-      main(genes[i]);
+      main(genes[i],genes);
     }
     frame.appendChild(gne);
     
@@ -47,8 +50,13 @@ $.get("./fetch.php?flag=3", function(data, status){
 var myData;
 var chart =  document.getElementById('myChart');
 
-function main(divs){
-
+function main(divs,genes){
+  // try {
+  //   document.getElementById('comp_gen_btn').classList.remove("disabled-link");
+  // } catch (error) {
+  //   console.log(error);
+  // }
+  
   // console.log(divs);
   document.getElementById('ask_frame').style.display = 'none';
   var allData;
@@ -101,9 +109,9 @@ function main(divs){
     });
     dayHrs = [7,8,9,10,11,12,13,14,15,16,17,18]
     nightHrs = [19,20,21,22,23,24,1,2,3,4,5,6]
-    test = allData;
-    bgcolor = 'crimson';
-    bordColor = 'darkgrey';
+    // test = allData;
+    // bgcolor = 'crimson';
+    // bordColor = 'darkgrey';
     $('#time_select').change(function(){
       $('#graph_select').val("select")
       graph([0,0],'-','-');
@@ -130,9 +138,7 @@ function main(divs){
           bordColor = 'darkslateblue';
           // allData = genData[2];
           break;
-        case 'select':
-          $('#graph_select').val("select")
-          graph([0,0],'-','-');
+        case 'all':
           test = allData;
           bgcolor = 'crimson';
           bordColor = 'darkgrey';
@@ -148,27 +154,31 @@ function main(divs){
     // graph(allData,'light','Light Intensity',);
     graph(allData,'room_temp','Temprature');
     $('#graph_select').change(function(){
-      var check = $(this).val();
-      switch (check) {
-        case 'temp':
-          graph(test,'room_temp','Temprature');
-          break;
-        case 'humid':
-          // chart.destroy();
-          graph(test,'humidity','Humidity');
-          break;
-        case 'moist':
-          graph(test,'moisture','Soil Moisture');
-          break;
-        case 'light':
-          graph(test,'light','Light Intensity');
-          break;
-        case 'select':
-          graph([0,0],'-','-');
-          break;
-        default:
-          graph(allData,'room_temp','Temprature');
-          break;
+      if($('#graph_select').val() == "select"){
+        alert("choose time of the day!")
+      } else{
+        var check = $(this).val();
+        switch (check) {
+          case 'temp':
+            graph(test,'room_temp','Temprature');
+            break;
+          case 'humid':
+            // chart.destroy();
+            graph(test,'humidity','Humidity');
+            break;
+          case 'moist':
+            graph(test,'moisture','Soil Moisture');
+            break;
+          case 'light':
+            graph(test,'light','Light Intensity');
+            break;
+          case 'select':
+            graph([0,0],'-','-');
+            break;
+          default:
+            graph(allData,'room_temp','Temprature');
+            break;
+        }
       }
     });
 
@@ -190,8 +200,6 @@ function main(divs){
           label: myLabel,
           backgroundColor: bgcolor,
           borderColor: bordColor,
-          // backgroundColor: 'darkblue', // night
-          // borderColor: 'dodgerblue',
           data: temp,
           fill: true,
           tension: 0.5
@@ -269,17 +277,53 @@ function main(divs){
     document.getElementById('condition').innerText = detail_val['plant_condition'];
     document.getElementById('start_dt').innerText = detail_val['start_date'];
     document.getElementById('end_dt').innerText = detail_val['end_date'];
-    document.getElementById('quality_in').innerText = detail_val['quantity'];
+
+    document.getElementById("comp_gen_btn").onclick = function(){
+      $('.comp_gen').get(0).style.display = 'flex';
+      $('.comp_box h3').get(0).innerText = "Compare "+detail_val['gen_name']+" with ....";
+      var frame = document.getElementsByClassName("comp_contain")[0];
+      for (let i = 0; i < genes.length; i++) {
+        if (genes[i] == detail_val['gen_name']) {
+          continue;
+        }
+        var gne = document.createElement("DIV");
+        gne.setAttribute("class","generations");
+        gne.setAttribute("id",genes[i]);
+        // gne.style.backgroundColor = getRandomColor();
+
+        gne.onclick = function(){
+          url = "./compare.php?one="+detail_val['gen_name']+"&two="+genes[i];
+          console.log(url);
+          window.location.replace(url);
+        }
+        frame.appendChild(gne);
+        
+        var kne = document.createElement("SPAN");
+        kne.innerHTML = genes[i];
+        gne.appendChild(kne);
+        
+      }
+    }
+
+    // document.getElementById('quality_in').innerText = detail_val['quality'];
+    starsvg = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+    </svg>`;
+    for (let i = 0; i < detail_val['quality']; i++) {
+      $("#quality_in").append(starsvg);      
+    }
+
+    // document.getElementById('quality_in').innerHTML = starsvg
     document.getElementById('growth_in').innerText = detail_val['growthrate'];
     document.getElementById('dis_name_in').innerText = detail_val['dis_name'];
     document.getElementById('dis_detail_in').innerText = detail_val['dis_details'];
 
-    document.getElementById('temp_day').innerText = day_val['day_temp'];
-    document.getElementById('temp_night').innerText = night_val['night_temp'];
-    document.getElementById('humid_day').innerText = day_val['day_humid'];
-    document.getElementById('humid_night').innerText = night_val['night_humid'];
-    document.getElementById('moist_day').innerText = day_val['day_moist'];
-    document.getElementById('moist_night').innerText = night_val['night_moist'];
+    document.getElementById('temp_day').innerText = day_val['day_temp']+" °C";
+    document.getElementById('temp_night').innerText = night_val['night_temp']+" °C";
+    document.getElementById('humid_day').innerText = day_val['day_humid']+" %";
+    document.getElementById('humid_night').innerText = night_val['night_humid']+" %";
+    document.getElementById('moist_day').innerText = day_val['day_moist']+" %";
+    document.getElementById('moist_night').innerText = night_val['night_moist']+" %";
   }
   function add_image(data,i){
     const div = document.createElement("div");

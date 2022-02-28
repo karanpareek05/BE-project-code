@@ -11,7 +11,10 @@ var mos_chk = '';
 var table = '';
 var disease_prob;
 var dis_json;
-
+Notification.requestPermission();
+if(Notification.permission == 'default' || Notification.permission == 'denied'){
+  Notification.requestPermission();
+}
 
 // --------------------------- Test Scripts --------------------
 function noti(color,notiText) {
@@ -36,16 +39,16 @@ function noti(color,notiText) {
 
 // --------------------------- Start Scripts --------------------
 
-// $.get("./fetch.php?flag=0", function(data, status){
-//   try {
-//     data = JSON.parse(data);
-//     check_data(data);
-//     console.log(data);
-//   } catch (error) {
-//     console.log(error);
-//     check_data(null);
-//   } 
-//   });  
+$.get("./fetch.php?flag=0", function(data, status){
+  try {
+    data = JSON.parse(data);
+    check_data(data);
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+    check_data(null);
+  } 
+  });  
 setInterval(function() {
   $.get("./fetch.php?flag=0", function(data, status){
     try {
@@ -110,8 +113,9 @@ left.onclick = function(){
     try {
       let table = document.getElementById('gen_name').innerText;
       let plant = document.getElementById('plnt_name').innerText;
-      console.log()
-      if (table != "" && plant != "") {
+      console.log(table,plant);
+      if (table != "-" && plant != "-") {
+        console.log(table,plant);
         end_gen(table,plant,0);
       }else{
         modal.style.display = "block";
@@ -182,6 +186,7 @@ left.onclick = function(){
 
 function check_data(data){
 // console.log("sumit"+data);
+
 if (data != null) {
   let live_check = data[0]['live_check'];
   console.log(live_check);
@@ -192,14 +197,14 @@ if (data != null) {
   }
   else if(live_check == 1){
     main(data);
-    // console.log("in else if check = 1 call main");
   }
 
 }
 else{
   alert("Currently Not Monitoring Any data");
-  document.getElementById('end_btn').style.display="none";
-  document.getElementById('photo_btn').style.display="none";
+//   document.getElementById('container').style.display="none";
+  // document.getElementById('end_btn').style.display="none";
+  // document.getElementById('photo_btn').style.display="none";
   
   }
 }
@@ -449,6 +454,9 @@ function main(data){
 
     switch (type) {
       case 1:
+        if(Notification.permission == 'denied'){
+          Notification.requestPermission();
+        }
         if(temp_chk == 'high'){
         change_color('temperature','high','Maximum');
         }
@@ -478,9 +486,6 @@ function main(data){
         } 
         break;
       case 2:
-        if(Notification.permission == 'denied'){
-            Notification.requestPermission();
-          }
         if(temp_chk == 'high'){
           send_noti('temperature','high','Maximum');
         }
@@ -509,8 +514,8 @@ function main(data){
   moist = document.getElementById('mos_in').innerText;
   light = document.getElementById('light_in').innerText;
   try {
-    // let url = "http://sumitas.pythonanywhere.com/?temp="+room_temp+"&humid="+humid+"&moist="+moist+"&light="+light
-    let url = "http://127.0.0.1:5000/?temp="+room_temp+"&humid="+humid+"&moist="+moist+"&light="+light
+    let url = "https://sumitas.pythonanywhere.com/?temp="+room_temp+"&humid="+humid+"&moist="+moist+"&light="+light
+    // let url = "http://127.0.0.1:5000/?temp="+room_temp+"&humid="+humid+"&moist="+moist+"&light="+light
     console.log(url);
     console.log(room_temp,humid,moist,light);
     $.get(url, function(data,){
@@ -767,6 +772,3 @@ function end_gen(table,plant,getCmd) {
     });
   }
 }
-
-
-

@@ -1,10 +1,10 @@
 <?php 
 include("database_connect.php");
-$test = mysqli_query($conn,"select * from gen_data where  live_check=0 ");
-$gen = array();
-while($row = mysqli_fetch_assoc($test)){
-  $gen[] = $row['gen_name'];
-}
+// $test = mysqli_query($conn,"select * from gen_data where  live_check=0 ");
+// $gen = array();
+// while($row = mysqli_fetch_assoc($test)){
+//   $gen[] = $row['gen_name'];
+// }
 
 ?>
 
@@ -23,7 +23,7 @@ while($row = mysqli_fetch_assoc($test)){
 </head>
 <body>
 	<div class="header">
-		<text>Smart Plant Management System</text>
+		<text>Smart Plant Monitoring System</text>
 		<div class="header-right">
 		<a href="./index.php">
 			<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Home-icon.svg/1200px-Home-icon.svg.png" alt="">
@@ -34,80 +34,88 @@ while($row = mysqli_fetch_assoc($test)){
 			<span>History</span>
 		</a>
 		<span class="vertical_line"></span>
-		<a  id="new_gen_btn" >
+		<a  id="comp_gen_btn" >
 			<img src="https://user-images.githubusercontent.com/21024245/35808218-c177e6cc-0a8d-11e8-929c-f8452748642b.png" alt="">
 			<span>Compare</span>
 		</a>
 		</div>
 	</div>
-	<!-- <div class="header">
-		<text>Smart Plant Monitoring System</text>
-		<div class="header-right">
-			<a href="./index.php">Home</a>
-			<span></span>
-			<a href="./history.php">History</a>
-			<a href="./compare.html" id="compare" >Compare</a>
-		</div> -->
+
 	</div>
 	<div class="container-box">
 		<section class="upper">
-			<div id="container_1">
-				<div class="details"><span class="label">Genration</span><span class="details_in" id="gen_in"></span></div>
-				<div class="details"><span class="label">Plant</span><span class="details_in" id="plant_in"></span></div>
-				<div class="details"><span class="label">Condition</span><span class="details_in" id="condition"></span></div>
-				<div class="details"><span class="label">Start Date</span><span class="details_in" id="start_dt"></span></div>
-				<div class="details"><span class="label">End Date</span><span class="details_in" id="end_dt"></span></div>
+			<div id="container_1" class="detail-cont">
+				<table>
+				<tr>
+					<td>Generation : </td>
+					<td id="gen_in"></td>
+				</tr>
+				<tr>
+					<td>Plant : </td>
+					<td id="plant_in">></td>
+				</tr>
+				<tr>
+					<td>Condition : </td>
+					<td id="condition"></td>
+				</tr>
+				<tr>
+					<td>Start Date : </td>
+					<td id="start_dt"></td>
+				</tr>
+				<tr>
+					<td>End Date : </td>
+					<td id="end_dt"></td>
+				</tr>
+				</table>
+
 			</div>
-			<div id="container_2">
-				<div class="details"><span class="label">Quality of the plant</span><span class="details_in" id="quality_in"></span></div>
-				<div class="details"><span class="label">Growth Rate</span><span class="details_in" id="growth_in"></span></div>
-				<div class="details"><span class="label">Disease Name</span><span class="details_in" id="dis_name_in"></span></div>
-				<div class="details"><span class="label">Disease Details</span><span class="details_in"  id="dis_detail_in"></span></div>
-				<div class="details"><span class="label"></span><span class="details_in"></span></div>
+			<div id="container_2" class="detail-cont">
+				<table>
+					<th colspan="3" >Temperature</th>
+					<tr>
+						<td>Day : </td>
+						<td id="temp_day"></td>
+						<td>Night : </td>
+						<td id="temp_night">></td>
+					</tr>
+					<th colspan="2" >Humidity</th>
+					<tr>
+						<td>Day : </td>
+						<td id="humid_day"></td>
+						<td>Night : </td>
+						<td id="humid_night">></td>
+					</tr>
+					<th colspan="2" >Moisture</th>
+					<tr>
+						<td>Day : </td>
+						<td id="moist_day"></td>
+						<td>Night : </td>
+						<td id="moist_night">></td>
+					</tr>
+				</table>
+
 			</div>
-			<div id="container_3">
-				<div class="details">Room Temperature</div>
-				<div class="details">
-					<span class="label">Day&nbsp;:&nbsp;</span><span class="details_in" id="temp_day"></span>
-					<span class="label">Night&nbsp;:&nbsp;</span><span class="details_in" id="temp_night"></span>
-				</div>
-				<div class="details">Humidity</div>
-				<div class="details">
-					<span class="label">Day&nbsp;:&nbsp;</span><span class="details_in" id="humid_day"></span>
-					<span class="label">Night&nbsp;:&nbsp;</span><span class="details_in" id="humid_night"></span>
-				</div>
-				<div class="details">Moisture</span></div>
-				<div class="details">
-					<span class="label">Day&nbsp;:&nbsp;</span><span class="details_in" id="moist_day"></span>
-					<span class="label">Night&nbsp;:&nbsp;</span><span class="details_in" id="moist_night"></span>
-				</div>
-			</div>
-			<!-- <div>4</div> -->
-		</section>
-		<section class="middle">
-			<div class="graph">
-				<select name="para" class="slct" id="graph_select">
-					<option value="select">- Select -</option>
-					<option value="temp"  selected="selected" >Room Temprature</option>
-					<option value="humid" >Humidity</option>
-					<option value="moist" >Moisture</option>
-					<option value="light" >Light</option>
-				</select>
-				<select name="para" class="slct" id="time_select">
-					<option value="select" selected="selected">- All -</option>
-					<option value="day" >Day</option>
-					<option value="night" >Night</option>
-				</select>
-				<select name="para" class="slct" id="day_select">
-					<option value="select" selected="selected">- All -</option>
-				</select>
-				<div class="chart">
-					<canvas id="myChart" height="26%" width="100%"></canvas>
-					<!-- <canvas id="temp_chart" height="26%" width="100%"></canvas>
-					<canvas id="humid_chart" height="26%" width="100%"></canvas>
-					<canvas id="moist_chart" height="26%" width="100%"></canvas>
-					<canvas id="light_chart" height="26%" width="100%"></canvas> -->
-				</div>
+			<div id="container_3" class="detail-cont">
+			<table>
+				<tr>
+					<td>Quality of the plant : </td>
+					<td id="quality_in">
+					</td>
+				</tr>
+				<tr>
+					<td>Growth Rate : </td>
+					<td id="growth_in">></td>
+				</tr>
+				<tr>
+					<td>Disease Name : </td>
+					<td id="dis_name_in"></td>
+				</tr>
+				<tr>
+					<td>Disease Details : </td>
+					<td id="dis_detail_in"></td>
+				</tr>
+				</table>
+
 			</div>
 		</section>
 		<section class="bottom">
@@ -142,23 +150,41 @@ while($row = mysqli_fetch_assoc($test)){
 				<label for="">No of days</label>
 			</div>
 		</section>
+		<section class="middle">
+			<div class="graph">
+				<div class="select-options">
+					<select name="para" class="slct" id="day_select">
+						<option value="select" selected="selected">- All -</option>
+					</select>
+					<select name="para" class="slct" id="time_select">
+						<option value="select" selected="selected">- Select -</option>
+						<option value="all" >24 Hrs</option>
+						<option value="day" >Day</option>
+						<option value="night" >Night</option>
+					</select>
+					<select name="para" class="slct" id="graph_select">
+						<option value="select">- Select -</option>
+						<option value="temp"  selected="selected" >Temprature</option>
+						<option value="humid" >Humidity</option>
+						<option value="moist" >Moisture</option>
+						<option value="light" >Light</option>
+					</select>
+				</div>
+				<div class="chart">
+					<canvas id="myChart" height="26%" width="100%"></canvas>
+					<!-- <canvas id="temp_chart" height="26%" width="100%"></canvas>
+					<canvas id="humid_chart" height="26%" width="100%"></canvas>
+					<canvas id="moist_chart" height="26%" width="100%"></canvas>
+					<canvas id="light_chart" height="26%" width="100%"></canvas> -->
+				</div>
+			</div>
+		</section>
 		<section class="image-sec" id="sec4">
 			<h3>Images</h3>
 			<div id="photos_box">
 				<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-			<!-- <div class="carousel-indicators">
-				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-			</div> -->
 			<div class="carousel-inner" id="image-cont">
-				<!-- <div class="carousel-item active" >
-				<img src="..." class="d-block w-100 "  height=400 id="sumit" alt="...">
-				<div class="carousel-caption d-none d-md-block">
-					<h5 id=h5-1 >First slide label</h5>
-					<p  id=p-2 >Some representative placeholder content for the first slide.</p>
-				</div>
-				</div> -->
+
 			</div>
 			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -175,10 +201,19 @@ while($row = mysqli_fetch_assoc($test)){
 		<div class="ask_box">
 			<div><center><h3>Choose Genration to view History</h3></center></div>
 			<div class="ask_contain">
-		</div>
+			</div>
+		</div>	
+	</div>
 
+	<div class="comp_gen" id="comp_frame">
+		<div class="comp_box">
+			<div><center><h3>Compare with ....</h3></center></div>
+			<div class="comp_contain"></div>
 		</div>
 	</div>
+
+
+
 	<script src="./js/history.js"></script>
 </body>
 

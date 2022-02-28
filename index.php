@@ -10,7 +10,7 @@
 <head>
   <meta charset="utf-8">
   <!-- <meta http-equiv="refresh" content="1"/> -->
-  <title>Smart Plant</title>
+  <title>SPMS</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
   <link rel="stylesheet" href="./css/index.css">
@@ -25,7 +25,7 @@
     </div>
   </div>
   <div class="header">
-    <text>Smart Plant Management System</text>
+    <text>Smart Plant Monitoring System</text>
     <div class="header-right">
       <a href="./index.php" class="active">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Home-icon.svg/1200px-Home-icon.svg.png" alt="">
@@ -116,15 +116,15 @@
           <table class="details-table">
             <tr>
               <td>Plant Name</td>
-              <td id="plnt_name">Mint</td>
+              <td id="plnt_name">-</td>
             </tr>
             <tr>
               <td>Generation</td>
-              <td id="gen_name" >BG01</td>
+              <td id="gen_name" >-</td>
             </tr>
             <tr>
               <td>Condition</td>
-              <td id="gen_cond" >Balanced</td>
+              <td id="gen_cond" >-</td>
             </tr>
             <tr>
               <td>Days</td>
@@ -225,8 +225,6 @@
         </svg>
           <span>Add Photo</span>
         </div>
-        <!-- <button  id="end_btn">End</button>
-        <button id="photo_btn">Add Photo</button> -->
       </div>
   </div>
 

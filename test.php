@@ -10,8 +10,8 @@ include("database_connect.php");
 
 
 
-$table1 = 'gen1';
-$table2 = 'gen2';
+$table1 = 'bg01';
+$table2 = 'eg01';
 
 $whole = array();
 $ary = array();
@@ -48,16 +48,16 @@ while ($row = mysqli_fetch_assoc($test)) {
     array_push($ary,$row);
 
 }
-$prevDate = date('d.m.Y',strtotime("-1 days"));
-$ary =[];
-$test = mysqli_query($conn,"select ROUND(AVG(room_temp)) as avgTemp,
-ROUND(AVG(humidity)) as avgHumid,
-ROUND(AVG(moisture)) as avgMoist,
-from `".$table2."` where date=".$prevDate);
-while ($row = mysqli_fetch_assoc($test)) {
-    $ary[] = $row;
-}
-array_push($whole,$ary);
+// $prevDate = date('d.m.Y',strtotime("-1 days"));
+// $ary =[];
+// $test = mysqli_query($conn,"select ROUND(AVG(room_temp)) as avgTemp,
+// ROUND(AVG(humidity)) as avgHumid,
+// ROUND(AVG(moisture)) as avgMoist,
+// from `".$table2."` where date=".$prevDate);
+// while ($row = mysqli_fetch_assoc($test)) {
+//     $ary[] = $row;
+// }
+// array_push($whole,$ary);
 
 // array_push($ary,$ary2);
 
